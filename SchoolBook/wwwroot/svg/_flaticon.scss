@@ -1,0 +1,135 @@
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+.fimanager:before {
+    display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.flaticon-001-class:before { content: "\f100"; }
+.flaticon-002-sex:before { content: "\f101"; }
+.flaticon-003-canteen:before { content: "\f102"; }
+.flaticon-004-chemistry:before { content: "\f103"; }
+.flaticon-005-alarm:before { content: "\f104"; }
+.flaticon-006-abacus:before { content: "\f105"; }
+.flaticon-007-projector:before { content: "\f106"; }
+.flaticon-008-smartphone:before { content: "\f107"; }
+.flaticon-009-pushpin:before { content: "\f108"; }
+.flaticon-010-history:before { content: "\f109"; }
+.flaticon-011-search:before { content: "\f10a"; }
+.flaticon-012-stationery:before { content: "\f10b"; }
+.flaticon-013-compass:before { content: "\f10c"; }
+.flaticon-014-headphones:before { content: "\f10d"; }
+.flaticon-015-paint-palette:before { content: "\f10e"; }
+.flaticon-016-telescope:before { content: "\f10f"; }
+.flaticon-017-backpack:before { content: "\f110"; }
+.flaticon-018-graduation:before { content: "\f111"; }
+.flaticon-019-reading-book:before { content: "\f112"; }
+.flaticon-020-college:before { content: "\f113"; }
+.flaticon-021-open-book:before { content: "\f114"; }
+.flaticon-022-basketball:before { content: "\f115"; }
+.flaticon-023-rest:before { content: "\f116"; }
+.flaticon-024-online-education:before { content: "\f117"; }
+.flaticon-025-physics:before { content: "\f118"; }
+.flaticon-026-notebook:before { content: "\f119"; }
+.flaticon-027-stapler:before { content: "\f11a"; }
+.flaticon-028-maths:before { content: "\f11b"; }
+.flaticon-029-papyrus:before { content: "\f11c"; }
+.flaticon-030-microscope:before { content: "\f11d"; }
+.flaticon-031-student-card:before { content: "\f11e"; }
+.flaticon-032-presentation:before { content: "\f11f"; }
+.flaticon-033-gown:before { content: "\f120"; }
+.flaticon-034-lecture:before { content: "\f121"; }
+.flaticon-035-lockers:before { content: "\f122"; }
+.flaticon-036-computer:before { content: "\f123"; }
+.flaticon-037-blackboard:before { content: "\f124"; }
+.flaticon-038-van:before { content: "\f125"; }
+.flaticon-039-canvas:before { content: "\f126"; }
+.flaticon-040-theater:before { content: "\f127"; }
+.flaticon-041-translator:before { content: "\f128"; }
+.flaticon-042-calculator:before { content: "\f129"; }
+.flaticon-043-test:before { content: "\f12a"; }
+.flaticon-044-desk:before { content: "\f12b"; }
+.flaticon-045-graduate:before { content: "\f12c"; }
+.flaticon-046-bell:before { content: "\f12d"; }
+.flaticon-047-comedy:before { content: "\f12e"; }
+.flaticon-048-mouse:before { content: "\f12f"; }
+.flaticon-049-book-shelf:before { content: "\f130"; }
+.flaticon-050-astronomy:before { content: "\f131"; }
+
+$font-Flaticon-001-class: "\f100";
+$font-Flaticon-002-sex: "\f101";
+$font-Flaticon-003-canteen: "\f102";
+$font-Flaticon-004-chemistry: "\f103";
+$font-Flaticon-005-alarm: "\f104";
+$font-Flaticon-006-abacus: "\f105";
+$font-Flaticon-007-projector: "\f106";
+$font-Flaticon-008-smartphone: "\f107";
+$font-Flaticon-009-pushpin: "\f108";
+$font-Flaticon-010-history: "\f109";
+$font-Flaticon-011-search: "\f10a";
+$font-Flaticon-012-stationery: "\f10b";
+$font-Flaticon-013-compass: "\f10c";
+$font-Flaticon-014-headphones: "\f10d";
+$font-Flaticon-015-paint-palette: "\f10e";
+$font-Flaticon-016-telescope: "\f10f";
+$font-Flaticon-017-backpack: "\f110";
+$font-Flaticon-018-graduation: "\f111";
+$font-Flaticon-019-reading-book: "\f112";
+$font-Flaticon-020-college: "\f113";
+$font-Flaticon-021-open-book: "\f114";
+$font-Flaticon-022-basketball: "\f115";
+$font-Flaticon-023-rest: "\f116";
+$font-Flaticon-024-online-education: "\f117";
+$font-Flaticon-025-physics: "\f118";
+$font-Flaticon-026-notebook: "\f119";
+$font-Flaticon-027-stapler: "\f11a";
+$font-Flaticon-028-maths: "\f11b";
+$font-Flaticon-029-papyrus: "\f11c";
+$font-Flaticon-030-microscope: "\f11d";
+$font-Flaticon-031-student-card: "\f11e";
+$font-Flaticon-032-presentation: "\f11f";
+$font-Flaticon-033-gown: "\f120";
+$font-Flaticon-034-lecture: "\f121";
+$font-Flaticon-035-lockers: "\f122";
+$font-Flaticon-036-computer: "\f123";
+$font-Flaticon-037-blackboard: "\f124";
+$font-Flaticon-038-van: "\f125";
+$font-Flaticon-039-canvas: "\f126";
+$font-Flaticon-040-theater: "\f127";
+$font-Flaticon-041-translator: "\f128";
+$font-Flaticon-042-calculator: "\f129";
+$font-Flaticon-043-test: "\f12a";
+$font-Flaticon-044-desk: "\f12b";
+$font-Flaticon-045-graduate: "\f12c";
+$font-Flaticon-046-bell: "\f12d";
+$font-Flaticon-047-comedy: "\f12e";
+$font-Flaticon-048-mouse: "\f12f";
+$font-Flaticon-049-book-shelf: "\f130";
+$font-Flaticon-050-astronomy: "\f131";

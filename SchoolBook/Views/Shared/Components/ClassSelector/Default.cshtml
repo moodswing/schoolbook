@@ -1,0 +1,16 @@
+@model SchoolBook.ViewModels.ClassSelectorViewModel
+
+<div class="class-selection">
+    <div class="row selector">
+        <i class="svgcollege-001-class small-icon"></i>
+        <div class="sm-col-3">
+            <select-cascade id="selYears" class="form-control" list="Model.Years" data-child="selGrades"></select-cascade>
+        </div>
+        <div class="sm-col-3">
+            <select-cascade id="selGrades" class="form-control" list="Model.Grades" data-child="selClasses"></select-cascade>
+        </div>
+        <div class="sm-col-3">
+            <select-cascade id="selClasses" class="form-control" list="Model.Classes" first-value="Seleccione.."></select-cascade>
+        </div>
+    </div>
+</div>

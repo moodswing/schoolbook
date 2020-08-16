@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/homeSite.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" type="text/css" href="~/svg/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="~/svgsm/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="~/svgfa/flaticon.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="svgcollege-021-open-book"></i>
+                    SchoolBook
+                </a>
+                <div class="nav-about">
+                    <a href="#" class="nav-about">Acerca</a>
+                    <a href="#" class="nav-about">Sugerencias</a>
+                    <a href="#" class="nav-about">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="form-title">
+        <div class="subtitle">Aqui va un subtitulo, quizás que sea...</div>
+        <div class="title">Favor ingresen a este maravilloso mundo.</div>
+    </div>
+    <div class="login-container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="colmn"></div>
+        <div class="colmn address">
+            <div class="title">Aklaxahyas</div>
+            <div>Av. Calle 321, Macul - Santiago</div>
+            <div><i class="flaticon-envelope mail small-icon"></i><a href="mailto:contacto@aklaxahyas.cl">contacto@aklaxahyas.cl</a></div>
+        </div>
+        <div class="colmn contact">
+            <div class="title">+56 2 4534 6543</div>
+            <div>Contactanos mediante nuestras redes sociales</div>
+            <div class="sm-contact">
+                <i></i>
+                <i class="svgsocialmedia-004-whatsapp small-icon"></i>
+                <i class="svgsocialmedia-023-facebook small-icon"></i>
+            </div>
+            <div class="privacy">
+                &copy; 2020 - SchoolBook - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

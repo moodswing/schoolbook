@@ -1,0 +1,36 @@
+﻿@model SchoolBook.ViewModels.LoginViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Ingresar - " + Configuration["AppSettings:SiteTitle"];
+    Layout = "../Shared/_layoutHome.cshtml";
+}
+
+<div class="text-center">
+    <div class="login-box">
+        <h1 class="display-4">ingreso</h1>
+        @using (Html.BeginForm("Login", "Home"))
+        {
+            <div class="table">
+                <div>
+                    @Html.EditorFor(m => m.Username, new { htmlAttributes = new { Placeholder = "Usuario" } })
+                </div>
+                <div>
+                    @Html.EditorFor(m => m.Password, new { htmlAttributes = new { Placeholder = "Contraseña", Type="password" } })
+                </div>
+                <div class="login-options">
+                    @Html.ValidationMessageFor(m => m.Username, null, new { @class = "login-not-valid" })
+                    @if(Model.SessionEnded)
+                    {
+                        <span class="login-not-valid">Su sesión ha expirado, favor volver a ingresar</span>
+                    }
+                    <input class="btn btn-info" type="submit" value="acceder" />
+                </div>
+                <div class="recover-password">
+                    <a href="#">Recuperar contraseña</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

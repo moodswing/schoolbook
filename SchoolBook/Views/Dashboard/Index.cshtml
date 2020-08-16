@@ -1,0 +1,39 @@
+﻿@model SchoolBook.ViewModels.DashboardViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Portal - " + Configuration["AppSettings:SiteTitle"];
+    Layout = "../Shared/_layout.cshtml";
+}
+
+<div class="content">
+    <vc:class-selector></vc:class-selector>
+    <div class="bulletin-news">
+        <div>
+            <h1>Informativos</h1>
+        </div>
+        <div class="bulletin">
+            @foreach (var news in Model.News)
+            {
+                <div class="news" style="background-image: url(@news.Image);">
+                    <div class="title">
+                        @news.Title
+                    </div>
+                    <div class="subtitle">
+                        @news.Subtitle
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div>
+        <h1>Claim details</h1>
+        <ul>
+            @foreach (var claim in User.Claims)
+            {
+                <li><strong>@claim.Type</strong>: @claim.Value</li>
+            }
+        </ul>
+    </div>
+</div>

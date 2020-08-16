@@ -1,0 +1,85 @@
+@font-face {
+  font-family: "SVGCollege";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "SVGCollege";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+.fimanager:before {
+      display: inline-block;
+  font-family: "SVGCollege";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    display: block;
+}
+
+.svgcollege-001-class:before { content: "\f100"; }
+.svgcollege-002-sex:before { content: "\f101"; }
+.svgcollege-003-canteen:before { content: "\f102"; }
+.svgcollege-004-chemistry:before { content: "\f103"; }
+.svgcollege-005-alarm:before { content: "\f104"; }
+.svgcollege-006-abacus:before { content: "\f105"; }
+.svgcollege-007-projector:before { content: "\f106"; }
+.svgcollege-008-smartphone:before { content: "\f107"; }
+.svgcollege-009-pushpin:before { content: "\f108"; }
+.svgcollege-010-history:before { content: "\f109"; }
+.svgcollege-011-search:before { content: "\f10a"; }
+.svgcollege-012-stationery:before { content: "\f10b"; }
+.svgcollege-013-compass:before { content: "\f10c"; }
+.svgcollege-014-headphones:before { content: "\f10d"; }
+.svgcollege-015-paint-palette:before { content: "\f10e"; }
+.svgcollege-016-telescope:before { content: "\f10f"; }
+.svgcollege-017-backpack:before { content: "\f110"; }
+.svgcollege-018-graduation:before { content: "\f111"; }
+.svgcollege-019-reading-book:before { content: "\f112"; }
+.svgcollege-020-college:before { content: "\f113"; }
+.svgcollege-021-open-book:before { content: "\f114"; }
+.svgcollege-022-basketball:before { content: "\f115"; }
+.svgcollege-023-rest:before { content: "\f116"; }
+.svgcollege-024-online-education:before { content: "\f117"; }
+.svgcollege-025-physics:before { content: "\f118"; }
+.svgcollege-026-notebook:before { content: "\f119"; }
+.svgcollege-027-stapler:before { content: "\f11a"; }
+.svgcollege-028-maths:before { content: "\f11b"; }
+.svgcollege-029-papyrus:before { content: "\f11c"; }
+.svgcollege-030-microscope:before { content: "\f11d"; }
+.svgcollege-031-student-card:before { content: "\f11e"; }
+.svgcollege-032-presentation:before { content: "\f11f"; }
+.svgcollege-033-gown:before { content: "\f120"; }
+.svgcollege-034-lecture:before { content: "\f121"; }
+.svgcollege-035-lockers:before { content: "\f122"; }
+.svgcollege-036-computer:before { content: "\f123"; }
+.svgcollege-037-blackboard:before { content: "\f124"; }
+.svgcollege-038-van:before { content: "\f125"; }
+.svgcollege-039-canvas:before { content: "\f126"; }
+.svgcollege-040-theater:before { content: "\f127"; }
+.svgcollege-041-translator:before { content: "\f128"; }
+.svgcollege-042-calculator:before { content: "\f129"; }
+.svgcollege-043-test:before { content: "\f12a"; }
+.svgcollege-044-desk:before { content: "\f12b"; }
+.svgcollege-045-graduate:before { content: "\f12c"; }
+.svgcollege-046-bell:before { content: "\f12d"; }
+.svgcollege-047-comedy:before { content: "\f12e"; }
+.svgcollege-048-mouse:before { content: "\f12f"; }
+.svgcollege-049-book-shelf:before { content: "\f130"; }
+.svgcollege-050-astronomy:before { content: "\f131"; }
