@@ -1,0 +1,27 @@
+@model List<MenuOption>
+
+<div class="sidebar">
+    <div class="inner">
+        <div class="mobile-sidebar">
+            <i class="small-icon flaticon-nine-black-tiles"></i>
+        </div>
+        <ul>
+            @foreach (var menu in Model)
+            {
+                <li class="@(menu.GroupMenuOptionId.Equals(0) ? "menu-group" : "menu-option")">
+                    @if (!string.IsNullOrEmpty(menu.Icon))
+                    {
+                        <i class="@(menu.Icon)"></i>
+                    }
+                    @menu.Description
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).on("click", ".sidebar .mobile-sidebar", function () {
+        $(".sidebar").find("ul").slideToggle(500)
+    });
+</script>

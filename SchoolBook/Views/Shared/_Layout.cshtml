@@ -10,63 +10,61 @@
     <link rel="stylesheet" type="text/css" href="~/svgsm/flaticon.css">
     <link rel="stylesheet" type="text/css" href="~/svgfa/flaticon.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 <body>
     <div class="page">
 
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="svgcollege-021-open-book"></i>
-                    SchoolBook
-                </a>
-                <div class="nav-about">
-                    <a href="#" class="nav-about">Acerca</a>
-                    <a href="#" class="nav-about">Sugerencias</a>
-                    <a href="#" class="nav-about">Contacto</a>
-                    <partial name="_LoginPartial" />
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="svgcollege-021-open-book"></i>
+                        SchoolBook
+                    </a>
+                    <div class="nav-about">
+                        <a href="#" class="nav-about">Acerca</a>
+                        <a href="#" class="nav-about">Sugerencias</a>
+                        <a href="#" class="nav-about">Contacto</a>
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    <div class="main">
-        @*<div class="container">*@
+        <div class="main">
             <main role="main" class="container">
-                <cache expires-after="@TimeSpan.FromDays(14)">
-                    <vc:sidebar />
-                </cache>
+                @*<cache expires-after="@TimeSpan.FromDays(14)">*@
+                <vc:sidebar />
+                @*</cache>*@
                 @RenderBody()
             </main>
-        @*</div>*@
-    </div>
+        </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="colmn"></div>
-        <div class="colmn address">
-            <div class="title">Aklaxahyas</div>
-            <div>Av. Calle 321, Macul - Santiago</div>
-            <div><i class="flaticon-envelope mail small-icon"></i><a href="mailto:contacto@aklaxahyas.cl">contacto@aklaxahyas.cl</a></div>
-        </div>
-        <div class="colmn contact">
-            <div class="title">+56 2 4534 6543</div>
-            <div>Contactanos mediante nuestras redes sociales</div>
-            <div class="sm-contact">
-                <i></i>
-                <i class="svgsocialmedia-004-whatsapp small-icon"></i>
-                <i class="svgsocialmedia-023-facebook small-icon"></i>
+        <footer class="border-top footer text-muted">
+            <div class="colmn"></div>
+            <div class="colmn address">
+                <div class="title">Aklaxahyas</div>
+                <div>Av. Calle 321, Macul - Santiago</div>
+                <div><i class="flaticon-envelope mail small-icon"></i><a href="mailto:contacto@aklaxahyas.cl">contacto@aklaxahyas.cl</a></div>
             </div>
-            <div class="privacy">
-                &copy; 2020 - SchoolBook - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+            <div class="colmn contact">
+                <div class="title">+56 2 4534 6543</div>
+                <div>Contactanos mediante nuestras redes sociales</div>
+                <div class="sm-contact">
+                    <i></i>
+                    <i class="svgsocialmedia-004-whatsapp small-icon"></i>
+                    <i class="svgsocialmedia-023-facebook small-icon"></i>
+                </div>
+                <div class="privacy">
+                    &copy; 2020 - SchoolBook - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+                </div>
             </div>
-        </div>
-        <div class="colmn"></div>
-    </footer>
+            <div class="colmn"></div>
+        </footer>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -6,11 +6,9 @@ namespace SchoolBook.ViewModels
 {
     public class ClassSelectorViewModel
     {
-        public int YearId { get; set; }
-        public int PeriodId { get; set; }
-        public int EducationId { get; set; }
-        public int GradeId { get; set; }
-        public int ClassId { get; set; }
+        public string YearId { get; set; }
+        public string GradeId { get; set; }
+        public string ClassId { get; set; }
 
         public IEnumerable<SchoolYear> Years { get; set; }
         public IEnumerable<Grade> Grades { get; set; }

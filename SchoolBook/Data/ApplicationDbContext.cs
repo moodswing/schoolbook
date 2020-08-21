@@ -30,6 +30,7 @@ namespace SchoolBook.Data
         public DbSet<TypePeriod> TypePeriods { get; set; }
         public DbSet<Bulletin> Bulletins { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<UserSelection> UserSelections { get; set; }
 
         public static ILogger<ApplicationDbContext> Logger { get; set; }
 
@@ -48,10 +49,10 @@ namespace SchoolBook.Data
         {
             modelBuilder.Entity<SchoolYear>().HasIndex(e => e.Year).IsUnique();
 
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "f67df2ce-0448-42a9-be11-3c68ea78d9c1", Name = "Administrador", NormalizedName = "Administrador".ToUpper() });
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "295b11cf-22e3-48b3-b6ab-538653c98c04", Name = "Profesor", NormalizedName = "Profesor".ToUpper() });
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "8176f8e0-49bf-44bd-9655-d39b9cf7111d", Name = "Apoderado", NormalizedName = "Apoderado".ToUpper() });
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "05ea2c83-210a-446d-971b-ecdf4f489461", Name = "Supervisor", NormalizedName = "Supervisor".ToUpper() });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "f67df2ce-0448-42a9-be11-3c68ea78d9c1", Name = "Administrador", NormalizedName = "Administrador".ToUpper(), ConcurrencyStamp = "48d62dea-f3da-4a93-b29a-238f32b8110b" });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "295b11cf-22e3-48b3-b6ab-538653c98c04", Name = "Profesor", NormalizedName = "Profesor".ToUpper(), ConcurrencyStamp = "5699460f-69a0-44b4-a503-bf7d71455516" });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "8176f8e0-49bf-44bd-9655-d39b9cf7111d", Name = "Apoderado", NormalizedName = "Apoderado".ToUpper(), ConcurrencyStamp = "e83e495d-60b3-4f97-96b5-421ddfde7307" });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "05ea2c83-210a-446d-971b-ecdf4f489461", Name = "Supervisor", NormalizedName = "Supervisor".ToUpper(), ConcurrencyStamp = "54461591-525d-4d79-b307-0e20e792ee4f" });
 
             modelBuilder.Entity<TypePeriod>().HasData(new TypePeriod { Id = 1, Description = "Semestral" });
             modelBuilder.Entity<TypePeriod>().HasData(new TypePeriod { Id = 2, Description = "Trimestral" });
@@ -71,18 +72,18 @@ namespace SchoolBook.Data
             modelBuilder.Entity<Grade>().HasData(new Grade { Id = 5, Description = "Tercero Medio", YearId = 1 });
             modelBuilder.Entity<Grade>().HasData(new Grade { Id = 6, Description = "Cuarto Medio", YearId = 1 });
 
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 1, Description = "Septimo Básico A", Abbreviation = "7A", GradeId = 1 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 2, Description = "Septimo Básico B", Abbreviation = "7B", GradeId = 1 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 3, Description = "Octavo Básico A", Abbreviation = "8A", GradeId = 2 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 4, Description = "Octavo Básico B", Abbreviation = "8A", GradeId = 2 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 5, Description = "Primero Medio A", Abbreviation = "1A", GradeId = 3 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 6, Description = "Primero Medio B", Abbreviation = "1B", GradeId = 3 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 7, Description = "Segundo Medio A", Abbreviation = "2A", GradeId = 4 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 8, Description = "Segundo Medio B", Abbreviation = "2B", GradeId = 4 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 9, Description = "Tercero Medio A", Abbreviation = "3A", GradeId = 5 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 10, Description = "Tercero Medio B", Abbreviation = "3B", GradeId = 5 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 11, Description = "Cuarto Medio A", Abbreviation = "4A", GradeId = 6 });
-            modelBuilder.Entity<Class>().HasData(new Class { Id = 12, Description = "Cuarto Medio B", Abbreviation = "4B", GradeId = 6 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 1, Description = "A", Abbreviation = "7A", GradeId = 1 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 2, Description = "B", Abbreviation = "7B", GradeId = 1 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 3, Description = "A", Abbreviation = "8A", GradeId = 2 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 4, Description = "B", Abbreviation = "8A", GradeId = 2 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 5, Description = "A", Abbreviation = "1A", GradeId = 3 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 6, Description = "B", Abbreviation = "1B", GradeId = 3 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 7, Description = "A", Abbreviation = "2A", GradeId = 4 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 8, Description = "B", Abbreviation = "2B", GradeId = 4 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 9, Description = "A", Abbreviation = "3A", GradeId = 5 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 10, Description = "B", Abbreviation = "3B", GradeId = 5 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 11, Description = "A", Abbreviation = "4A", GradeId = 6 });
+            modelBuilder.Entity<Class>().HasData(new Class { Id = 12, Description = "B", Abbreviation = "4B", GradeId = 6 });
 
             modelBuilder.Entity<Subject>().HasData(new Subject { Id = 1, Description = "Historia y Geografía" });
             modelBuilder.Entity<Subject>().HasData(new Subject { Id = 2, Description = "Matemáticas" });
@@ -150,7 +151,6 @@ namespace SchoolBook.Data
             var managerId = Guid.NewGuid().ToString();
 
             dbContext.Users.RemoveRange(dbContext.Users);
-            //dbContext.SaveChanges();
 
             await AddUserAndRoleAsync("nic@sclbk.com", "Nicolas Rivera", "Supervisor", userManager, dbContext, managerId);
             await AddUserAndRoleAsync("rob@sclbk.com", "Robinson Aravena", "Administrador", userManager, dbContext);

@@ -1,0 +1,243 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a, a:hover {
+    color: #1ca9d4 !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Quicksand', serif !important;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+}
+
+.navbar div.nav-about {
+    float: right;
+}
+
+    .navbar a.nav-about {
+        width: 80px;
+        text-align: right;
+        padding-left: 19px;
+        line-height: 54px;
+        font-size: 14px;
+    }
+
+.container {
+    max-width: 95%;
+    display: block !important;
+}
+
+.table {
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+}
+
+.login-container {
+    position: fixed;
+    width: 100%;
+    max-width: 100%;
+    background: url("../img/loginbg.jpg");
+    background-repeat: repeat;
+    background-position: top center;
+    height: 100%;
+}
+
+.form-title {
+    background-color: #f7f7f7;
+    padding: 5% 6% 5%;
+}
+
+    .form-title .subtitle {
+        font-size: 18px;
+    }
+
+    .form-title .title {
+        font-size: 30px;
+    }
+
+.login-box {
+    background-color: white;
+    margin: auto;
+    position: absolute;
+    top: -110px;
+    right: 62px;
+    padding: 35px 60px 13px;
+    border-radius: 2%;
+    -moz-border-radius: 2%;
+    -webkit-border-radius: 2%;
+    border: 1px solid #dee2e6c2;
+}
+
+    .login-box .display-4 {
+        padding-bottom: 20px;
+        font-size: 3.0rem;
+    }
+
+    .login-box .recover-password {
+        padding-bottom: 0;
+        padding-top: 20px;
+    }
+
+    .login-box .recover-password a {
+        font-size: 12px;
+    }
+
+    .login-box .login-not-valid {
+        font-size: 12px;
+        color: red;
+        margin-top: -10px;
+        display: block;
+        padding-bottom: 20px;
+    }
+
+.login-box div {
+    padding-bottom: 20px;
+}
+
+    .login-box input[type=text],
+    .login-box input[type=password] {
+        border: none;
+        border-bottom: 1px solid #a89b99;
+        padding-bottom: 10px;
+    }
+
+    .login-box .login-options {
+        text-align: right;
+    }
+
+    .login-box input[type=button] {
+        margin-top: 2px;
+    }
+
+
+.btn-info {
+    background-color: #1ca9d4;
+}
+
+[class^="svgcollege-"]:before, [class*=" svgcollege-"]:before, [class^="svgcollege-"]:after, [class*=" svgcollege-"]:after {
+    font-family: SVGCollege;
+    font-size: 30px;
+    font-style: normal;
+/*    margin-left: 20px;*/
+    color: #1ca9d4;
+    padding-right: 15px;
+}
+
+[class^="svgsocialmedia-"]:before, [class*=" svgsocialmedia-"]:before, [class^="svgsocialmedia-"]:after, [class*=" svgsocialmedia-"]:after {
+    font-family: SVGSocialMedia;
+    font-size: 18px;
+    font-style: normal;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-family: Flaticon;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    text-align: right;
+    background-color: #f7f7f7;
+    display: table;
+    font-size: 12px;
+}
+
+footer .colmn {
+    display: table-cell;
+}
+
+footer .title {
+    font-size: 25px;
+}
+
+footer .contact {
+    width: 200px;
+    padding: 15px 52px 20px 0;
+}
+
+footer .address {
+    width: 200px;
+    padding: 15px 90px 12px 0;
+}
+
+footer .sm-contact {
+    padding: 5px 0 20px;
+}
+
+.small-icon:before {
+    padding: 0;
+    margin: 0 0 0 5px !important;
+    color: #f9a835;
+}
+
+.small-icon.mail:before {
+    color: #6c757d;
+    padding-right: 5px;
+}
+
+:focus {
+    outline: none;
+    border-bottom: 2px solid #f9a835 !important;
+}

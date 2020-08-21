@@ -1,16 +1,34 @@
 @model SchoolBook.ViewModels.ClassSelectorViewModel
 
 <div class="class-selection">
+    @*<input name="classSelected" type="hidden" value="@Model.ClassSelection" />*@
     <div class="row selector">
         <i class="svgcollege-001-class small-icon"></i>
         <div class="sm-col-3">
-            <select-cascade id="selYears" class="form-control" list="Model.Years" data-child="selGrades"></select-cascade>
+            <select-cascade id="selYears" name="YearId" class="form-control" list="Model.Years" data-child="selGrades" selected="@Model.YearId"></select-cascade>
         </div>
         <div class="sm-col-3">
-            <select-cascade id="selGrades" class="form-control" list="Model.Grades" data-child="selClasses"></select-cascade>
+            <select-cascade id="selGrades" name="GradeId" class="form-control" list="Model.Grades" data-child="selClasses" first-value="Grado" selected="@Model.GradeId"></select-cascade>
         </div>
         <div class="sm-col-3">
-            <select-cascade id="selClasses" class="form-control" list="Model.Classes" first-value="Seleccione.."></select-cascade>
+            <select-cascade id="selClasses" name="ClassId" class="form-control" list="Model.Classes" first-value="Curso" selected="@Model.ClassId"></select-cascade>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).on("change", "#selClasses", function () {
+        if ($("#selClasses :selected").index() == 0) return;
+
+        var dataSelected = {};
+        $.each($('.class-selection select').serializeArray(), function () {
+            dataSelected[this.name] = this.value;
+        });
+
+        var request = $.ajax({
+            type: "POST",
+            url: "Dashboard/SaveClassSelection",
+            data: { selection: JSON.stringify(dataSelected) }
+        });
+    });
+</script>

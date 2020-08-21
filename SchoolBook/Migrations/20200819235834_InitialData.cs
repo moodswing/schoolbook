@@ -271,6 +271,27 @@ namespace SchoolBook.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserSelections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSelections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserSelections_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoleMenus",
                 columns: table => new
                 {
@@ -472,10 +493,10 @@ namespace SchoolBook.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "f67df2ce-0448-42a9-be11-3c68ea78d9c1", "40ef233c-5b48-4e4f-b4a2-96fc983f992d", "Administrador", "ADMINISTRADOR" },
-                    { "295b11cf-22e3-48b3-b6ab-538653c98c04", "f4acea0a-b9df-4a63-a600-2433a5164de0", "Profesor", "PROFESOR" },
-                    { "8176f8e0-49bf-44bd-9655-d39b9cf7111d", "52bec1b1-b1b1-4687-925d-fade60b9cf29", "Apoderado", "APODERADO" },
-                    { "05ea2c83-210a-446d-971b-ecdf4f489461", "f4d861d3-6c44-4c18-9e22-6bda9f49b650", "Supervisor", "SUPERVISOR" }
+                    { "f67df2ce-0448-42a9-be11-3c68ea78d9c1", "48d62dea-f3da-4a93-b29a-238f32b8110b", "Administrador", "ADMINISTRADOR" },
+                    { "295b11cf-22e3-48b3-b6ab-538653c98c04", "5699460f-69a0-44b4-a503-bf7d71455516", "Profesor", "PROFESOR" },
+                    { "8176f8e0-49bf-44bd-9655-d39b9cf7111d", "e83e495d-60b3-4f97-96b5-421ddfde7307", "Apoderado", "APODERADO" },
+                    { "05ea2c83-210a-446d-971b-ecdf4f489461", "54461591-525d-4d79-b307-0e20e792ee4f", "Supervisor", "SUPERVISOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -483,10 +504,10 @@ namespace SchoolBook.Migrations
                 columns: new[] { "Id", "Content", "Image", "Subtitle", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Esto es demasiado interesante..", "https://images.app.goo.gl/ogig7XCRdeA8CDw7A", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 1" },
-                    { 2, "Esto es demasiado interesante..", "https://images.app.goo.gl/x2sKNN55vLYSwMa79", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 2" },
-                    { 3, "Esto es demasiado interesante..", "https://images.app.goo.gl/mNmcKwGGu39gd2pX8", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 3" },
-                    { 4, "Esto es demasiado interesante..", "https://images.app.goo.gl/qNZZs7FBSuiRezkT6", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 4" }
+                    { 1, "Esto es demasiado interesante..", "https://www.elosceolastar.com/wp-content/uploads/2020/07/empty-classroom_elementary-school-middle-school-high-school.jpg", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 1" },
+                    { 2, "Esto es demasiado interesante..", "https://www.andree.cl/home3/images/stories/slideshow2014/foto_03.jpg", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 2" },
+                    { 3, "Esto es demasiado interesante..", "https://lh5.googleusercontent.com/proxy/dv9-TY9gKRTLd9zTuxrQYfx6H67fgMhCBBBjHNDZrSdv0RDqhiI3a8SBmQyHXyVVz983bM53TmXyiSU", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 3" },
+                    { 4, "Esto es demasiado interesante..", "https://www.sketchup.com/sites/www.sketchup.com/files/molecule_image/IMG_01_SCHOOL_SCENE_01_low-1.png", "Que tema tan interesante nos hablan hoy", "Noticia de prueba 4" }
                 });
 
             migrationBuilder.InsertData(
@@ -507,7 +528,7 @@ namespace SchoolBook.Migrations
                     { 16, "Horario Por Curso", 13, null, 0, "ScheduleMaker?type=2" },
                     { 15, "Horario Por Asignatura", 13, null, 0, "ScheduleMaker?type=1" },
                     { 14, "Crear Horarios", 13, null, 0, "ScheduleMaker" },
-                    { 13, "Horarios", 0, "small-icon svgcollege-005-alarm", 5, null },
+                    { 13, "Horarios", 0, "small-icon svgcollege-005-alarm", 3, null },
                     { 11, "Credenciales", 10, null, 0, "Credentials" },
                     { 10, "Administración", 0, "small-icon svgcollege-043-test", 4, null },
                     { 9, "Accidente Escolar", 7, null, 0, "Accidents" },
@@ -591,18 +612,18 @@ namespace SchoolBook.Migrations
                 columns: new[] { "Id", "Abbreviation", "Description", "GradeId" },
                 values: new object[,]
                 {
-                    { 1, "7A", "Septimo Básico A", 1 },
-                    { 2, "7B", "Septimo Básico B", 1 },
-                    { 3, "8A", "Octavo Básico A", 2 },
-                    { 4, "8A", "Octavo Básico B", 2 },
-                    { 5, "1A", "Primero Medio A", 3 },
-                    { 6, "1B", "Primero Medio B", 3 },
-                    { 7, "2A", "Segundo Medio A", 4 },
-                    { 8, "2B", "Segundo Medio B", 4 },
-                    { 9, "3A", "Tercero Medio A", 5 },
-                    { 10, "3B", "Tercero Medio B", 5 },
-                    { 11, "4A", "Cuarto Medio A", 6 },
-                    { 12, "4B", "Cuarto Medio B", 6 }
+                    { 1, "7A", "A", 1 },
+                    { 2, "7B", "B", 1 },
+                    { 3, "8A", "A", 2 },
+                    { 4, "8A", "B", 2 },
+                    { 5, "1A", "A", 3 },
+                    { 6, "1B", "B", 3 },
+                    { 7, "2A", "A", 4 },
+                    { 8, "2B", "B", 4 },
+                    { 9, "3A", "A", 5 },
+                    { 10, "3B", "B", 5 },
+                    { 11, "4A", "A", 6 },
+                    { 12, "4B", "B", 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -848,6 +869,11 @@ namespace SchoolBook.Migrations
                 name: "IX_StudentsClasses_StudentId",
                 table: "StudentsClasses",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserSelections_UserId",
+                table: "UserSelections",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -889,7 +915,7 @@ namespace SchoolBook.Migrations
                 name: "StudentsClasses");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "UserSelections");
 
             migrationBuilder.DropTable(
                 name: "Educations");
@@ -908,6 +934,9 @@ namespace SchoolBook.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Classes");

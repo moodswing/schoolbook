@@ -98,7 +98,7 @@ main:after {
         z-index: 1;
     }
 
-        .main .sidebar div {
+        .main .sidebar .inner {
             background: white;
             padding: 15px 22px 20px;
             border: 1px solid #dee2e6c2;
@@ -314,4 +314,38 @@ input[type=password]:focus {
 
 h1 {
     color: #036e8c;
+}
+
+.mobile-sidebar {
+    display: none;
+}
+
+@media (max-width: 946px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+
+    .main .content {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .mobile-sidebar {
+        display: block;
+    }
+
+    .main .sidebar ul {
+        display: none;
+        text-align: left;
+    }
+
+    .main .sidebar .inner {
+        padding: 15px 22px 15px;
+        text-align: right;
+    }
+
+    .main .sidebar .inner:hover {
+        cursor: pointer;
+    }
 }

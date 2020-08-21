@@ -53,6 +53,8 @@ namespace SchoolBook
                         options.Password.RequireUppercase = false;
                         options.Password.RequireLowercase = false;
                         options.User.AllowedUserNameCharacters = null;
+                        options.SignIn.RequireConfirmedAccount = false;
+                        options.SignIn.RequireConfirmedEmail = false;
                     })
                 .AddRoles<IdentityRole>()
                 //.AddUserStore<CustomUserStore>()
@@ -69,7 +71,8 @@ namespace SchoolBook
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddTransient<IMenuOptionsDAL, MenuOptionsDAL>();
             services.TryAddTransient<IBulletinsDAL, BulletinsDAL>();
-            services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.TryAddTransient<IUsersDAL, UsersDAL>();
+            services.TryAddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Home");
         }

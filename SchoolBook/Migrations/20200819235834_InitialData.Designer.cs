@@ -10,7 +10,7 @@ using SchoolBook.Data;
 namespace SchoolBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200814233544_InitialData")]
+    [Migration("20200819235834_InitialData")]
     partial class InitialData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,28 +51,28 @@ namespace SchoolBook.Migrations
                         new
                         {
                             Id = "f67df2ce-0448-42a9-be11-3c68ea78d9c1",
-                            ConcurrencyStamp = "40ef233c-5b48-4e4f-b4a2-96fc983f992d",
+                            ConcurrencyStamp = "48d62dea-f3da-4a93-b29a-238f32b8110b",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "295b11cf-22e3-48b3-b6ab-538653c98c04",
-                            ConcurrencyStamp = "f4acea0a-b9df-4a63-a600-2433a5164de0",
+                            ConcurrencyStamp = "5699460f-69a0-44b4-a503-bf7d71455516",
                             Name = "Profesor",
                             NormalizedName = "PROFESOR"
                         },
                         new
                         {
                             Id = "8176f8e0-49bf-44bd-9655-d39b9cf7111d",
-                            ConcurrencyStamp = "52bec1b1-b1b1-4687-925d-fade60b9cf29",
+                            ConcurrencyStamp = "e83e495d-60b3-4f97-96b5-421ddfde7307",
                             Name = "Apoderado",
                             NormalizedName = "APODERADO"
                         },
                         new
                         {
                             Id = "05ea2c83-210a-446d-971b-ecdf4f489461",
-                            ConcurrencyStamp = "f4d861d3-6c44-4c18-9e22-6bda9f49b650",
+                            ConcurrencyStamp = "54461591-525d-4d79-b307-0e20e792ee4f",
                             Name = "Supervisor",
                             NormalizedName = "SUPERVISOR"
                         });
@@ -214,7 +214,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 1,
                             Content = "Esto es demasiado interesante..",
-                            Image = "https://images.app.goo.gl/ogig7XCRdeA8CDw7A",
+                            Image = "https://www.elosceolastar.com/wp-content/uploads/2020/07/empty-classroom_elementary-school-middle-school-high-school.jpg",
                             Subtitle = "Que tema tan interesante nos hablan hoy",
                             Title = "Noticia de prueba 1"
                         },
@@ -222,7 +222,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 2,
                             Content = "Esto es demasiado interesante..",
-                            Image = "https://images.app.goo.gl/x2sKNN55vLYSwMa79",
+                            Image = "https://www.andree.cl/home3/images/stories/slideshow2014/foto_03.jpg",
                             Subtitle = "Que tema tan interesante nos hablan hoy",
                             Title = "Noticia de prueba 2"
                         },
@@ -230,7 +230,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 3,
                             Content = "Esto es demasiado interesante..",
-                            Image = "https://images.app.goo.gl/mNmcKwGGu39gd2pX8",
+                            Image = "https://lh5.googleusercontent.com/proxy/dv9-TY9gKRTLd9zTuxrQYfx6H67fgMhCBBBjHNDZrSdv0RDqhiI3a8SBmQyHXyVVz983bM53TmXyiSU",
                             Subtitle = "Que tema tan interesante nos hablan hoy",
                             Title = "Noticia de prueba 3"
                         },
@@ -238,7 +238,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 4,
                             Content = "Esto es demasiado interesante..",
-                            Image = "https://images.app.goo.gl/qNZZs7FBSuiRezkT6",
+                            Image = "https://www.sketchup.com/sites/www.sketchup.com/files/molecule_image/IMG_01_SCHOOL_SCENE_01_low-1.png",
                             Subtitle = "Que tema tan interesante nos hablan hoy",
                             Title = "Noticia de prueba 4"
                         });
@@ -271,84 +271,84 @@ namespace SchoolBook.Migrations
                         {
                             Id = 1,
                             Abbreviation = "7A",
-                            Description = "Septimo Básico A",
+                            Description = "A",
                             GradeId = 1
                         },
                         new
                         {
                             Id = 2,
                             Abbreviation = "7B",
-                            Description = "Septimo Básico B",
+                            Description = "B",
                             GradeId = 1
                         },
                         new
                         {
                             Id = 3,
                             Abbreviation = "8A",
-                            Description = "Octavo Básico A",
+                            Description = "A",
                             GradeId = 2
                         },
                         new
                         {
                             Id = 4,
                             Abbreviation = "8A",
-                            Description = "Octavo Básico B",
+                            Description = "B",
                             GradeId = 2
                         },
                         new
                         {
                             Id = 5,
                             Abbreviation = "1A",
-                            Description = "Primero Medio A",
+                            Description = "A",
                             GradeId = 3
                         },
                         new
                         {
                             Id = 6,
                             Abbreviation = "1B",
-                            Description = "Primero Medio B",
+                            Description = "B",
                             GradeId = 3
                         },
                         new
                         {
                             Id = 7,
                             Abbreviation = "2A",
-                            Description = "Segundo Medio A",
+                            Description = "A",
                             GradeId = 4
                         },
                         new
                         {
                             Id = 8,
                             Abbreviation = "2B",
-                            Description = "Segundo Medio B",
+                            Description = "B",
                             GradeId = 4
                         },
                         new
                         {
                             Id = 9,
                             Abbreviation = "3A",
-                            Description = "Tercero Medio A",
+                            Description = "A",
                             GradeId = 5
                         },
                         new
                         {
                             Id = 10,
                             Abbreviation = "3B",
-                            Description = "Tercero Medio B",
+                            Description = "B",
                             GradeId = 5
                         },
                         new
                         {
                             Id = 11,
                             Abbreviation = "4A",
-                            Description = "Cuarto Medio A",
+                            Description = "A",
                             GradeId = 6
                         },
                         new
                         {
                             Id = 12,
                             Abbreviation = "4B",
-                            Description = "Cuarto Medio B",
+                            Description = "B",
                             GradeId = 6
                         });
                 });
@@ -1103,7 +1103,7 @@ namespace SchoolBook.Migrations
                             Description = "Horarios",
                             GroupMenuOptionId = 0,
                             Icon = "small-icon svgcollege-005-alarm",
-                            Order = 5
+                            Order = 3
                         },
                         new
                         {
@@ -1754,6 +1754,29 @@ namespace SchoolBook.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("SchoolBook.Models.UserSelection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSelections");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1901,6 +1924,13 @@ namespace SchoolBook.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.UserSelection", b =>
+                {
+                    b.HasOne("SchoolBook.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
