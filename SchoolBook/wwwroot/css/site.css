@@ -70,7 +70,7 @@ header .container {
     background: url("../img/loginbg.jpg");
     background-repeat: repeat;
     background-position: top center;
-    min-height: 800px
+    min-height: 768px
 }
 
 main {
@@ -115,6 +115,15 @@ main:after {
         padding: 0;
     }
 
+        .main .sidebar a {
+            color: #212529;
+        }
+
+            .main .sidebar a:hover {
+                color: #1ca9d4;
+                text-decoration: none;
+            }
+
     .main .menu-group {
         padding-top: 10px;
         padding-bottom: 2px;
@@ -137,39 +146,8 @@ main:after {
     margin-left: 30px;
 }
 
-.bulletin-news {
-    margin-bottom: 30px;
-}
-
-.bulletin {
-    display: grid;
-    padding-right: 30px;
-    margin: 20px auto;
-    grid-gap: 7px;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-    .bulletin .news {
-        margin: 5px;
-        border-radius: 2%;
-        height: 200px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-size: 100%;
-        background-repeat: no-repeat;
-        box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
-    }
-
-        .bulletin .news .title,
-        .bulletin .news .subtitle {
-            box-sizing: border-box;
-            background-color: #ffffffe3;
-            padding: 4px 10px;
-        }
-
-    .bulletin .news .subtitle {
-        font-size: 13px;
+    .main .content .inner-content {
+        margin-bottom: 30px;
     }
 
 .class-selection {

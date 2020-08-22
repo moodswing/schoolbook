@@ -13,7 +13,7 @@ namespace SchoolBook.DAL
     {
         private ClaimsPrincipal User { get; }
 
-        public MenuOptionsDAL(ILogger<MenuOptionsDAL> logger, UserManager<User> userManager, ApplicationDbContext dbContext, ClaimsPrincipal user) : base(logger, userManager, dbContext)
+        public MenuOptionsDAL(ApplicationDbContext dbContext, ClaimsPrincipal user, ILogger<MenuOptionsDAL> logger) : base(dbContext, logger)
         {
             User = user;
         }

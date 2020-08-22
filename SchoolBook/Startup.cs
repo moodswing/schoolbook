@@ -68,10 +68,13 @@ namespace SchoolBook
                 .AddRazorRuntimeCompilation();
 
             services.AddHttpContextAccessor();
-            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
             services.TryAddTransient<IMenuOptionsDAL, MenuOptionsDAL>();
             services.TryAddTransient<IBulletinsDAL, BulletinsDAL>();
             services.TryAddTransient<IUsersDAL, UsersDAL>();
+            services.TryAddTransient<IStudentsDAL, StudentsDAL>();
+
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Home");

@@ -31,6 +31,7 @@
     <Folder Include="Views\Shared\Components\Sidebar\" />
     <Folder Include="Views\Shared\Components\ClassSelector\" />
     <Folder Include="DAL\" />
+    <Folder Include="Views\ClassBook\" />
   </ItemGroup>
 
   <ItemGroup>

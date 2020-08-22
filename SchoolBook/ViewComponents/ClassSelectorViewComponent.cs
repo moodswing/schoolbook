@@ -26,11 +26,7 @@ namespace SchoolBook.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var viewModel = new ClassSelectorViewModel();
-            var classSelection = UsersDAL.GetUserSelection(SelectionType.Class);
-
-            if (!string.IsNullOrEmpty(classSelection))
-                viewModel = JsonSerializer.Deserialize<ClassSelectorViewModel>(classSelection);
+            var viewModel = UsersDAL.GetUserSelection<ClassSelectorViewModel>(SelectionType.Class);
 
             viewModel.Years = DbContext.SchoolYears.ToList();
             viewModel.Grades = DbContext.Grades.ToList();

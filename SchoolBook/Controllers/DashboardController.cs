@@ -12,16 +12,14 @@ using System.Threading.Tasks;
 
 namespace SchoolBook.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         public IBulletinsDAL BulletinsDAL { get; }
-        public IUsersDAL UsersDAL { get; }
         public ILogger<DashboardController> Logger { get; }
 
-        public DashboardController(IBulletinsDAL bulletinsDAL, IUsersDAL usersDAL, ILogger<DashboardController> logger)
+        public DashboardController(IBulletinsDAL bulletinsDAL, IUsersDAL usersDAL, ILogger<DashboardController> logger) : base(usersDAL)
         {
             BulletinsDAL = bulletinsDAL;
-            UsersDAL = usersDAL;
             Logger = logger;
         }
 

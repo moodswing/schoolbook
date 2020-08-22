@@ -1,0 +1,30 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Portal - " + Configuration["AppSettings:SiteTitle"];
+    Layout = "../Shared/_layout.cshtml";
+}
+
+<style>
+    .student-list {
+        display: grid;
+        grid-template-columns: 100%;
+    }
+</style>
+
+<div class="content">
+    <vc:class-selector></vc:class-selector>
+    <div class="inner-content">
+        <div>
+            <h1>Libro de Notas</h1>
+        </div>
+        <div class="student-list">
+            @foreach(var student in Model.Students)
+            {
+                <div>@student.Name</div>
+            }
+        </div>
+    </div>
+</div>

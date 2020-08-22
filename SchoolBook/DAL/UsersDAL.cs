@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using SchoolBook.Data;
@@ -13,7 +14,7 @@ namespace SchoolBook.DAL
     {
         private ClaimsPrincipal User { get; }
 
-        public UsersDAL(ILogger<MenuOptionsDAL> logger, UserManager<User> userManager, ApplicationDbContext dbContext, ClaimsPrincipal user) : base(logger, userManager, dbContext)
+        public UsersDAL(ApplicationDbContext dbContext, UserManager<User> userManager, ClaimsPrincipal user, ILogger<MenuOptionsDAL> logger) : base(dbContext, logger)
         {
             User = user;
         }
@@ -24,10 +25,16 @@ namespace SchoolBook.DAL
             return _dbContext.Users.FirstOrDefault(u => u.Id == userId);
         }
 
-        public string GetUserSelection(SelectionType type)
+        public T GetUserSelection<T>(SelectionType type)
         {
+            var result = default(T);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _dbContext.UserSelections.FirstOrDefault(s => s.UserId.Equals(userId) && s.Type.Equals(type))?.Value ?? null;
+            var selection = _dbContext.UserSelections.FirstOrDefault(s => s.UserId.Equals(userId) && s.Type.Equals(type))?.Value ?? null;
+
+            if (!string.IsNullOrEmpty(selection))
+                result = JsonSerializer.Deserialize<T>(selection);
+
+            return result;
         }
 
         public void SaveUserSelection(SelectionType type, string value)
@@ -52,7 +59,7 @@ namespace SchoolBook.DAL
     {
         User GetCurrentUser();
 
-        string GetUserSelection(SelectionType type);
+        T GetUserSelection<T>(SelectionType type);
         void SaveUserSelection(SelectionType type, string value);
     }
 }

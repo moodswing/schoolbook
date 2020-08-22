@@ -11,7 +11,7 @@ namespace SchoolBook.DAL
 {
     public class BulletinsDAL : BaseDAL, IBulletinsDAL
     {
-        public BulletinsDAL(ILogger<MenuOptionsDAL> logger, UserManager<User> userManager, ApplicationDbContext dbContext) : base(logger, userManager, dbContext)
+        public BulletinsDAL(ApplicationDbContext dbContext, ILogger<MenuOptionsDAL> logger) : base(dbContext, logger)
         {
         }
 
