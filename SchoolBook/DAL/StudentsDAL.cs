@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using SchoolBook.Data;
 using SchoolBook.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolBook.DAL
 {
@@ -19,14 +20,20 @@ namespace SchoolBook.DAL
             User = user;
         }
 
-        public List<Student> GetClassStudents(int classId)
+        public List<Student> GetClassScores(int classId, int subjectId, int periodId)
         {
-            return _dbContext.StudentsClasses.Where(s => s.ClassId.Equals(classId)).Select(s => s.Student).OrderBy(s => s.Name).ToList();
+            //_dbContext.ChangeTracker.LazyLoadingEnabled = false;
+            var result = _dbContext.StudentsClasses.Include("Student.Scores.Evaluation.ClassSubject").Where(s => s.ClassId == classId).Select(s => s.Student).OrderBy(s => s.Name).ToList();
+
+            foreach(var student in result)
+                student.Scores = student.Scores.Where(s => s.Evaluation.PeriodId == periodId && s.Evaluation.ClassSubject.ClassId == classId && s.Evaluation.ClassSubject.SubjectId == subjectId).ToList();
+
+            return result;
         }
     }
 
     public interface IStudentsDAL
     {
-        List<Student> GetClassStudents(int classId);
+        List<Student> GetClassScores(int classId, int subjectId, int periodId);
     }
 }

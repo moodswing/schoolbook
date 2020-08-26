@@ -31,7 +31,7 @@ namespace SchoolBook.DAL
             foreach (var menu in menuOptions.Where(m => m.GroupMenuOptionId.Equals(0)).OrderBy(m => m.Order))
             {
                 menuOptionsOrdered.Add(menu);
-                foreach (var subMenu in menuOptions.OrderBy(m => m.Description).Where(m => m.GroupMenuOptionId.Equals(menu.Id)))
+                foreach (var subMenu in menuOptions.Where(m => m.GroupMenuOptionId.Equals(menu.Id)).OrderBy(m => m.Order))
                     menuOptionsOrdered.Add(subMenu);
             }
 

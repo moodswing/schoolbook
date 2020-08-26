@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using SchoolBook.Models;
 using System.Linq;
-using Microsoft.Extensions.Logging;
+using SchoolBook.Utils;
+using SchoolBook.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace SchoolBook.Data
 {
@@ -19,6 +18,7 @@ namespace SchoolBook.Data
         public DbSet<Education> Educations { get; set; }
         public DbSet<EducationGrade> EducationGrades { get; set; }
         public DbSet<Evaluation> Evaluations { get; set; }
+        public DbSet<EvaluationScore> Scores { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<MenuOption> MenuOptions { get; set; }
         public DbSet<Period> Periods { get; set; }
@@ -59,8 +59,8 @@ namespace SchoolBook.Data
 
             modelBuilder.Entity<SchoolYear>().HasData(new SchoolYear { Id = 1, Year = 2020, Start = new DateTime(2020, 3, 1), End = new DateTime(2021, 1, 30) });
 
-            modelBuilder.Entity<Period>().HasData(new Period { Id = 1, Description = "Primer Semestre", TypePeriodId = 1, Order = 1 });
-            modelBuilder.Entity<Period>().HasData(new Period { Id = 2, Description = "Segundo Semestre", TypePeriodId = 1, Order = 2 });
+            modelBuilder.Entity<Period>().HasData(new Period { Id = 1, Description = "Primer Semestre", TypePeriodId = 1, Order = 1, YearId = 1 });
+            modelBuilder.Entity<Period>().HasData(new Period { Id = 2, Description = "Segundo Semestre", TypePeriodId = 1, Order = 2, YearId = 1 });
 
             modelBuilder.Entity<Education>().HasData(new Education { Id = 1, Description = "Enseñansa Básica" });
             modelBuilder.Entity<Education>().HasData(new Education { Id = 2, Description = "Enseñansa Media" });
@@ -85,12 +85,12 @@ namespace SchoolBook.Data
             modelBuilder.Entity<Class>().HasData(new Class { Id = 11, Description = "A", Abbreviation = "4A", GradeId = 6 });
             modelBuilder.Entity<Class>().HasData(new Class { Id = 12, Description = "B", Abbreviation = "4B", GradeId = 6 });
 
-            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 1, Description = "Historia y Geografía" });
-            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 2, Description = "Matemáticas" });
-            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 3, Description = "Lenguaje y Comunicaciones" });
-            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 4, Description = "Biología" });
-            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 5, Description = "Química" });
-            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 6, Description = "Física" });
+            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 1, Description = "Historia y Geografía", Order = 1 });
+            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 2, Description = "Matemáticas", Order = 2 });
+            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 3, Description = "Lenguaje y Comunicaciones", Order = 3 });
+            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 4, Description = "Biología", Order = 4 });
+            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 5, Description = "Química", Order = 5 });
+            modelBuilder.Entity<Subject>().HasData(new Subject { Id = 6, Description = "Física", Order = 6 });
 
             var counter = 1;
             for (var i = 1; i <= 12; i++) // classes
@@ -99,6 +99,13 @@ namespace SchoolBook.Data
                     modelBuilder.Entity<ClassSubject>().HasData(new ClassSubject { Id = counter, ClassId = i, SubjectId = j });
                     counter++;
                 }
+
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 1, Description = "Prueba Historia de Chile 1", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 2, Description = "Prueba Historia de Chile 2", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 3, Description = "Trabajo Presidentes de Chile", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 4, Description = "Prueba Historia Mundial", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 5, Description = "Prueba Historia Universal", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 6, Description = "Prueba Cultura Chopistica", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
 
             modelBuilder.Entity<Student>().HasData(new Student { Id = 1, Name = "Juanito Perez" });
             modelBuilder.Entity<Student>().HasData(new Student { Id = 2, Name = "Luchito Jara" });
@@ -117,26 +124,36 @@ namespace SchoolBook.Data
                     counter++;
                 }
 
+            var random = new Random();
+
+            counter = 1;
+            for (var i = 1; i <= 8; i++) // students
+                for (var j = 1; j <= 6; j++) // evaluations
+                {
+                    modelBuilder.Entity<EvaluationScore>().HasData(new EvaluationScore { Id = counter, StudentId = i, EvaluationId = j, Score = new Random().GetDecimal(1, 7) }); ;
+                    counter++;
+                }
+
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 1, Description = "Libro de Clases", Icon = "small-icon svgcollege-029-papyrus", Order = 1 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 2, Description = "Notas", GroupMenuOptionId = 1, Url = "ClassBook" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 3, Description = "Anotaciones", GroupMenuOptionId = 1, Url = "Observations" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 4, Description = "Evaluaciones", GroupMenuOptionId = 1, Url = "Evaluations" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 5, Description = "Asistencia", GroupMenuOptionId = 1, Url = "Attendance" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 6, Description = "Atrasos", GroupMenuOptionId = 1, Url = "Delays" });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 2, Description = "Notas", GroupMenuOptionId = 1, Url = "ClassBook", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 3, Description = "Anotaciones", GroupMenuOptionId = 1, Url = "Observations", Order = 3 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 4, Description = "Evaluaciones", GroupMenuOptionId = 1, Url = "Evaluations", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 5, Description = "Asistencia", GroupMenuOptionId = 1, Url = "Attendance", Order = 4 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 6, Description = "Atrasos", GroupMenuOptionId = 1, Url = "Delays", Order = 5 });
 
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 7, Description = "Alumnos", Icon = "small-icon svgcollege-019-reading-book", Order = 2 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 8, Description = "Ficha Alumno", GroupMenuOptionId = 7, Url = "Student" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 9, Description = "Accidente Escolar", GroupMenuOptionId = 7, Url = "Accidents" });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 8, Description = "Ficha Alumno", GroupMenuOptionId = 7, Url = "Student", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 9, Description = "Accidente Escolar", GroupMenuOptionId = 7, Url = "Accidents", Order = 2 });
 
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 10, Description = "Administración", Icon = "small-icon svgcollege-043-test", Order = 4 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 11, Description = "Credenciales", GroupMenuOptionId = 10, Url = "Credentials" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 12, Description = "Cambiar Contraseña", GroupMenuOptionId = 10, Url = "Password" });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 11, Description = "Credenciales", GroupMenuOptionId = 10, Url = "Credentials", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 12, Description = "Cambiar Contraseña", GroupMenuOptionId = 10, Url = "Password", Order = 2 });
 
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 13, Description = "Horarios", Icon = "small-icon svgcollege-005-alarm", Order = 3 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 14, Description = "Crear Horarios", GroupMenuOptionId = 13, Url = "ScheduleMaker" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 15, Description = "Horario Por Asignatura", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=1" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 16, Description = "Horario Por Curso", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=2" });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 17, Description = "Horario Por Profesor", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=3" });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 14, Description = "Crear Horarios", GroupMenuOptionId = 13, Url = "ScheduleMaker", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 15, Description = "Horario Por Asignatura", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=1", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 16, Description = "Horario Por Curso", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=2", Order = 3 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 17, Description = "Horario Por Profesor", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=3", Order = 4 });
 
             modelBuilder.Entity<Bulletin>().HasData(new Bulletin { Id = 1, Title = "Noticia de prueba 1", Subtitle = "Que tema tan interesante nos hablan hoy", Content = "Esto es demasiado interesante..", Image = "https://www.elosceolastar.com/wp-content/uploads/2020/07/empty-classroom_elementary-school-middle-school-high-school.jpg" });
             modelBuilder.Entity<Bulletin>().HasData(new Bulletin { Id = 2, Title = "Noticia de prueba 2", Subtitle = "Que tema tan interesante nos hablan hoy", Content = "Esto es demasiado interesante..", Image = "https://www.andree.cl/home3/images/stories/slideshow2014/foto_03.jpg" });

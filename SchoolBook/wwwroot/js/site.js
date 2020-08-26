@@ -32,3 +32,11 @@ function getFormData($form) {
 
     return indexed_array;
 }
+
+function showSpinner() {
+    $(".spinner").show();
+}
+
+function hideSpinner() {
+    $(".spinner").hide();
+}

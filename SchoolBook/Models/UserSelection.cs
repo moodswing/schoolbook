@@ -14,6 +14,7 @@ namespace SchoolBook.Models
 
     public enum SelectionType
     {
-        Class
+        Class,
+        GradeBook
     }
 }

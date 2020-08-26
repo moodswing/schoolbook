@@ -25,9 +25,9 @@ namespace SchoolBook.DAL
             return _dbContext.Users.FirstOrDefault(u => u.Id == userId);
         }
 
-        public T GetUserSelection<T>(SelectionType type)
+        public T GetUserSelection<T>(SelectionType type) where T : new()
         {
-            var result = default(T);
+            var result = new T();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var selection = _dbContext.UserSelections.FirstOrDefault(s => s.UserId.Equals(userId) && s.Type.Equals(type))?.Value ?? null;
 
@@ -59,7 +59,7 @@ namespace SchoolBook.DAL
     {
         User GetCurrentUser();
 
-        T GetUserSelection<T>(SelectionType type);
+        T GetUserSelection<T>(SelectionType type) where T : new();
         void SaveUserSelection(SelectionType type, string value);
     }
 }

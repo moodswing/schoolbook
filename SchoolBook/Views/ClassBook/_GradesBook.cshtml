@@ -1,0 +1,73 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+
+<style>
+    .student-list .header,
+    .student-list .grade-row {
+        display: flex;
+    }
+
+    .student-list .header {
+        background-color: #C8C8C8;
+        color: white;
+    }
+
+        .student-list .header .student,
+        .student-list .grade-row .student {
+            width: 300px;
+            padding-left: 10px;
+        }
+
+    .student-list .header .grade,
+    .student-list .grade-row .grade {
+        width: 35px;
+        text-align: center;
+    }
+
+    .student-list .header .grade.avg,
+    .student-list .grade-row .grade.avg {
+        width: 70px;
+        margin-left: 10px;
+    }
+
+    .student-list .grade-row:nth-child(odd) {
+        background-color: #f7f7f7;
+        color: #212529;
+    }
+
+    .student-list .grade-row .grade.failed-score {
+        color: red;
+    }
+</style>
+
+@if (Model.Students != null && Model.Students.Any())
+{
+<div class="header">
+    <div class="student">Alumno</div>
+    @for (var i = 0; i < Model.Evaluations.Count(); i++)
+    {
+        <div class="grade">N@(i + 1)</div>
+    }
+    @if (Model.Evaluations != null && Model.Evaluations.Any())
+    {
+        <div class="grade avg">Promedio</div>
+    }
+</div>
+    @foreach (var student in Model.Students)
+    {
+        <div class="grade-row">
+            <div class="student">@student.Name</div>
+            @if (student.Scores != null && student.Scores.Any())
+            {
+                decimal avg = 0;
+                foreach (var score in student.Scores)
+                {
+                    // todo: global parameter
+                    <div class="grade @(score.Score < 4 ? "failed-score" : string.Empty)">@score.Score</div>
+                    avg += score.Score;
+                }
+                avg = avg / Model.Evaluations.Count();
+                <div class="grade avg @(avg < 4 ? "failed-score" : string.Empty)">@avg.ToString("0.0")</div>
+            }
+        </div>
+    }
+}

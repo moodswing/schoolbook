@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SchoolBook.Models;
+using SchoolBook.Utils;
 using SchoolBook.ViewModels;
 
 namespace SchoolBook.Controllers
@@ -28,8 +29,9 @@ namespace SchoolBook.Controllers
 
         public IActionResult Index(string returnUrl = "")
         {
+            // todo: change to dashboard
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "ClassBook");
 
             var viewModel = new LoginViewModel();
             viewModel.SessionEnded = !string.IsNullOrEmpty(returnUrl);

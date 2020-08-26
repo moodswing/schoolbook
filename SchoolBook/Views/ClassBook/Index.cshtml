@@ -8,9 +8,20 @@
 }
 
 <style>
+    h1 {
+        display: inline-block;
+    }
+
     .student-list {
         display: grid;
         grid-template-columns: 100%;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .inner-content .selector select {
+        display: inline-block;
+        margin-right: 60px;
     }
 </style>
 
@@ -19,12 +30,48 @@
     <div class="inner-content">
         <div>
             <h1>Libro de Notas</h1>
+            <div class="spin-container">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+
+            <div class="selector">
+                @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, "Asignatura", new { @class = "form-control" })
+                <radiobutton list="Model.Periods" for="PeriodId" selected="@Model.PeriodId"></radiobutton>
+            </div>
         </div>
         <div class="student-list">
-            @foreach(var student in Model.Students)
-            {
-                <div>@student.Name</div>
-            }
+            @await Html.PartialAsync("_GradesBook", Model)
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var selectorsData = function () {
+        var dataSelected = {};
+        $.each($('.inner-content .selector select, .inner-content .selector input[type=radio]').serializeArray(), function () {
+            dataSelected[this.name] = this.value;
+        });
+
+        return {
+            subjectId: $("#SubjectId").val(),
+            periodId: $("[name=PeriodId]:checked").val(),
+            selection: JSON.stringify(dataSelected)
+        };
+    }
+
+    $(document).on("change", "#SubjectId, [name=PeriodId]", function () {
+        var data = selectorsData();
+        if (data.subjectId == "" || data.periodId == undefined) return;
+
+        showSpinner();
+        $(".student-list").load("ClassBook/GetGradesBook", data, hideSpinner);
+    });
+
+    $(document).on("change", "[name=PeriodId]", function () {
+        $(this).parents("radiobutton").find(".options").removeClass("selected");
+        $(this).parents(".options").first().addClass("selected");
+    });
+</script>

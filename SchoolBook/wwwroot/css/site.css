@@ -327,3 +327,62 @@ h1 {
         cursor: pointer;
     }
 }
+
+.inner-content .selector {
+    margin: 10px -1px 10px -26px;
+    background-color: #f7f7f7;
+    border: 1px solid #dee2e680;
+    padding-right: 15px;
+}
+
+    .inner-content .selector select {
+        border: none;
+        width: 280px;
+        background-color: #f7f7f7;
+        margin-left: 19px;
+    }
+
+    .inner-content .selector radiobutton {
+        float: right;
+    }
+
+    .inner-content .selector .options {
+        display: inline-block;
+        margin-right: 10px;
+        background-color: #f7f7f7;
+        color: #495057;
+        border: 1px solid #dee2e680;
+        padding: 2px 15px 2px;
+        margin-top: 4px;
+        border-radius: 4px;
+        box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
+        font-size: 13px;
+        background-color: #f7f7f7;
+        color: #495057;
+    }
+
+    .inner-content .selector .options.selected {
+        background-color: #1ca9d4;
+        color: white;
+    }
+
+        .inner-content .selector .options input[type=radio] {
+            display: none;
+        }
+
+    .inner-content .selector .options:hover,
+        .inner-content .selector .options label:hover {
+        cursor: pointer;
+    }
+
+        .inner-content .selector .options label {
+            margin-bottom: 0;
+        }
+
+.spin-container {
+    display: inline-block;
+}
+
+.spinner {
+    display: none;
+}

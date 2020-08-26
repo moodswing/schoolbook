@@ -9,5 +9,6 @@ namespace SchoolBook.Models
         public string Name { get; set; }
 
         public List<StudentClass> StudentClass { get; set; }
+        public List<EvaluationScore> Scores { get; set; }
     }
 }

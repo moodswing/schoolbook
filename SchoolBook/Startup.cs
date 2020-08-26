@@ -40,7 +40,8 @@ namespace SchoolBook
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                builder => builder.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name)));
+                builder => builder.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name)),
+                ServiceLifetime.Transient);
 
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -73,6 +74,8 @@ namespace SchoolBook
             services.TryAddTransient<IBulletinsDAL, BulletinsDAL>();
             services.TryAddTransient<IUsersDAL, UsersDAL>();
             services.TryAddTransient<IStudentsDAL, StudentsDAL>();
+            services.TryAddTransient<ISubjectsDAL, SubjectsDAL>();
+            services.TryAddTransient<IPeriodsDAL, PeriodsDAL>();
 
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);

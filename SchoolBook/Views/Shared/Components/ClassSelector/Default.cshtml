@@ -16,18 +16,25 @@
 </div>
 
 <script type="text/javascript">
-    $(document).on("change", "#selClasses", function () {
-        if ($("#selClasses :selected").index() == 0) return;
+    $(document).ready(function () {
+        $(document).on("change", "#selClasses", function () {
+            if ($("#selClasses :selected").index() == 0) return;
 
-        var dataSelected = {};
-        $.each($('.class-selection select').serializeArray(), function () {
-            dataSelected[this.name] = this.value;
-        });
+            showSpinner();
 
-        var request = $.ajax({
-            type: "POST",
-            url: "Dashboard/SaveClassSelection",
-            data: { selection: JSON.stringify(dataSelected) }
+            var dataSelected = {};
+            $.each($('.class-selection select').serializeArray(), function () {
+                dataSelected[this.name] = this.value;
+            });
+
+            var request = $.ajax({
+                type: "POST",
+                url: "Dashboard/SaveClassSelection",
+                data: { selection: JSON.stringify(dataSelected) },
+                complete: function () {
+                    window.location.reload(true);
+                }
+            });
         });
     });
-</script>
+ </script>
