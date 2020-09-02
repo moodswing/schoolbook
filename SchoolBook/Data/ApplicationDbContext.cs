@@ -42,6 +42,12 @@ namespace SchoolBook.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Evaluation>()
+                .HasMany(a => a.Scores)
+                .WithOne(b => b.Evaluation)
+                .HasForeignKey(b => b.EvaluationId);
+
             InitialSeed(modelBuilder);
         }
 
@@ -106,6 +112,11 @@ namespace SchoolBook.Data
             modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 4, Description = "Prueba Historia Mundial", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
             modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 5, Description = "Prueba Historia Universal", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
             modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 6, Description = "Prueba Cultura Chopistica", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 7, Description = "Prueba Ecuaciones Diferenciales", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 8, Description = "Prueba Geometria", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 9, Description = "Trabajo Aritmetica", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 10, Description = "Prueba Planos Cartesianos", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
 
             modelBuilder.Entity<Student>().HasData(new Student { Id = 1, Name = "Juanito Perez" });
             modelBuilder.Entity<Student>().HasData(new Student { Id = 2, Name = "Luchito Jara" });

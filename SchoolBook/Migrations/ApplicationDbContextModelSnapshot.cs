@@ -15,7 +15,7 @@ namespace SchoolBook.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -888,7 +888,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 1,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Prueba Historia de Chile 1",
                             PeriodId = 1
                         },
@@ -896,7 +896,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 2,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Prueba Historia de Chile 2",
                             PeriodId = 1
                         },
@@ -904,7 +904,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 3,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Trabajo Presidentes de Chile",
                             PeriodId = 1
                         },
@@ -912,7 +912,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 4,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Prueba Historia Mundial",
                             PeriodId = 1
                         },
@@ -920,7 +920,7 @@ namespace SchoolBook.Migrations
                         {
                             Id = 5,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Prueba Historia Universal",
                             PeriodId = 1
                         },
@@ -928,8 +928,40 @@ namespace SchoolBook.Migrations
                         {
                             Id = 6,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Prueba Cultura Chopistica",
+                            PeriodId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClassSubjectId = 2,
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Prueba Ecuaciones Diferenciales",
+                            PeriodId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClassSubjectId = 2,
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Prueba Geometria",
+                            PeriodId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ClassSubjectId = 2,
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Trabajo Aritmetica",
+                            PeriodId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ClassSubjectId = 2,
+                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Prueba Planos Cartesianos",
                             PeriodId = 1
                         });
                 });
@@ -963,42 +995,42 @@ namespace SchoolBook.Migrations
                         {
                             Id = 1,
                             EvaluationId = 1,
-                            Score = 4.1m,
+                            Score = 1.7m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 2,
                             EvaluationId = 2,
-                            Score = 1.2m,
+                            Score = 1.6m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 3,
                             EvaluationId = 3,
-                            Score = 6.1m,
+                            Score = 5.8m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 4,
                             EvaluationId = 4,
-                            Score = 4.3m,
+                            Score = 2.8m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 5,
                             EvaluationId = 5,
-                            Score = 5.0m,
+                            Score = 7.0m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 6,
                             EvaluationId = 6,
-                            Score = 1.6m,
+                            Score = 6.9m,
                             StudentId = 1
                         },
                         new
@@ -1012,287 +1044,287 @@ namespace SchoolBook.Migrations
                         {
                             Id = 8,
                             EvaluationId = 2,
-                            Score = 5.8m,
+                            Score = 3.6m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 9,
                             EvaluationId = 3,
-                            Score = 4.4m,
+                            Score = 5.0m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 10,
                             EvaluationId = 4,
-                            Score = 1.1m,
+                            Score = 4.4m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 11,
                             EvaluationId = 5,
-                            Score = 3.0m,
+                            Score = 2.0m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 12,
                             EvaluationId = 6,
-                            Score = 1.8m,
+                            Score = 2.0m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 13,
                             EvaluationId = 1,
-                            Score = 4.2m,
+                            Score = 3.7m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 14,
                             EvaluationId = 2,
-                            Score = 3.3m,
+                            Score = 2.7m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 15,
                             EvaluationId = 3,
-                            Score = 3.3m,
+                            Score = 5.2m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 16,
                             EvaluationId = 4,
-                            Score = 3.9m,
+                            Score = 4.9m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 17,
                             EvaluationId = 5,
-                            Score = 6.1m,
+                            Score = 3.2m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 18,
                             EvaluationId = 6,
-                            Score = 4.7m,
+                            Score = 1.6m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 19,
                             EvaluationId = 1,
-                            Score = 1.1m,
+                            Score = 5.5m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 20,
                             EvaluationId = 2,
-                            Score = 4.2m,
+                            Score = 5.2m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 21,
                             EvaluationId = 3,
-                            Score = 5.4m,
+                            Score = 6.7m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 22,
                             EvaluationId = 4,
-                            Score = 3.6m,
+                            Score = 4.6m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 23,
                             EvaluationId = 5,
-                            Score = 3.1m,
+                            Score = 5.8m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 24,
                             EvaluationId = 6,
-                            Score = 2.2m,
+                            Score = 5.9m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 25,
                             EvaluationId = 1,
-                            Score = 1.6m,
+                            Score = 6.2m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 26,
                             EvaluationId = 2,
-                            Score = 1.7m,
+                            Score = 6.6m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 27,
                             EvaluationId = 3,
-                            Score = 1.9m,
+                            Score = 6.7m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 28,
                             EvaluationId = 4,
-                            Score = 2.3m,
+                            Score = 4.2m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 29,
                             EvaluationId = 5,
-                            Score = 6.7m,
+                            Score = 5.7m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 30,
                             EvaluationId = 6,
-                            Score = 5.8m,
+                            Score = 1.4m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 31,
                             EvaluationId = 1,
-                            Score = 1.4m,
+                            Score = 3.5m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 32,
                             EvaluationId = 2,
-                            Score = 5.7m,
+                            Score = 3.8m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 33,
                             EvaluationId = 3,
-                            Score = 6.9m,
+                            Score = 2.6m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 34,
                             EvaluationId = 4,
-                            Score = 5.4m,
+                            Score = 2.9m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 35,
                             EvaluationId = 5,
-                            Score = 2.8m,
+                            Score = 7.0m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 36,
                             EvaluationId = 6,
-                            Score = 3.3m,
+                            Score = 4.5m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 37,
                             EvaluationId = 1,
-                            Score = 4.8m,
+                            Score = 5.3m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 38,
                             EvaluationId = 2,
-                            Score = 4.8m,
+                            Score = 1.3m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 39,
                             EvaluationId = 3,
-                            Score = 5.0m,
+                            Score = 1.1m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 40,
                             EvaluationId = 4,
-                            Score = 3.3m,
+                            Score = 1.4m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 41,
                             EvaluationId = 5,
-                            Score = 1.3m,
+                            Score = 5.4m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 42,
                             EvaluationId = 6,
-                            Score = 2.8m,
+                            Score = 2.1m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 43,
                             EvaluationId = 1,
-                            Score = 4.9m,
+                            Score = 5.9m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 44,
                             EvaluationId = 2,
-                            Score = 5.6m,
+                            Score = 6.4m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 45,
                             EvaluationId = 3,
-                            Score = 2.9m,
+                            Score = 4.2m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 46,
                             EvaluationId = 4,
-                            Score = 5.7m,
+                            Score = 4.0m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 47,
                             EvaluationId = 5,
-                            Score = 5.0m,
+                            Score = 3.8m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 48,
                             EvaluationId = 6,
-                            Score = 1.6m,
+                            Score = 5.0m,
                             StudentId = 8
                         });
                 });
@@ -2315,7 +2347,7 @@ namespace SchoolBook.Migrations
                         .IsRequired();
 
                     b.HasOne("SchoolBook.Models.Student", "Student")
-                        .WithMany("Scores")
+                        .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

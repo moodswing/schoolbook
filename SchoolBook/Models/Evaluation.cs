@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SchoolBook.Models
 {
@@ -16,5 +18,8 @@ namespace SchoolBook.Models
         public TypePeriod Period { get; set; }
 
         public List<EvaluationScore> Scores { get; set; }
+
+        [NotMapped]
+        public EvaluationScore StudentScore { get; set; }
     }
 }

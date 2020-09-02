@@ -69,4 +69,58 @@ namespace SchoolBook.Utils
             output.Content.SetHtmlContent(sb.ToString());
         }
     }
+
+    [HtmlTargetElement("spinner")]
+    public class SpinnerHelper : TagHelper
+    {
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "div";
+            output.TagMode = TagMode.StartTagAndEndTag;
+
+            output.Attributes.Add("class", "spin-container");
+
+            var sb = new StringBuilder();
+
+            sb.AppendFormat("<div class='spinner'><div class='double-bounce1'></div><div class='double-bounce2'></div></div>");
+
+            output.Content.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("confirm-action")]
+    public class ConfirmActionHelper : TagHelper
+    {
+        [HtmlAttributeName("message")]
+        public string Message { get; set; }
+
+        [HtmlAttributeName("yes-title")]
+        public string Yes { get; set; }
+
+        [HtmlAttributeName("no-title")]
+        public string No { get; set; }
+
+        [HtmlAttributeName("callback")]
+        public string Callback { get; set; }
+
+        [HtmlAttributeName("display-over")]
+        public string Position { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "div";
+            output.TagMode = TagMode.StartTagAndEndTag;
+
+            output.Attributes.Add("class", "action-confirmation");
+            output.Attributes.Add("style", "display: none;");
+
+            var sb = new StringBuilder();
+
+            sb.AppendFormat("<div class=title>{0}</div>", Message);
+            sb.AppendFormat("<button id=btnCancel class=btn-secondary onclick=cancelConfirmation('{1}')>{0}</button>", No, Position);
+            sb.AppendFormat("<button id=btnOk class=btn-primary onclick={1}>{0}</button>", Yes, Callback);
+
+            output.Content.SetHtmlContent(sb.ToString());
+        }
+    }
 }

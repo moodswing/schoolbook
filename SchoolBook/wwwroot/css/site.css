@@ -2,32 +2,33 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .navbar {
@@ -50,13 +51,13 @@ html {
         display: inline-block;
     }
 
-    .navbar div.nav-about form button {
-        font-size: 14px;
-    }
+        .navbar div.nav-about form button {
+            font-size: 14px;
+        }
 
-    .navbar div.nav-about form button:hover {
-        text-decoration: underline;
-    }
+            .navbar div.nav-about form button:hover {
+                text-decoration: underline;
+            }
 
 header .container {
     display: block !important;
@@ -84,108 +85,105 @@ main {
         box-sizing: border-box;
     }
 
-main:after {
-    content: "";
-    display: table;
-    clear: both;
-}
+    main:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 
 .main .container {
     padding: 30px 30px 0 30px;
 }
 
-    .main .sidebar {
-        z-index: 1;
+.main .sidebar {
+    z-index: 1;
+}
+
+    .main .sidebar .inner {
+        background: white;
+        padding: 15px 22px 20px;
+        border: 1px solid #dee2e6c2;
+        width: 246px;
+        box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
     }
 
-        .main .sidebar .inner {
-            background: white;
-            padding: 15px 22px 20px;
-            border: 1px solid #dee2e6c2;
-            width: 246px;
-            box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
-        }
-
-        .main .sidebar .small-icon:before {
-            color: #036E8C !important;
-            font-size: 20px;
-        }
+    .main .sidebar .small-icon:before {
+        color: #036E8C !important;
+        font-size: 20px;
+    }
 
     .main .sidebar ul {
         padding: 0;
     }
 
-        .main .sidebar a {
-            color: #212529;
+    .main .sidebar a {
+        color: #212529;
+    }
+
+        .main .sidebar a:hover {
+            color: #1ca9d4;
+            text-decoration: none;
         }
 
-            .main .sidebar a:hover {
-                color: #1ca9d4;
-                text-decoration: none;
-            }
+.main .menu-group {
+    padding-top: 10px;
+    padding-bottom: 2px;
+    list-style: none;
+    font-size: 17px;
+}
 
-    .main .menu-group {
-        padding-top: 10px;
-        padding-bottom: 2px;
-        list-style: none;
-        font-size: 17px;
-    }
-
-    .main .menu-option {
-        list-style: none;
-        padding-bottom: 2px;
-        font-size: 13px;
-        margin-left: 45px;
-    }
+.main .menu-option {
+    list-style: none;
+    padding-bottom: 2px;
+    font-size: 13px;
+    margin-left: 45px;
+}
 
 .main .content {
     background: white;
-    padding: 25px 0 40px 25px;
+    padding: 25px 0 30px 25px;
     border: 1px solid #dee2e680;
     box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
     margin-left: 30px;
 }
-
-    .main .content .inner-content {
-        margin-bottom: 30px;
-    }
 
 .class-selection {
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
 
-.class-selection .selector {
-    line-height: 26px;
-}
+    .class-selection .selector {
+        line-height: 26px;
+    }
 
-.class-selection .selector div {
-    padding-right: 25px;
-}
+        .class-selection .selector div {
+            padding-right: 25px;
+        }
 
-.class-selection .selector select {
-    border: none;
-}
+        .class-selection .selector select {
+            border: none;
+        }
 
-.class-selection .selector .small-icon:before {
-    font-size: 23px;
-    color: #32b1d8;
-}
+        .class-selection .selector .small-icon:before {
+            font-size: 23px;
+            color: #32b1d8;
+        }
 
 .border-top {
     border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 .row {
@@ -200,13 +198,13 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     /* Margin bottom by footer height */
-/*    margin-bottom: 60px;*/
+    /*    margin-bottom: 60px;*/
     font-family: 'Quicksand', serif !important;
 }
 
@@ -220,8 +218,8 @@ a, a:hover {
 }
 
 .footer {
-/*    position: absolute;*/
-/*    bottom: 0;*/
+    /*    position: absolute;*/
+    /*    bottom: 0;*/
     width: 100%;
     white-space: nowrap;
     text-align: right;
@@ -266,7 +264,6 @@ footer .sm-contact {
 input[type=text]:focus,
 input[type=password]:focus {
     outline: none;
-    border-bottom: 2px solid #f9a835 !important;
 }
 
 [class^="svgcollege-"]:before, [class*=" svgcollege-"]:before, [class^="svgcollege-"]:after, [class*=" svgcollege-"]:after {
@@ -323,16 +320,16 @@ h1 {
         text-align: right;
     }
 
-    .main .sidebar .inner:hover {
-        cursor: pointer;
-    }
+        .main .sidebar .inner:hover {
+            cursor: pointer;
+        }
 }
 
 .inner-content .selector {
     margin: 10px -1px 10px -26px;
     background-color: #f7f7f7;
     border: 1px solid #dee2e680;
-    padding-right: 15px;
+    padding: 2px 15px 2px 0
 }
 
     .inner-content .selector select {
@@ -361,19 +358,19 @@ h1 {
         color: #495057;
     }
 
-    .inner-content .selector .options.selected {
-        background-color: #1ca9d4;
-        color: white;
-    }
+        .inner-content .selector .options.selected {
+            background-color: #1ca9d4;
+            color: white;
+        }
 
         .inner-content .selector .options input[type=radio] {
             display: none;
         }
 
-    .inner-content .selector .options:hover,
+        .inner-content .selector .options:hover,
         .inner-content .selector .options label:hover {
-        cursor: pointer;
-    }
+            cursor: pointer;
+        }
 
         .inner-content .selector .options label {
             margin-bottom: 0;
@@ -385,4 +382,72 @@ h1 {
 
 .spinner {
     display: none;
+}
+
+.informative {
+    padding: 10px 20px 0 6px;
+    font-size: 13px;
+}
+
+    .informative .icon[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, .informative .icon[class*=" flaticon-"]:after {
+        padding-right: 10px;
+        color: #f9aa3b;
+    }
+
+    .informative .small-icon[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, .informative .small-icon[class*=" flaticon-"]:after {
+        font-size: 11px;
+        color: #036e8c;
+    }
+
+.footer-buttons {
+    padding: 10px 26px 10px 0;
+    text-align: center;
+    margin-left: -25px;
+    margin-top: 25px;
+    background-color: #f7f7f7;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin: 0 2px;
+    border: none;
+    font-size: 14px;
+}
+
+    .btn-primary,
+    .btn-primary:hover {
+        background-color: #1ca9d4;
+        color: white;
+    }
+
+    .btn-secondary,
+    .btn-secondary:hover {
+        background-color: #ffffff;
+        color: #1ca9d4;
+    }
+
+
+.action-confirmation {
+    display: flex;
+    justify-content: center;
+    padding: 10px 26px 10px 0;
+    margin-left: -25px;
+    margin-top: 25px;
+    background-color: #f7f7f7;
+}
+
+    .action-confirmation div {
+        font-size: 14px;
+        padding-top: 5px;
+        color: #00C6CF;
+    }
+
+    .action-confirmation div + * {
+        margin-left: 20px;
+    }
+
+.action-confirmation button {
+    width: 40px;
 }

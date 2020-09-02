@@ -59,12 +59,10 @@
                 </div>
             }
         </div>
-    </div>
-    <div>
         <h1>Claim details</h1>
-            @foreach (var claim in User.Claims)
-            {
-                <div><strong>. @claim.Type</strong>: @claim.Value</div>
-            }
+        @foreach (var claim in User.Claims)
+        {
+            <div><strong>. @claim.Type</strong>: @claim.Value</div>
+        }
     </div>
 </div>

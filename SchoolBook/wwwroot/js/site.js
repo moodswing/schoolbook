@@ -22,6 +22,26 @@ $(document).on("change", "select[cascade]", function () {
         child.val(childSelectedValue);
 });
 
+function confirmSaving(input) {
+    $(input).closest("div").toggle();
+    $("#btnSave").closest("div").next(".action-confirmation").animate({ "width": "toggle" }, 200);
+}
+
+function cancelConfirmation(position) {
+    var container = $(position);
+    container.next(".action-confirmation").animate({ "width": "toggle" }, 200, function () {
+        container.toggle();
+    });
+}
+
+function showSpinner() {
+    $(".spinner").show();
+}
+
+function hideSpinner() {
+    $(".spinner").hide();
+}
+
 function getFormData($form) {
     var unindexed_array = $form.serializeArray();
     var indexed_array = {};
@@ -33,10 +53,6 @@ function getFormData($form) {
     return indexed_array;
 }
 
-function showSpinner() {
-    $(".spinner").show();
-}
-
-function hideSpinner() {
-    $(".spinner").hide();
+function toFixed(num, precision) {
+    return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
 }

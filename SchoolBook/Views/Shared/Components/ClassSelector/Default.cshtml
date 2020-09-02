@@ -21,7 +21,6 @@
             if ($("#selClasses :selected").index() == 0) return;
 
             showSpinner();
-
             var dataSelected = {};
             $.each($('.class-selection select').serializeArray(), function () {
                 dataSelected[this.name] = this.value;

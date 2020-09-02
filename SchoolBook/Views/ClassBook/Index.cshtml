@@ -15,7 +15,7 @@
     .student-list {
         display: grid;
         grid-template-columns: 100%;
-        margin-top: 20px;
+        margin-top: 15px;
         font-size: 14px;
     }
 
@@ -26,26 +26,34 @@
 </style>
 
 <div class="content">
-    <vc:class-selector></vc:class-selector>
+    <vc:class-selector />
     <div class="inner-content">
         <div>
             <h1>Libro de Notas</h1>
-            <div class="spin-container">
-                <div class="spinner">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                </div>
-            </div>
-
+            <spinner />
             <div class="selector">
                 @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, "Asignatura", new { @class = "form-control" })
                 <radiobutton list="Model.Periods" for="PeriodId" selected="@Model.PeriodId"></radiobutton>
             </div>
         </div>
+        <div class="informative">
+            <i class="flaticon-information-button icon"></i>
+            Puedes ingresar las notas mas rápido usando las flechas del teclado
+            <i class="flaticon-arrow-pointing-to-left small-icon"></i>
+            <i class="flaticon-arrow-pointing-down small-icon"></i>
+            <i class="flaticon-arrow-up small-icon"></i>
+            <i class="flaticon-arrow-pointing-to-right small-icon"></i>
+            &nbsp; o las letras a, s, d y w.
+        </div>
         <div class="student-list">
             @await Html.PartialAsync("_GradesBook", Model)
         </div>
-    </div>
+        <div class="footer-buttons">
+            <button id="btnLoadGrades" class="btn-secondary">Carga Masiva</button>
+            <button id="btnSave" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
+        </div>
+        <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveGradeBook()" display-over=".footer-buttons" />
+</div>
 </div>
 
 <script type="text/javascript">
@@ -74,4 +82,17 @@
         $(this).parents("radiobutton").find(".options").removeClass("selected");
         $(this).parents(".options").first().addClass("selected");
     });
+
+    function saveGradesBook() {
+        showSpinner();
+
+        var request = $.ajax({
+            type: "POST",
+            url: "ClassBook/SaveGradesBook",
+            data: getFormData($("#frmGradesBook")),
+            complete: function () {
+                window.location.reload(true);
+            }
+        });
+    }
 </script>

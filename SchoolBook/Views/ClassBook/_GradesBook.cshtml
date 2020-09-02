@@ -11,16 +11,41 @@
         color: white;
     }
 
-        .student-list .header .student,
-        .student-list .grade-row .student {
-            width: 300px;
+        .student-list .header .student-number,
+        .student-list .grade-row .student-number {
+            width: 30px;
             padding-left: 10px;
         }
 
-    .student-list .header .grade,
-    .student-list .grade-row .grade {
-        width: 35px;
-        text-align: center;
+        .student-list .header .student,
+        .student-list .grade-row .student {
+            width: 300px;
+        }
+
+        .student-list .header .grade,
+        .student-list .grade-row .grade {
+            width: 35px;
+            text-align: center;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+            height: unset;
+            outline: none;
+            z-index: 1;
+        }
+
+    .student-list .grade-row input.grade {
+        border: 1px solid #dee2e680;
+        border-top: none;
+        border-right: none;
+    }
+
+    #frmGradesBook input[type=text]:last-of-type {
+        border-right: 1px solid #dee2e680;
+    }
+
+    .student-list .grade-row .grade:focus {
+        background-color: white !important;
     }
 
     .student-list .header .grade.avg,
@@ -29,7 +54,7 @@
         margin-left: 10px;
     }
 
-    .student-list .grade-row:nth-child(odd) {
+    .student-list .grade-row:nth-child(even) {
         background-color: #f7f7f7;
         color: #212529;
     }
@@ -37,37 +62,148 @@
     .student-list .grade-row .grade.failed-score {
         color: red;
     }
+
+    .student-list .grade-row .grade.changed-score {
+        border-bottom: 2px solid #00C6CF;
+    }
 </style>
 
 @if (Model.Students != null && Model.Students.Any())
 {
-<div class="header">
-    <div class="student">Alumno</div>
-    @for (var i = 0; i < Model.Evaluations.Count(); i++)
-    {
-        <div class="grade">N@(i + 1)</div>
-    }
-    @if (Model.Evaluations != null && Model.Evaluations.Any())
-    {
-        <div class="grade avg">Promedio</div>
-    }
-</div>
-    @foreach (var student in Model.Students)
-    {
-        <div class="grade-row">
-            <div class="student">@student.Name</div>
-            @if (student.Scores != null && student.Scores.Any())
-            {
-                decimal avg = 0;
-                foreach (var score in student.Scores)
+    <div class="header">
+        <div class="student-number"></div>
+        <div class="student">Alumno</div>
+        @for (var i = 0; i < Model.Evaluations.Count(); i++)
+        {
+            <div class="grade">N@(i + 1)</div>
+        }
+        @if (Model.Evaluations != null && Model.Evaluations.Any())
+        {
+            <div class="grade avg">Promedio</div>
+        }
+    </div>
+    <form id="frmGradesBook">
+        @for (var i = 0; i < Model.Students.Count(); i++)
+        {
+            var student = Model.Students[i];
+            <div class="grade-row">
+                @Html.Hidden("students[" + i + "].Id", student.Id)
+                <div class="student-number">@(i + 1)</div>
+                <div class="student">@student.Name</div>
+                @if (student.Evaluations != null && student.Evaluations.Any())
                 {
-                    // todo: global parameter
-                    <div class="grade @(score.Score < 4 ? "failed-score" : string.Empty)">@score.Score</div>
-                    avg += score.Score;
+                    for (var j = 0; j < student.Evaluations.Count(); j++)
+                    {
+                        var score = student.Evaluations[j].StudentScore ?? new EvaluationScore();
+
+                        @Html.Hidden("students[" + i + "].Evaluations[" + j + "].Id", student.Evaluations[j].Id)
+                        @Html.Hidden("students[" + i + "].Evaluations[" + j + "].StudentScore.Id", score.Id)
+                        <input type="text" class="form-control grade @(score.Score != 0 && score.Score < Model.FailedGrade ? "failed-score" : string.Empty)" value="@score.ScoreStr" name="@("students[" + i + "].Evaluations[" + j + "].StudentScore.Score")" maxlength="2" />
+                    }
+                    <div class="grade avg @(student.EvaluationAvg != 0 && student.EvaluationAvg < Model.FailedGrade ? "failed-score" : string.Empty)">@student.EvaluationAvgStr</div>
                 }
-                avg = avg / Model.Evaluations.Count();
-                <div class="grade avg @(avg < 4 ? "failed-score" : string.Empty)">@avg.ToString("0.0")</div>
-            }
-        </div>
-    }
+            </div>
+        }
+    </form>
+    @Html.Hidden("hdnFailedGrade", Model.FailedGrade)
+    @Html.Hidden("hdnMinGrade", Model.MinGrade)
+    @Html.Hidden("hdnMaxGrade", Model.MaxGrade)
 }
+
+<script type="text/javascript">
+    var initialGrades;
+    $(document).ready(function () {
+        initialGrades = getFormData($("#frmGradesBook"));
+    });
+
+    $(document).on("blur", "input.grade", function (event) {
+        // todo: highlight notes changed
+
+        var input = $(this);
+        var grade = input.val().replace(new RegExp("([0-9])[^0-9]*([0-9]*)", "gm"), "$1.$2");
+
+        if (isNaN(Number(grade)))
+            grade = "";
+
+        grade = toFixed(Number(grade), 1);
+
+        grade = grade != 0 && grade < $("#hdnMinGrade").val() ? $("#hdnMinGrade").val() : grade;
+        grade = grade != 0 && grade > $("#hdnMaxGrade").val() ? $("#hdnMaxGrade").val() : grade;
+
+        grade = grade == 0 ? "" : grade;
+
+        input.val(grade);
+        EvaluateChange(input, grade);
+
+        var sum = 0;
+        var counter = 0;
+        input.closest(".grade-row").find("input[type=text]").each(function () {
+            if (Number($(this).val()) != 0)
+                counter++;
+
+            sum += Number($(this).val());
+        });
+
+        if (sum != 0) {
+            var avg = toFixed(Number(sum / counter), 1);
+            var avgDiv = input.closest(".grade-row").find(".avg");
+            avgDiv.text(avg);
+            EvaluateChange(avgDiv, avg);
+        }
+    });
+
+    $(document).on("keydown", "input.grade", function (event) {
+        var allowedInput = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Tab", "Delete", "Backspace", "a", "s", "d", "w"];
+
+        if (allowedInput.indexOf(event.key) == -1 && isNaN(event.key))
+            event.preventDefault();
+
+        var input = $(this);
+        var index = input.index();
+
+        var moveRight = function () { input.nextAll("input[type=text]:first").focus(); };
+        var moveLeft = function () { input.prevAll("input[type=text]:first").focus(); };
+        var moveDown = function () { input.closest(".grade-row").next().children().eq(index).focus(); };
+        var moveUp = function () { input.closest(".grade-row").prev().children().eq(index).focus(); };
+
+        if (event.key == "ArrowRight" && this.selectionStart == $(this).val().length)
+            moveRight();
+        else if (event.key == "ArrowLeft" && this.selectionStart == 0)
+            moveLeft();
+        else if (event.key == "ArrowDown")
+            moveDown();
+        else if (event.key == "ArrowUp")
+            moveUp();
+
+        if (event.key == "d") {
+            moveRight();
+            event.preventDefault();
+        }
+        else if (event.key == "a") {
+            moveLeft();
+            event.preventDefault();
+        }
+        else if (event.key == "s") {
+            moveDown();
+            event.preventDefault();
+        }
+        else if (event.key == "w") {
+            moveUp();
+            event.preventDefault();
+        }
+    });
+
+    function EvaluateChange(input, score) {
+        if (score != "" && score < $("#hdnFailedGrade").val())
+            input.addClass("failed-score");
+        else
+            input.removeClass("failed-score");
+
+        if (!input.is("input")) return;
+
+        if (initialGrades[input.prop("name")] != input.val())
+            input.addClass("changed-score");
+        else
+            input.removeClass("changed-score");
+    }
+</script>

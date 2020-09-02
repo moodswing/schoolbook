@@ -10,18 +10,22 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace SchoolBook.Controllers
 {
     public class ClassBookController : BaseController
     {
+        public IConfiguration Configuration { get; }
         public ISubjectsDAL SubjectsDAL { get; }
         public IStudentsDAL StudentsDAL { get; }
         public IPeriodsDAL PeriodsDAL { get; }
         public ILogger<DashboardController> Logger { get; }
 
-        public ClassBookController(IStudentsDAL studentsDAL, IPeriodsDAL periodsDAL, ISubjectsDAL subjectsDAL, IUsersDAL usersDAL, ILogger<DashboardController> logger) : base(usersDAL)
+        public ClassBookController(IStudentsDAL studentsDAL, IPeriodsDAL periodsDAL, ISubjectsDAL subjectsDAL,
+            IUsersDAL usersDAL, IConfiguration configuration, ILogger<DashboardController> logger) : base(usersDAL)
         {
+            Configuration = configuration;
             SubjectsDAL = subjectsDAL;
             StudentsDAL = studentsDAL;
             PeriodsDAL = periodsDAL;
@@ -44,6 +48,10 @@ namespace SchoolBook.Controllers
             if (!string.IsNullOrEmpty(viewModel.SubjectId) && !string.IsNullOrEmpty(viewModel.PeriodId))
                 viewModel.Students = StudentsDAL.GetClassScores(classId, Convert.ToInt32(viewModel.SubjectId), Convert.ToInt32(viewModel.PeriodId));
 
+            viewModel.MinGrade = Decimal.Parse(Configuration["AppSettings:MinGrade"]);
+            viewModel.MaxGrade = Decimal.Parse(Configuration["AppSettings:MaxGrade"]);
+            viewModel.FailedGrade = Decimal.Parse(Configuration["AppSettings:FailedGrade"]);
+
             return View(viewModel);
         }
 
@@ -55,9 +63,21 @@ namespace SchoolBook.Controllers
             if (subjectId != 0 && int.TryParse(ClassSelection.ClassId, out int classId))
                 viewModel.Students = StudentsDAL.GetClassScores(classId, subjectId, periodId);
 
+            viewModel.MinGrade = Decimal.Parse(Configuration["AppSettings:MinGrade"]);
+            viewModel.MaxGrade = Decimal.Parse(Configuration["AppSettings:MaxGrade"]);
+            viewModel.FailedGrade = Decimal.Parse(Configuration["AppSettings:FailedGrade"]);
+            
             UsersDAL.SaveUserSelection(SelectionType.GradeBook, selection);
 
             return PartialView("_GradesBook", viewModel);
+        }
+
+        [Authorize]
+        public IActionResult SaveGradesBook(List<Student> students)
+        {
+            StudentsDAL.UpdateClassScores(students);
+
+            return Json("ok");
         }
     }
 }
