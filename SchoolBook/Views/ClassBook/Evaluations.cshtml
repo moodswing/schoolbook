@@ -1,0 +1,26 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Portal - " + Configuration["AppSettings:SiteTitle"];
+    Layout = "../Shared/_layout.cshtml";
+}
+
+<style>
+    .evaluations-editor {
+    }
+</style>
+
+<div class="content">
+    <vc:class-selector />
+    <div class="inner-content">
+        <div>
+            <h1>Evaluaciones</h1>
+            @await Html.PartialAsync("_SubjectSelector", Model)
+        </div>
+        <div class="evaluations-editor subject-data-container">
+            @await Html.PartialAsync("_EditEvaluations", Model)
+        </div>
+    </div>
+</div>

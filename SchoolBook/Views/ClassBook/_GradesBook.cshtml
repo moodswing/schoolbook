@@ -73,11 +73,11 @@
     <div class="header">
         <div class="student-number"></div>
         <div class="student">Alumno</div>
-        @for (var i = 0; i < Model.Evaluations.Count(); i++)
+        @for (var i = 0; i < Model.StudentEvaluations.Count(); i++)
         {
             <div class="grade">N@(i + 1)</div>
         }
-        @if (Model.Evaluations != null && Model.Evaluations.Any())
+        @if (Model.StudentEvaluations != null && Model.StudentEvaluations.Any())
         {
             <div class="grade avg">Promedio</div>
         }

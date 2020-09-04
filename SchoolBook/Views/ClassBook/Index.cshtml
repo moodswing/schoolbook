@@ -18,11 +18,6 @@
         margin-top: 15px;
         font-size: 14px;
     }
-
-    .inner-content .selector select {
-        display: inline-block;
-        margin-right: 60px;
-    }
 </style>
 
 <div class="content">
@@ -30,11 +25,7 @@
     <div class="inner-content">
         <div>
             <h1>Libro de Notas</h1>
-            <spinner />
-            <div class="selector">
-                @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, "Asignatura", new { @class = "form-control" })
-                <radiobutton list="Model.Periods" for="PeriodId" selected="@Model.PeriodId"></radiobutton>
-            </div>
+            @await Html.PartialAsync("_SubjectSelector", Model)
         </div>
         <div class="informative">
             <i class="flaticon-information-button icon"></i>
@@ -45,53 +36,32 @@
             <i class="flaticon-arrow-pointing-to-right small-icon"></i>
             &nbsp; o las letras a, s, d y w.
         </div>
-        <div class="student-list">
+        <div class="student-list subject-data-container">
             @await Html.PartialAsync("_GradesBook", Model)
         </div>
         <div class="footer-buttons">
             <button id="btnLoadGrades" class="btn-secondary">Carga Masiva</button>
             <button id="btnSave" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
         </div>
-        <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveGradeBook()" display-over=".footer-buttons" />
+        <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveGradesBook()" display-over=".footer-buttons" />
 </div>
 </div>
 
 <script type="text/javascript">
-    var selectorsData = function () {
-        var dataSelected = {};
-        $.each($('.inner-content .selector select, .inner-content .selector input[type=radio]').serializeArray(), function () {
-            dataSelected[this.name] = this.value;
-        });
-
-        return {
-            subjectId: $("#SubjectId").val(),
-            periodId: $("[name=PeriodId]:checked").val(),
-            selection: JSON.stringify(dataSelected)
-        };
-    }
-
-    $(document).on("change", "#SubjectId, [name=PeriodId]", function () {
-        var data = selectorsData();
-        if (data.subjectId == "" || data.periodId == undefined) return;
-
-        showSpinner();
-        $(".student-list").load("ClassBook/GetGradesBook", data, hideSpinner);
-    });
-
-    $(document).on("change", "[name=PeriodId]", function () {
-        $(this).parents("radiobutton").find(".options").removeClass("selected");
-        $(this).parents(".options").first().addClass("selected");
-    });
-
     function saveGradesBook() {
-        showSpinner();
-
         var request = $.ajax({
             type: "POST",
             url: "ClassBook/SaveGradesBook",
             data: getFormData($("#frmGradesBook")),
-            complete: function () {
-                window.location.reload(true);
+            success: function (result) {
+                // todo: remove timer + refresh changed grades
+
+                setTimeout(function () {
+                    finishAction(result, '.footer-buttons');
+                    $(".changed-score").removeClass("changed-score");
+                    initialGrades = getFormData($("#frmGradesBook"));
+                }, 3000);
+                @*finishAction(result, '.footer-buttons');*@
             }
         });
     }

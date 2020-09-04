@@ -15,11 +15,14 @@ namespace SchoolBook.ViewModels
         public decimal MaxGrade { get; set; }
         public decimal FailedGrade { get; set; }
 
+        public string SelectorChangeAction { get; set; }
+
         public List<SelectListItem> Subjects { get; set; }
         public List<Period> Periods { get; set; }
         public List<Student> Students { get; set; }
+        public List<Evaluation> Evaluations { get; set; }
 
-        public List<Evaluation> Evaluations {
+        public List<Evaluation> StudentEvaluations {
             get
             {
                 if (Students == null || !Students.Any() || Students.First().Evaluations == null || !Students.First().Evaluations.Any())

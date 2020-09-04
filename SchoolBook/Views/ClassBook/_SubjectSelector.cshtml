@@ -1,0 +1,40 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+
+<style>
+    .inner-content .selector select {
+        display: inline-block;
+        margin-right: 60px;
+    }
+</style>
+
+<div class="selector">
+    @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, "Asignatura", new { @class = "form-control" })
+    <radiobutton list="Model.Periods" for="PeriodId" selected="@Model.PeriodId"></radiobutton>
+</div>
+
+<script type="text/javascript">
+    var selectorsData = function () {
+        var dataSelected = {};
+        $.each($('.inner-content .selector select, .inner-content .selector input[type=radio]').serializeArray(), function () {
+            dataSelected[this.name] = this.value;
+        });
+
+        return {
+            subjectId: $("#SubjectId").val(),
+            periodId: $("[name=PeriodId]:checked").val(),
+            selection: JSON.stringify(dataSelected)
+        };
+    }
+
+    $(document).on("change", "#SubjectId, [name=PeriodId]", function () {
+        var data = selectorsData();
+        if (data.subjectId == "" || data.periodId == undefined) return;
+
+        $(".subject-data-container").loaFadeOut("@(Model.SelectorChangeAction)", data);
+    });
+
+    $(document).on("change", "[name=PeriodId]", function () {
+        $(this).parents("radiobutton").find(".options").removeClass("selected");
+        $(this).parents(".options").first().addClass("selected");
+    });
+</script>

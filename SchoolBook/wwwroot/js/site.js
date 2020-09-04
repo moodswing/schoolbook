@@ -3,9 +3,13 @@
 
 // Write your JavaScript code.
 
+var confirmationMessage;
+
 $(document).ready(function () {
     $("select[cascade]").trigger("change");
 });
+
+// #region Cascade DropDownList
 
 $(document).on("change", "select[cascade]", function () {
     var sel = $(this);
@@ -22,25 +26,67 @@ $(document).on("change", "select[cascade]", function () {
         child.val(childSelectedValue);
 });
 
+// #endregion
+
+// #region Action Confirmation
+
 function confirmSaving(input) {
-    $(input).closest("div").toggle();
-    $("#btnSave").closest("div").next(".action-confirmation").animate({ "width": "toggle" }, 200);
+    $(input).closest("div").hide();
+
+    $(input).closest("div").next(".action-confirmation").find("button").show();
+    $(input).closest("div").next(".action-confirmation").find("i").hide();
+
+    $(input).closest("div").next(".action-confirmation").fadeToggle(400);
 }
 
-function cancelConfirmation(position) {
-    var container = $(position);
-    container.next(".action-confirmation").animate({ "width": "toggle" }, 200, function () {
-        container.toggle();
+function showConfirmationSpinner(input) {
+    var actionContainer = $(input).closest(".action-confirmation");
+    actionContainer.children().hide();
+    actionContainer.find(".spinner").show();
+}
+
+function cancelConfirmation(container) {
+    var actionContainer = $(container);
+
+    actionContainer.next(".action-confirmation").find(".title").text(confirmationMessage);
+    actionContainer.next(".action-confirmation").toggle(0, function () {
+        actionContainer.fadeToggle(200);
     });
 }
 
-function showSpinner() {
-    $(".spinner").show();
+function finishAction(result, container) {
+    var confirmationContainer = $(container).next(".action-confirmation");
+
+    confirmationContainer.children().show();
+    confirmationContainer.find(".spinner").hide();
+
+    confirmationMessage = confirmationContainer.find(".title").text().trim();
+
+    confirmationContainer.find("button").hide();
+    confirmationContainer.find(".title").text(result.message);
+    confirmationContainer.find("i").show();
+
+    if (result.state != "ok")
+        confirmationContainer.find(".title").addClass("error-message");
+    else
+        confirmationContainer.find(".title").removeClass("error-message");
 }
 
-function hideSpinner() {
-    $(".spinner").hide();
-}
+// #endregion
+
+// #region Jquery Plugins
+
+$.fn.loaFadeOut = function (url, data) {
+    var container = this;
+    container.load(url, data, function () {
+        container.hide();
+        container.fadeIn(750);
+    });
+};
+
+// #endregion
+
+// #region Others
 
 function getFormData($form) {
     var unindexed_array = $form.serializeArray();
@@ -56,3 +102,5 @@ function getFormData($form) {
 function toFixed(num, precision) {
     return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
 }
+
+// #endregion

@@ -82,7 +82,7 @@ namespace SchoolBook.Utils
 
             var sb = new StringBuilder();
 
-            sb.AppendFormat("<div class='spinner'><div class='double-bounce1'></div><div class='double-bounce2'></div></div>");
+            sb.AppendFormat("<div class='spinner'><div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div></div>");
 
             output.Content.SetHtmlContent(sb.ToString());
         }
@@ -117,8 +117,10 @@ namespace SchoolBook.Utils
             var sb = new StringBuilder();
 
             sb.AppendFormat("<div class=title>{0}</div>", Message);
+            sb.AppendFormat("<i class='flaticon-remove-symbol icon' style='display:none;' onclick=cancelConfirmation('{0}')></i>", Position);
             sb.AppendFormat("<button id=btnCancel class=btn-secondary onclick=cancelConfirmation('{1}')>{0}</button>", No, Position);
-            sb.AppendFormat("<button id=btnOk class=btn-primary onclick={1}>{0}</button>", Yes, Callback);
+            sb.AppendFormat("<button id=btnOk class=btn-primary onclick='showConfirmationSpinner(this); {1}'>{0}</button>", Yes, Callback);
+            sb.AppendFormat("<div class='spinner'><div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div></div>");
 
             output.Content.SetHtmlContent(sb.ToString());
         }

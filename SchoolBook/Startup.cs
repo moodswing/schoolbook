@@ -76,6 +76,7 @@ namespace SchoolBook
             services.TryAddTransient<IStudentsDAL, StudentsDAL>();
             services.TryAddTransient<ISubjectsDAL, SubjectsDAL>();
             services.TryAddTransient<IPeriodsDAL, PeriodsDAL>();
+            services.TryAddTransient<IEvaluationsDAL, EvaluationsDAL>();
 
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);

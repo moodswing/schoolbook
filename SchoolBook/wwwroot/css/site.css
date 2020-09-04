@@ -384,6 +384,11 @@ h1 {
     display: none;
 }
 
+.action-confirmation .spinner {
+    margin-top: 2px;
+    margin-bottom: 1px;
+}
+
 .informative {
     padding: 10px 20px 0 6px;
     font-size: 13px;
@@ -444,10 +449,32 @@ h1 {
         color: #00C6CF;
     }
 
-    .action-confirmation div + * {
+    .action-confirmation .title {
+        height: 29px;
+    }
+
+    .action-confirmation i + *,
+        .action-confirmation div + * {
         margin-left: 20px;
     }
 
 .action-confirmation button {
     width: 40px;
+}
+
+    .action-confirmation i {
+        padding-top: 1px;
+    }
+
+    .action-confirmation i:hover {
+        cursor: pointer;
+    }
+
+        .action-confirmation i:before {
+            font-size: 9px;
+            color: #949698;
+        }
+
+.error-message {
+    color: red !important;
 }

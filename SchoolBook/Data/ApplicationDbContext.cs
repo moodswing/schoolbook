@@ -146,9 +146,9 @@ namespace SchoolBook.Data
                 }
 
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 1, Description = "Libro de Clases", Icon = "small-icon svgcollege-029-papyrus", Order = 1 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 2, Description = "Notas", GroupMenuOptionId = 1, Url = "ClassBook", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 2, Description = "Notas", GroupMenuOptionId = 1, Url = "/ClassBook", Order = 1 });
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 3, Description = "Anotaciones", GroupMenuOptionId = 1, Url = "Observations", Order = 3 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 4, Description = "Evaluaciones", GroupMenuOptionId = 1, Url = "Evaluations", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 4, Description = "Evaluaciones", GroupMenuOptionId = 1, Url = "/ClassBook/Evaluations", Order = 2 });
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 5, Description = "Asistencia", GroupMenuOptionId = 1, Url = "Attendance", Order = 4 });
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 6, Description = "Atrasos", GroupMenuOptionId = 1, Url = "Delays", Order = 5 });
 
