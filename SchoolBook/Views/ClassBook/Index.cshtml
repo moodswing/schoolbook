@@ -1,11 +1,14 @@
 ﻿@model SchoolBook.ViewModels.ClassBookViewModel
 @using Microsoft.Extensions.Configuration
+@using SchoolBook.Utils
 @inject IConfiguration Configuration
 
 @{
     ViewData["Title"] = "Portal - " + Configuration["AppSettings:SiteTitle"];
     Layout = "../Shared/_layout.cshtml";
 }
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 
 <style>
     h1 {
@@ -25,7 +28,7 @@
     <div class="inner-content">
         <div>
             <h1>Libro de Notas</h1>
-            @await Html.PartialAsync("_SubjectSelector", Model)
+            <partial name="_SubjectSelector" />
         </div>
         <div class="informative">
             <i class="flaticon-information-button icon"></i>
@@ -37,32 +40,7 @@
             &nbsp; o las letras a, s, d y w.
         </div>
         <div class="student-list subject-data-container">
-            @await Html.PartialAsync("_GradesBook", Model)
+            <partial name="_GradesBook" />
         </div>
-        <div class="footer-buttons">
-            <button id="btnLoadGrades" class="btn-secondary">Carga Masiva</button>
-            <button id="btnSave" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
-        </div>
-        <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveGradesBook()" display-over=".footer-buttons" />
+    </div>
 </div>
-</div>
-
-<script type="text/javascript">
-    function saveGradesBook() {
-        var request = $.ajax({
-            type: "POST",
-            url: "ClassBook/SaveGradesBook",
-            data: getFormData($("#frmGradesBook")),
-            success: function (result) {
-                // todo: remove timer + refresh changed grades
-
-                setTimeout(function () {
-                    finishAction(result, '.footer-buttons');
-                    $(".changed-score").removeClass("changed-score");
-                    initialGrades = getFormData($("#frmGradesBook"));
-                }, 3000);
-                @*finishAction(result, '.footer-buttons');*@
-            }
-        });
-    }
-</script>

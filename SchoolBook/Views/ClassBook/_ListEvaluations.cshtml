@@ -1,0 +1,213 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+
+<style>
+    .evals-container {
+        margin-bottom: 10px;
+    }
+
+        .evals-container .form-control {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .evals-container h6 {
+            background-color: #f7f7f7;
+            padding: 7px 0 7px 10px;
+            box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, .05);
+            position: relative;
+            margin-bottom: 0px;
+            font-size: 13px;
+            border: 1px solid #eaecee;
+            border-right: none;
+        }
+
+        .evals-container h6::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 100%;
+            height: 1px;
+            width: 100%;
+            background-color: #00C6CF;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 250ms ease-in;
+        }
+
+        .evals-container:hover h6::after,
+        .evals-container h6:hover::after {
+            transform: scaleX(1);
+        }
+
+        .evals-container h6:hover {
+            cursor: pointer;
+        }
+
+    .evaluation {
+        padding: 15px 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        width: 95%;
+        margin: 0 auto;
+        padding-right: 20px;
+    }
+
+    .evaluation .field,
+    .evaluation .field + div {
+        padding-left: 25px;
+        padding-bottom: 8px;
+        font-size: 13px;
+        line-height: 33px;
+    }
+
+        .evaluation .field {
+            padding-left: 0;
+            padding-right: 40px;
+            text-align: right;
+            color: #036e8c;
+        }
+
+            .evaluation .field + div {
+                padding-left: 40px;
+                line-height: inherit;
+            }
+
+    .evaluation input[type=text],
+    .evaluation textarea {
+        width: 100%;
+        margin-right: 30px;
+    }
+
+    .evaluation input.datepicker {
+        display: inline;
+    }
+
+    .evaluation input.datepicker,
+    .evaluation input.numeric,
+    .evaluation select {
+        width: 200px !important;
+    }
+
+    .datepicker + i {
+        margin-left: -66px
+    }
+
+        .datepicker + i:hover {
+            cursor: pointer;
+        }
+
+    .evaluation i::before {
+        color: #036E8C;
+    }
+
+    .evaluation .field {
+        background-color: #f7f7f7;
+        width: 220px;
+    }
+
+    .evaluation:last-of-type {
+        padding-bottom: 0;
+    }
+
+    .first-field {
+        padding-top: 8px;
+    }
+
+    .content {
+        padding-bottom: 20px;
+    }
+
+    .no-data {
+        margin-top: 12px !important;
+    }
+
+</style>
+
+@if (Model.Evaluations != null && Model.Evaluations.Any())
+{
+    for (var i = 0; i < Model.Evaluations.Count(); i++)
+    {
+        var evaluation = Model.Evaluations[i];
+        evaluation.Index = i;
+        evaluation.EvaluationTypes = Model.EvaluationTypes;
+
+        <partial name="_EditEvaluation" model="evaluation" />
+    }
+}
+
+<div class="informative no-data">
+    <i class="flaticon-information-button icon"></i>
+    No se han ingresado evaluaciones aún.
+</div>
+
+<script type="text/javascript">
+    var evaluations = [];
+
+    $(document).ready(getAllDataEvaluations);
+
+    $(document).onOff("click", "h6", function () { $(this).closest("div").find(".evaluation, .footer-buttons").toggle(400); });
+    $(document).onOff("change keyup", "[name=Title]", function () { $(this).closest(".evaluation").prev("h6").find("span").text($(this).val()); });
+
+    function saveEvaluation(btn) {
+        var evaluationContainer = $(btn).closest(".evals-container");
+
+        var request = $.ajax({
+            type: "POST",
+            url: "/ClassBook/SaveEvaluation",
+            data: getFormData(evaluationContainer),
+            success: function (result) {
+                evaluationContainer.find("#Id").val(result.id);
+
+                var evalIndex = evaluationContainer.index() - 1;
+                evaluations[evalIndex] = evaluationContainer.serializeList();
+
+                // todo: remove timer + refresh changed grades
+
+                setTimeout(function () {
+                    finishAction(result, btn);
+                    $(".changed-score").removeClass("changed-score");
+                    initialGrades = getFormData($("#frmGradesBook"));
+                }, 2000);
+                @* finishAction(result, actionContainer);*@
+            }
+        });
+    };
+
+    function cancelModification(btn) {
+        var evaluationContainer = $(btn).closest(".evals-container");
+        var evaluationDiv = evaluationContainer.find(".evaluation, .footer-buttons");
+
+        evaluationDiv.toggle(400, function () {
+            var evalIndex = $(".evals-container").index(evaluationContainer);
+            var evaluation = evaluations[evalIndex];
+
+            if (evaluation == undefined) return;
+
+            if (evaluation[0].value == "0") { // id
+                evaluationContainer.remove();
+                evaluations.splice(evalIndex, 1);
+            }
+            else {
+                evaluation.forEach(function (field) {
+                    var input = evaluationContainer.find(`[name=${field.name}]`);
+                    if (input.is("[type=checkbox]"))
+                        input.prop("checked", field.value == "on").change();
+                    else
+                        input.val(field.value)
+                });
+            }
+        });
+    };
+
+    function getAllDataEvaluations() {
+        evaluations = [];
+        $(".evaluation").each(function () {
+            var data = $(this).serializeList();
+            evaluations.push(data);
+        });
+
+        return evaluations;
+    };
+</script>
+

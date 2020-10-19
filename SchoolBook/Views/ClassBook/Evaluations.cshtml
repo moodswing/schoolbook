@@ -7,20 +7,49 @@
     Layout = "../Shared/_layout.cshtml";
 }
 
-<style>
-    .evaluations-editor {
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="~/lib/datepicker/datepicker.css">
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/datepicker/datepicker.js"></script>
 
 <div class="content">
     <vc:class-selector />
     <div class="inner-content">
         <div>
             <h1>Evaluaciones</h1>
-            @await Html.PartialAsync("_SubjectSelector", Model)
+            <partial name="_SubjectSelector" />
+        </div>
+        <div class="footer-buttons">
+            <button type="button" class="btn-primary" onclick="addNewEvaluation()">Agregar Evaluación</button>
         </div>
         <div class="evaluations-editor subject-data-container">
-            @await Html.PartialAsync("_EditEvaluations", Model)
+            <partial name="_ListEvaluations" />
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function addNewEvaluation() {
+        var data = getFormData($(".subject-data-filters, .selector"));
+        data.index = $(".evals-container").length;
+
+        scrollToTheBottom();
+        if (evaluations[evaluations.length - 1][0].value == "0") {
+            return;
+        }
+
+        var request = $.ajax({
+            type: "POST",
+            url: "/ClassBook/GetNewEvaluation",
+            data,
+            success: function (result) {
+                var newEvaluation = $(result);
+                newEvaluation.find(".evaluation").hide();
+
+                newEvaluation.insertBefore(".informative.no-data");
+                newEvaluation.find(".evaluation, .footer-buttons").toggle(400);
+
+                evaluations.push(newEvaluation.serializeList());
+            }
+        });
+    }
+</script>

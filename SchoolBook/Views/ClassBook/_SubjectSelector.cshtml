@@ -8,33 +8,24 @@
 </style>
 
 <div class="selector">
-    @Html.DropDownListFor(m => m.SubjectId, Model.Subjects, "Asignatura", new { @class = "form-control" })
+    <select asp-for="SubjectId" asp-items="Model.Subjects" class="form-control">
+        <option value="">Asignatura</option>
+    </select>
     <radiobutton list="Model.Periods" for="PeriodId" selected="@Model.PeriodId"></radiobutton>
 </div>
 
 <script type="text/javascript">
-    var selectorsData = function () {
-        var dataSelected = {};
-        $.each($('.inner-content .selector select, .inner-content .selector input[type=radio]').serializeArray(), function () {
-            dataSelected[this.name] = this.value;
-        });
-
-        return {
-            subjectId: $("#SubjectId").val(),
-            periodId: $("[name=PeriodId]:checked").val(),
-            selection: JSON.stringify(dataSelected)
-        };
-    }
-
     $(document).on("change", "#SubjectId, [name=PeriodId]", function () {
         var data = selectorsData();
-        if (data.subjectId == "" || data.periodId == undefined) return;
+        if (data.SubjectId == "" || data.PeriodId == undefined) return;
 
-        $(".subject-data-container").loaFadeOut("@(Model.SelectorChangeAction)", data);
+        var container = "@(string.IsNullOrEmpty(Model.FilterAction) ? ".subject-data-container" : ".subject-data-filters")";
+        var action = "@(string.IsNullOrEmpty(Model.FilterAction) ? Model.SelectorChangeAction : Model.FilterAction )";
+
+        primarySelectorChange(container, action, data);
     });
 
-    $(document).on("change", "[name=PeriodId]", function () {
-        $(this).parents("radiobutton").find(".options").removeClass("selected");
-        $(this).parents(".options").first().addClass("selected");
+    $(document).on("change", ".subject-data-filters input[type=hidden]", function () {
+        filtersChange("@(Model.SelectorChangeAction)");
     });
 </script>

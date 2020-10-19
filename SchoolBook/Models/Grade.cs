@@ -15,11 +15,8 @@ namespace SchoolBook.Models
 
         public  List<EducationGrade> EducationGrades { get; set; }
 
-        [NotMapped]
         public string Text => Description;
-        [NotMapped]
         public string Value => Id.ToString();
-        [NotMapped]
         public string SuperiorId => YearId.ToString();
     }
 }

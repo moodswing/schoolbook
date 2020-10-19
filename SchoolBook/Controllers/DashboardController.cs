@@ -40,7 +40,7 @@ namespace SchoolBook.Controllers
         {
             try
             {
-                UsersDAL.SaveUserSelection(SelectionType.Class, selection);
+                UsersDAL.SaveUserSelection(SelectionType.Filters, selection);
 
                 return Json("ok");
 

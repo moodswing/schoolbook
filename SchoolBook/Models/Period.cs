@@ -19,11 +19,8 @@ namespace SchoolBook.Models
         public int YearId { get; set; }
         public SchoolYear Year { get; set; }
 
-        [NotMapped]
         public string Text => Description.ToString();
-        [NotMapped]
         public string Value => Id.ToString();
-        [NotMapped]
         public string SuperiorId => string.Empty;
     }
 }

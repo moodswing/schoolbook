@@ -9,13 +9,13 @@ namespace SchoolBook.Controllers
     public class BaseController : Controller
     {
         public IUsersDAL UsersDAL { get; }
-        public ClassSelectorViewModel ClassSelection { get; set; }
+        public UserSelectorViewModel FiltersSelection { get; set; }
 
         public BaseController(IUsersDAL usersDAL)
         {
             UsersDAL = usersDAL;
 
-            ClassSelection = UsersDAL.GetUserSelection<ClassSelectorViewModel>(SelectionType.Class);
+            FiltersSelection = UsersDAL.GetUserSelection<UserSelectorViewModel>(SelectionType.Filters);
         }
     }
 }

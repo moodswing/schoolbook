@@ -1,6 +1,10 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+b {
+    -webkit-font-smoothing: antialiased;
+}
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -139,7 +143,7 @@ main {
     margin-left: 45px;
 }
 
-.main .content {
+main > .content {
     background: white;
     padding: 25px 0 30px 25px;
     border: 1px solid #dee2e680;
@@ -287,6 +291,10 @@ input[type=password]:focus {
     font-style: normal;
 }
 
+.datepicker + i {
+    margin-top: 5px;
+}
+
 h1 {
     color: #036e8c;
 }
@@ -301,7 +309,7 @@ h1 {
     }
 
 
-    .main .content {
+    main > .content {
         margin-left: 0;
         margin-top: 20px;
     }
@@ -343,38 +351,65 @@ h1 {
         float: right;
     }
 
-    .inner-content .selector .options {
-        display: inline-block;
-        margin-right: 10px;
-        background-color: #f7f7f7;
-        color: #495057;
-        border: 1px solid #dee2e680;
-        padding: 2px 15px 2px;
-        margin-top: 4px;
-        border-radius: 4px;
-        box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
-        font-size: 13px;
-        background-color: #f7f7f7;
-        color: #495057;
-    }
+radiobutton .options {
+    display: inline-block;
+    margin-right: 10px;
+    background-color: #f7f7f7;
+    color: #495057;
+    border: 1px solid #dee2e680;
+    padding: 2px 15px 2px;
+    margin-top: 4px;
+    border-radius: 3px;
+    box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, .05);
+    font-size: 13px;
+    background-color: #f7f7f7;
+    color: #495057;
+}
 
-        .inner-content .selector .options.selected {
-            background-color: #1ca9d4;
-            color: white;
+        radiobutton .options.selected {
+            background-color: #ffffff;
+            color: #036e8c;
+            border-color: #00C6CF;
+            box-shadow: 1px 1px 2px 0px rgba(171,171,171,1);
         }
 
-        .inner-content .selector .options input[type=radio] {
+        radiobutton .options input[type=radio] {
             display: none;
         }
 
-        .inner-content .selector .options:hover,
-        .inner-content .selector .options label:hover {
+        radiobutton .options:hover,
+        radiobutton .options label:hover {
             cursor: pointer;
         }
 
-        .inner-content .selector .options label {
+        radiobutton .options label {
             margin-bottom: 0;
         }
+
+        radiobutton.error .options {
+            border-bottom-color: #f9a835
+        }
+
+        radiobutton .options label {
+            margin-bottom: 0;
+        }
+
+.add-item-form radiobutton .options {
+    box-shadow: none;
+    margin-right: 5px;
+}
+
+    .add-item-form radiobutton .options.selected {
+        box-shadow: 1px 1px 2px 0px rgba(171,171,171,1);
+    }
+
+.add-item-form radiobutton .options:first-of-type {
+    border-radius: 5px 0 0 5px
+}
+
+    .add-item-form radiobutton .options:last-of-type {
+        border-radius: 0 5px 5px 0;
+    }
 
 .spin-container {
     display: inline-block;
@@ -384,15 +419,22 @@ h1 {
     display: none;
 }
 
-.action-confirmation .spinner {
-    margin-top: 2px;
-    margin-bottom: 1px;
-}
-
 .informative {
     padding: 10px 20px 0 6px;
     font-size: 13px;
 }
+
+.informative.no-data {
+    padding: 25px 20px;
+    font-size: 13px;
+    border: 1px dashed #c8c8c8;
+    border-right: none;
+    margin-top: 20px;
+}
+
+    .evals-container + .informative.no-data {
+        display: none;
+    }
 
     .informative .icon[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, .informative .icon[class*=" flaticon-"]:after {
         padding-right: 10px;
@@ -404,21 +446,13 @@ h1 {
         color: #036e8c;
     }
 
-.footer-buttons {
-    padding: 10px 26px 10px 0;
-    text-align: center;
-    margin-left: -25px;
-    margin-top: 25px;
-    background-color: #f7f7f7;
-}
-
 .btn-primary,
 .btn-secondary {
-    padding: 4px 10px;
-    border-radius: 4px;
+    padding: 3px 10px;
+    border-radius: 3px;
     margin: 0 2px;
     border: none;
-    font-size: 14px;
+    font-size: 13px;
 }
 
     .btn-primary,
@@ -427,54 +461,722 @@ h1 {
         color: white;
     }
 
+        .btn-primary:disabled {
+            color: #f7f7f7;
+            background-color: #c8c8c8;
+        }
+
+        .btn-primary:disabled:hover {
+            cursor: not-allowed;
+        }
+
+.modal .btn-primary,
+.modal .btnbtn-secondary {
+    height: 26px;
+}
+
     .btn-secondary,
     .btn-secondary:hover {
         background-color: #ffffff;
         color: #1ca9d4;
     }
 
+.error-message {
+    color: red !important;
+}
 
-.action-confirmation {
+input + .flaticon-check:hover,
+input + .flaticon-check-box-empty:hover {
+    cursor: pointer;
+}
+
+input + .flaticon-check,
+input + .flaticon-check-box-empty {
+    position: relative;
+    top: 5px;
+    padding-left: 8px;
+}
+
+input + .flaticon-check:before {
+    font-size: 16px;
+}
+
+.toltip {
+    position: relative;
+    display: inline-block;
+}
+
+    i.toltip:hover {
+        cursor: pointer;
+    }
+
+.toltip:hover .toltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.toltip .toltip {
+    visibility: hidden;
+    position: absolute;
+    width: max-content;
+    background-color: #ffffff;
+    color: #1ca9d4;
+    padding: 2px 15px;
+    border-radius: 3px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity .6s;
+    top: -12px;
+    left: calc(100% + 10px);
+    font-size: 12px;
+    font-style: normal;
+    border: 1px solid #ebedef;
+}
+
+    .toltip .toltip.up {
+        top: -27px;
+        transform: translateX(-52%);
+    }
+
+button:not(:disabled) .toltip.validation {
+    display: none;
+}
+
+button:disabled .toltip.validation {
+    top: 0 !important;
+    transform: translateX(-31%) translateY(-125%) !important;
+    left: 0;
+    color: #212529;
+    width: 400px;
+    padding-top: 7px;
+    padding-bottom: 3px;
+}
+
+.modal-dialog {
+    font-size: 13px;
+    top: -60px;
+    max-width: 95%;
+    width: 700px;
+}
+
+.subject-data-filters,
+.subject-data-container {
+    font-size: 13px;
+}
+
+/* #region Autocomplete */
+
+autocomplete {
+    width: 100%;
+}
+
+input[type=text]:focus ~ .autocomplete-list,
+input[type=text] ~ .autocomplete-list:hover {
+    display: block;
+}
+
+.autocomplete-list {
+    position: absolute;
+    background: white;
+    border: 1px solid #1ca9d4;
+    border-top-color: #bfdeff;
+    width: 400px;
+    margin-top: -6px;
+    box-shadow: 2px 2px 5px 0px rgba(171,171,171,1);
+    margin-left: 1px;
+    z-index: 1;
+    display: none;
+    transition: max-height 0.8s ease-in-out;
+    max-height: 100%;
+}
+
+    .autocomplete-list div {
+        padding: 5px 20px;
+        display: none;
+    }
+
+        .autocomplete-list div.selected {
+            background-color: #c8c8c8;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+autocomplete .display-all {
+    border-top: 1px dashed #c8c8c8;
+}
+
+.autocomplete-list > div:not(.selected) i {
+    display: none;
+}
+
+.autocomplete-list > div.selected i {
+    float: right;
+}
+
+    .autocomplete-list > div.selected i::before {
+        color: #036e8c;
+        font-size: 13px;
+    }
+
+autocomplete .selection-list {
     display: flex;
-    justify-content: center;
-    padding: 10px 26px 10px 0;
-    margin-left: -25px;
+    flex-wrap: wrap;
+}
+
+autocomplete .selection-list:empty {
+    display: none;
+}
+
+    autocomplete .selection-list > div {
+        margin-right: 10px;
+        background: #f7f7f7;
+        padding: 2px 10px;
+        border-radius: 3px;
+        margin-top: 8px;
+    }
+
+autocomplete .selection-list > div i {
+    margin-left: 10px;
+}
+
+    autocomplete .selection-list > div i:hover {
+        cursor: pointer;
+    }
+
+    autocomplete .selection-list > div i::before {
+        color: #036e8c;
+        font-size: 8px;
+        top: -1px;
+        position: relative;
+    }
+
+/* #endregion Autocomplete */
+
+/* #region Observation Modal */
+
+.modal-open {
+    padding-right: 0 !important;
+}
+
+.modal .obs-container {
+    padding: 5px 0;
+}
+
+    .modal .obs-container .observation {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+    }
+
+    .modal .obs-container h6 {
+        background-color: #25a9d4;
+        color: white;
+        padding: 7px 0 5px 20px;
+        box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, .05);
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .modal .obs-container .observation .field {
+        background-color: #f7f7f7;
+        color: #036E8C;
+    }
+
+    .modal .obs-container .first-field {
+        padding-top: 15px !important;
+    }
+
+    .modal .obs-container .field {
+        padding: 8px 0 8px 20px;
+        margin-left: 40px;
+        padding-right: 30px;
+        text-align: right;
+    }
+
+        .modal .obs-container .field + div {
+            padding: 8px 10px;
+            margin-right: 40px;
+            margin-left: 20px;
+        }
+
+    .modal .obs-container .input {
+        line-height: 33px;
+    }
+
+    .modal .obs-container .textarea {
+        text-decoration: none !important;
+    }
+
+    .modal .obs-container input {
+        border: none;
+        border-bottom: 1px solid #ced4da;
+    }
+
+    .modal .obs-container textarea {
+        height: 100px;
+        border: none;
+        border-bottom: 1px solid #ced4da;
+    }
+
+/* #endregion Observation Modal */
+
+/* #region Errors */
+
+.field + div {
+    display: flex;
+}
+
+.field + div input,
+.field + div select {
+    margin-right: 0;
+}
+
+    .field + div input.error:not(.datepicker),
+    .field + div textarea.error {
+        margin-right: 10px;
+    }
+
+    .modal .field + div input.error:not(.datepicker),
+    .modal .field + div textarea.error {
+        margin-right: -20px;
+    }
+
+
+autocomplete input[type=text] ~ i {
+    position: relative;
+    top: -33px;
+    left: calc(100% - 35px);
+}
+
+    autocomplete input[type=text] ~ i::before {
+        color: #156e8b;
+        position: absolute;
+        font-size: 14px;
+    }
+
+input.error:not(.datepicker) + i,
+select.error + i,
+textarea.error + i {
+    right: 46px;
+    position: relative;
+    top: 6px;
+    margin-right: 0;
+}
+
+.modal input.error:not(.datepicker) + i,
+.modal select.error + i,
+.modal textarea.error + i {
+    right: 16px;
+}
+
+select.error:not(.datepicker) + i {
+    right: -16px;
+}
+
+textarea.error + i {
+    right: 46px;
+    transform: translateY(calc(100% - 32px));
+}
+
+div > input:not(.datepicker):not(.error):not([type=checkbox]) ~ i,
+div > select:not(.error) ~ i,
+radiobutton:not(.error) ~ i,
+div > textarea:not(.error) ~ i {
+    display: none;
+}
+
+    input.error:not(.datepicker) ~ i::before,
+    select.error ~ i::before,
+    textarea.error ~ i::before {
+        color: #f9a835;
+/*        position: absolute;*/
+        font-size: 15px;
+    }
+
+.datepicker.error ~ i::before {
+    color: #f9a835;
+}
+
+radiobutton.error ~ i {
+    margin-top: 5px;
+    right: -5px;
+    position: relative;
+}
+
+/* #endregion Errors */
+
+/* #region Add Item Form */
+
+.add-item-form {
+    font-size: 13px;
+}
+
+.add-item-form form {
+    border: 1px solid #eaecee;
+    border-right: none;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+
+.add-item-form .field {
+    background-color: #f7f7f7;
+    color: #036E8C;
+    padding: 7px 0 7px 20px;
+    padding-left: 25px;
+    padding-right: 30px;
+}
+
+.add-item-form .field:first-of-type,
+.add-item-form .field:first-of-type + div {
+    padding-top: 15px !important;
+}
+
+.add-item-form .field + div {
+    padding: 7px 10px;
+    margin-right: 40px;
+    margin-left: 20px;
+}
+
+.add-item-form .field {
+    line-height: 33px;
+}
+
+.add-item-form input {
+    border: none;
+    border-bottom: 1px solid #ced4da;
+}
+
+.add-item-form .textarea {
+    text-decoration: none !important;
+}
+
+.add-item-form textarea {
+    height: 100px;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+}
+
+.add-item-form .informative {
+    font-size: 12px;
+    margin-top: -7px;
+    display: inline;
+}
+
+    .add-item-form .informative .small-icon {
+        margin-right: 8px;
+    }
+
+        .add-item-form .informative .small-icon::before {
+            color: #f9a835;
+        }
+
+    .add-item-form .action-confirmation div {
+        font-size: 13px;
+    }
+
+        .add-item-form .action-confirmation .title {
+            height: 24px;
+        }
+
+        .add-item-form .action-confirmation button {
+            padding: 3px 10px 2px;
+        }
+
+        .add-item-form .action-confirmation .spinner {
+            margin-bottom: 2px;
+        }
+
+    .add-item-form .field + div input.error:not(.datepicker),
+    .add-item-form .field + div textarea.error {
+        margin-right: -20px;
+    }
+
+    .add-item-form input.error:not(.datepicker) + i,
+    .add-item-form select.error + i,
+    .add-item-form textarea.error + i {
+        right: 16px;
+    }
+
+    .add-item-form .description {
+        line-height: 33px;
+    }
+
+.add-item-form autocomplete input[type=text] ~ i {
+    top: -25px;
+}
+
+    .add-item-form .autocomplete-list {
+        margin-top: 2px;
+    }
+
+    .add-item-form input.datepicker {
+        width: 200px;
+        display: inline;
+    }
+
+    .add-item-form input.datepicker + i {
+        margin-left: -36px;
+    }
+
+        .add-item-form input.datepicker:not(.error) + i::before {
+            color: #036E8C;
+        }
+
+/* #endregion */
+
+/* #region Display Container */
+
+.display-container header {
+    display: flex;
+    border-bottom: 1px dashed #ced4da;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.display-container > div > header {
+    padding-left: 15px;
+}
+
+.display-container > div > div {
+    padding-left: 80px;
+}
+
+.display-container .avatar {
+    border-radius: 27px;
+    padding: 8px 14px;
+    height: 45px;
+    width: 45px;
+    background: #f7f7f7;
+    margin-right: 20px;
+}
+
+.display-container .title {
+    padding-top: 5px;
+    color: #036e8c;
+}
+
+.display-container .subtitle,
+.display-container .additional-info {
+    font-size: 12px;
+}
+
+.display-container .avatar i::before {
+    font-size: 19px;
+    color: #1ca9d4;
+}
+
+.display-container > div:not(.no-data) {
+    padding: 10px 0 10px;
+    margin-bottom: 15px;
+    border: 1px solid #eaecee;
+    border-right: none;
+    box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, .05);
+}
+
+    .display-container > div:not(.no-data):nth-child(odd) {
+        background-color: #f7f7f7;
+    }
+
+        .display-container > div:nth-child(odd) .avatar {
+            background-color: white;
+        }
+
+.display-container div:not(.list-separator) ~ .no-data {
+    display: none;
+}
+
+.display-container > div .actions {
+    margin-top: 5px;
+}
+
+    .display-container > div .actions span {
+        padding: 2px 7px;
+        border-radius: .35rem;
+        font-size: 12px;
+    }
+
+        .display-container > div .actions span:hover {
+            cursor: pointer;
+        }
+
+.display-container > div:nth-child(odd) .actions span {
+    background-color: white;
+}
+
+.display-container > div:nth-child(even) .actions span {
+    background-color: #f7f7f7;
+}
+
+.display-container .additional-info {
+    padding: 5px 0;
+    display: none;
+}
+
+    .display-container .additional-info .flaticon-angle-arrow-pointing-to-right {
+        padding-right: 7px;
+        position: relative;
+        top: -2px;
+    }
+
+        .display-container .additional-info .flaticon-angle-arrow-pointing-to-right:before {
+            font-size: 7px;
+            color: #277d97;
+        }
+
+    .display-container .additional-info span {
+        padding-left: 10px;
+    }
+
+.display-container .flaticon-caret-down,
+.display-container .flaticon-caret-arrow-up {
+    cursor: pointer;
+    padding-left: 5px;
+}
+
+    .display-container .flaticon-caret-down::before,
+    .display-container .flaticon-caret-arrow-up::before {
+        font-size: 10px;
+        color: #f9a835;
+    }
+
+.display-container .list-separator {
+    background-color: #c8c8c8 !important;
+    text-align: center;
+    color: white;
+}
+
+.display-container .cancelled {
+    text-decoration: line-through;
+}
+
+/* #endregion */
+
+/* #region General Modal */
+
+.modal .modal-content form > .title {
+    background-color: #25a9d4;
+    color: white;
+    padding: 5px 0 5px 0;
+    box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, .05);
+    margin-bottom: 10px;
+    position: relative;
+    margin-top: 3px;
+    font-size: 17px;
+    text-align: center;
+}
+
+.modal .modal-content .subtitle {
+    border-bottom: 1px dashed #ced4da;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+    .modal .modal-content .subtitle ul {
+        margin-top: 15px;
+        padding-left: 65px;
+        margin-bottom: 10px;
+    }
+
+.modal .modal-content .subtitle > div {
+    display: flex;
+}
+
+    .modal .modal-content .subtitle .icon {
+        color: #f9a835;
+        padding-right: 15px;
+    }
+
+.modal .modal-content .content {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal .modal-content .content label {
+    margin-bottom: 5px;
+}
+
+    .modal .modal-content .content textarea {
+        height: 100px;
+        border: none;
+        border-bottom: 1px solid #ced4da;
+    }
+
+/* #endregion */
+
+/* #region Action Buttons */
+
+.footer-buttons,
+.action-confirmation {
+    padding: 6px 0;
+    text-align: center;
     margin-top: 25px;
     background-color: #f7f7f7;
+    border-top: 1px solid #eaecee;
+    border-bottom: 1px solid #eaecee;
+    display: flex;
+    justify-content: center;
+}
+
+.student-list .footer-buttons,
+.student-list .action-confirmation {
+    margin-left: -25px;
+}
+
+.modal .footer-buttons,
+.modal .action-confirmation {
+    margin-left: 0;
+    margin-top: 19px;
+    border-bottom: none;
+}
+
+.action-confirmation .spinner {
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+
+.modal .action-confirmation .spinner {
+    margin-bottom: 3px;
 }
 
     .action-confirmation div {
         font-size: 14px;
-        padding-top: 5px;
+        padding-top: 2px;
         color: #00C6CF;
     }
 
     .action-confirmation .title {
-        height: 29px;
+        height: 25px;
+    }
+
+    .modal .action-confirmation .title {
+        height: 26px;
     }
 
     .action-confirmation i + *,
-        .action-confirmation div + * {
+    .action-confirmation div + * {
         margin-left: 20px;
     }
 
-.action-confirmation button {
-    width: 40px;
+    .action-confirmation button {
+        width: 40px;
+    }
+
+.modal .action-confirmation i {
+    margin-top: 2px;
 }
 
-    .action-confirmation i {
-        padding-top: 1px;
-    }
+.action-confirmation i {
+    margin-top: 2px;
+}
 
     .action-confirmation i:hover {
         cursor: pointer;
     }
 
-        .action-confirmation i:before {
-            font-size: 9px;
-            color: #949698;
-        }
+    .action-confirmation i:before {
+        font-size: 9px;
+        color: #949698;
+    }
 
-.error-message {
-    color: red !important;
-}
+/* #endregion Actions Buttons */

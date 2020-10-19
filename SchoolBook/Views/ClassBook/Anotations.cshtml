@@ -1,0 +1,48 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Portal - " + Configuration["AppSettings:SiteTitle"];
+    Layout = "../Shared/_layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/datepicker/datepicker.css">
+<script src="~/lib/datepicker/datepicker.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/js/autocomplete.js" asp-append-version="true"></script>
+
+<div class="content">
+    <vc:class-selector />
+    <div class="inner-content">
+        <div>
+            <h1>Anotaciones</h1>
+        </div>
+        <div class="subject-data-filters">
+            <partial name="_StudentSelector" />
+        </div>
+        <div class="footer-buttons">
+            <button type="button" class="btn-primary" onclick="addNewObservation()">Agregar Anotación</button>
+        </div>
+        <div class="new-anotation add-item-form">
+        </div>
+        <div class="anotations-editor subject-data-container">
+            <partial name="_ListAnotations" />
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddObservation">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function addNewObservation() {
+        $(".new-anotation").loadFadeOut("/ClassBook/GetNewAnotation", getFormData($(".selector")));
+    }
+
+</script>

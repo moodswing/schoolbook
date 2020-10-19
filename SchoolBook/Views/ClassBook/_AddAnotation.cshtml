@@ -1,0 +1,59 @@
+﻿@model SchoolBook.Models.Anotation
+
+<form id="frmObservation">
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ObserverId)
+    @Html.HiddenFor(m => m.ClassId)
+    <div class="field input">Para</div>
+    <div>
+        <radiobutton list="Model.ReceiverList" for="Receiver" selected="@Model.Receiver" required></radiobutton>
+    </div>
+    <div class="field input">Título</div>
+    <div>
+        <input asp-for="Title" class="form-control" required />
+        <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+    </div>
+    <div class="field"></div>
+    <div class="informative">
+        <i class="flaticon-information-button small-icon"></i>Observación ingresada por <i>@User.Identity.Name</i>.
+    </div>
+    <div class="field student-anotation">Alumno(s)</div>
+    <div class="student-anotation">
+        <autocomplete list="Model.Students" for="Students" placeholder="Buscar..." multiple-selection="true" required></autocomplete>
+    </div>
+    <div class="field class-anotation">Clase</div>
+    <div class="class-anotation description">Curso @Model.Class.Grade.Description @Model.Class.Description</div>
+    <div class="field input">Fecha</div>
+    <div>
+        <input asp-for="Date" type="text" class="form-control datepicker" value="@(Model.Date == DateTime.MinValue ? "" : Model.Date.ToString("dd/MM/yyyy"))" autocomplete="off" required />
+        <i class="flaticon-calendar-with-spring-binder-and-date-blocks small-icon"></i>
+    </div>
+    <div class="field input">Calificación</div>
+    <div>
+        <radiobutton list="Model.TypesList" for="Type" selected="@Model.Type" required></radiobutton>
+    </div>
+    <div class="field">Descripción</div>
+    <div class="textarea">
+        <textarea asp-for="Description" class="form-control" required></textarea>
+        <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+    </div>
+    <div class="field"></div>
+    <div class="footer-buttons">
+        <button type="button" class="btn-secondary" onclick="cancelAddItem(this)">Cancelar</button>
+        <button type="button" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
+    </div>
+    <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveForm(this, '/ClassBook/SaveAnotation', getFilteredData)" />
+</form>
+
+<script type="text/javascript">
+    $(document).on("change", "[name=Receiver]", function () {
+        if ($(this).val() == 1) {
+            $(".class-anotation").slideUp(750);
+            $(".student-anotation").slideDown(750);
+        }
+        else if ($(this).val() == 2) {
+            $(".class-anotation").slideDown(750);
+            $(".student-anotation").slideUp(750);
+        }
+    });
+</script>

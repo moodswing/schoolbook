@@ -1,0 +1,33 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+
+<div class="display-container">
+    @if (Model.StudentAnotations != null && Model.StudentAnotations.Any())
+    {
+        for (var i = 0; i < Model.StudentAnotations.Count(); i++)
+        {
+            var annotation = Model.StudentAnotations[i];
+            annotation.Index = i;
+
+            <partial name="_DisplayAnotation" model="annotation" />
+        }
+    }
+    @if (Model.ClassAnotations != null && Model.ClassAnotations.Any())
+    {
+        <div class="list-separator">
+            @{ var studentsClass =  Model.ClassAnotations.First().Class; }
+            Anotaciones generales del curso <b>@studentsClass.Grade.Description @studentsClass.Description</b>
+        </div>
+
+        for (var i = 0; i < Model.ClassAnotations.Count(); i++)
+        {
+            var annotation = Model.ClassAnotations[i];
+            annotation.Index = i;
+
+            <partial name="_DisplayAnotation" model="annotation" />
+        }
+    }
+    <div class="informative no-data">
+        <i class="flaticon-information-button icon"></i>
+        @(string.IsNullOrEmpty(Model.StudentId) ? "Favor completar los parametros de búsqueda." : "No se han ingresado anotaciones aún.")
+    </div>
+</div>

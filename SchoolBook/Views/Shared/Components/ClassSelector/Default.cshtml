@@ -1,4 +1,4 @@
-@model SchoolBook.ViewModels.ClassSelectorViewModel
+@model SchoolBook.ViewModels.UserSelectorViewModel
 
 <div class="class-selection">
     <div class="row selector">
@@ -20,7 +20,6 @@
         $(document).on("change", "#selClasses", function () {
             if ($("#selClasses :selected").index() == 0) return;
 
-            showSpinner();
             var dataSelected = {};
             $.each($('.class-selection select').serializeArray(), function () {
                 dataSelected[this.name] = this.value;
@@ -28,7 +27,7 @@
 
             var request = $.ajax({
                 type: "POST",
-                url: "Dashboard/SaveClassSelection",
+                url: "/Dashboard/SaveClassSelection",
                 data: { selection: JSON.stringify(dataSelected) },
                 complete: function () {
                     window.location.reload(true);

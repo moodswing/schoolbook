@@ -184,6 +184,80 @@ namespace SchoolBook.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SchoolBook.Models.Anotation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AuthorizationRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ObserverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Receiver")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorizationRequestId");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("ObserverId");
+
+                    b.ToTable("Anotations");
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.AuthorizationRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Observation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResolvedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResolvedById");
+
+                    b.ToTable("AuthorizationRequests");
+                });
+
             modelBuilder.Entity("SchoolBook.Models.Bulletin", b =>
                 {
                     b.Property<int>("Id")
@@ -364,11 +438,16 @@ namespace SchoolBook.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ClassSubjects");
 
@@ -863,8 +942,14 @@ namespace SchoolBook.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ClassSubjectId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Coefficient")
+                        .HasColumnType("decimal(2,1)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -875,11 +960,19 @@ namespace SchoolBook.Migrations
                     b.Property<int>("PeriodId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClassSubjectId");
 
                     b.HasIndex("PeriodId");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Evaluations");
 
@@ -887,82 +980,246 @@ namespace SchoolBook.Migrations
                         new
                         {
                             Id = 1,
+                            Active = false,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Historia de Chile 1",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Historia de Chile 1",
+                            TypeId = 1
                         },
                         new
                         {
                             Id = 2,
+                            Active = false,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Historia de Chile 2",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Historia de Chile 2",
+                            TypeId = 2
                         },
                         new
                         {
                             Id = 3,
+                            Active = false,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Trabajo Presidentes de Chile",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Trabajo Presidentes de Chile",
+                            TypeId = 3
                         },
                         new
                         {
                             Id = 4,
+                            Active = false,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Historia Mundial",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Historia Mundial",
+                            TypeId = 1
                         },
                         new
                         {
                             Id = 5,
+                            Active = false,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Historia Universal",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Historia Universal",
+                            TypeId = 1
                         },
                         new
                         {
                             Id = 6,
+                            Active = false,
                             ClassSubjectId = 1,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Cultura Chopistica",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Cultura Chopistica",
+                            TypeId = 2
                         },
                         new
                         {
                             Id = 7,
+                            Active = false,
                             ClassSubjectId = 2,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Ecuaciones Diferenciales",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Ecuaciones Diferenciales",
+                            TypeId = 2
                         },
                         new
                         {
                             Id = 8,
+                            Active = false,
                             ClassSubjectId = 2,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Geometria",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Geometria",
+                            TypeId = 3
                         },
                         new
                         {
                             Id = 9,
+                            Active = false,
                             ClassSubjectId = 2,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Trabajo Aritmetica",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Trabajo Aritmetica",
+                            TypeId = 4
                         },
                         new
                         {
                             Id = 10,
+                            Active = false,
                             ClassSubjectId = 2,
-                            Date = new DateTime(2020, 8, 30, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Prueba Planos Cartesianos",
-                            PeriodId = 1
+                            Coefficient = 0m,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            PeriodId = 1,
+                            Title = "Prueba Planos Cartesianos",
+                            TypeId = 5
+                        });
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.EvaluationObservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AuthorizationRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EvaluationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ObserverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorizationRequestId");
+
+                    b.HasIndex("EvaluationId");
+
+                    b.HasIndex("ObserverId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Observations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "No quiso entregar la prueba.",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Mal comportamiento"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Sigue sin entregar la prueba!!",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Falta de respeto"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Oye hasta cuando po!",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Sin interes alguno"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Anotación negativa!",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Comportamiento agresivo"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Expulsado.",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Falló en la vida"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Cayó en las drogas :(",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Sin esperanzas"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Se nos jue :'(",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 5,
+                            Title = "Un trágico final"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Date = new DateTime(2020, 10, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "No entrega trabajo a la fecha.",
+                            EvaluationId = 10,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213",
+                            StudentId = 2,
+                            Title = "Flojera maximas"
                         });
                 });
 
@@ -995,337 +1252,384 @@ namespace SchoolBook.Migrations
                         {
                             Id = 1,
                             EvaluationId = 1,
-                            Score = 1.7m,
+                            Score = 2.3m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 2,
                             EvaluationId = 2,
-                            Score = 1.6m,
+                            Score = 3.7m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 3,
                             EvaluationId = 3,
-                            Score = 5.8m,
+                            Score = 1.6m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 4,
                             EvaluationId = 4,
-                            Score = 2.8m,
+                            Score = 4.1m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 5,
                             EvaluationId = 5,
-                            Score = 7.0m,
+                            Score = 3.4m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 6,
                             EvaluationId = 6,
-                            Score = 6.9m,
+                            Score = 5.5m,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 7,
                             EvaluationId = 1,
-                            Score = 5.5m,
+                            Score = 4.4m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 8,
                             EvaluationId = 2,
-                            Score = 3.6m,
+                            Score = 5.8m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 9,
                             EvaluationId = 3,
-                            Score = 5.0m,
+                            Score = 3.4m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 10,
                             EvaluationId = 4,
-                            Score = 4.4m,
+                            Score = 4.5m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 11,
                             EvaluationId = 5,
-                            Score = 2.0m,
+                            Score = 5.6m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 12,
                             EvaluationId = 6,
-                            Score = 2.0m,
+                            Score = 2.6m,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 13,
                             EvaluationId = 1,
-                            Score = 3.7m,
+                            Score = 5.3m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 14,
                             EvaluationId = 2,
-                            Score = 2.7m,
+                            Score = 6.3m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 15,
                             EvaluationId = 3,
-                            Score = 5.2m,
+                            Score = 3.8m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 16,
                             EvaluationId = 4,
-                            Score = 4.9m,
+                            Score = 1.5m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 17,
                             EvaluationId = 5,
-                            Score = 3.2m,
+                            Score = 3.9m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 18,
                             EvaluationId = 6,
-                            Score = 1.6m,
+                            Score = 3.7m,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 19,
                             EvaluationId = 1,
-                            Score = 5.5m,
+                            Score = 2.8m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 20,
                             EvaluationId = 2,
-                            Score = 5.2m,
+                            Score = 6.3m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 21,
                             EvaluationId = 3,
-                            Score = 6.7m,
+                            Score = 2.4m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 22,
                             EvaluationId = 4,
-                            Score = 4.6m,
+                            Score = 1.0m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 23,
                             EvaluationId = 5,
-                            Score = 5.8m,
+                            Score = 6.7m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 24,
                             EvaluationId = 6,
-                            Score = 5.9m,
+                            Score = 6.5m,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 25,
                             EvaluationId = 1,
-                            Score = 6.2m,
+                            Score = 2.0m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 26,
                             EvaluationId = 2,
-                            Score = 6.6m,
+                            Score = 6.9m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 27,
                             EvaluationId = 3,
-                            Score = 6.7m,
+                            Score = 6.1m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 28,
                             EvaluationId = 4,
-                            Score = 4.2m,
+                            Score = 6.1m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 29,
                             EvaluationId = 5,
-                            Score = 5.7m,
+                            Score = 6.5m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 30,
                             EvaluationId = 6,
-                            Score = 1.4m,
+                            Score = 4.4m,
                             StudentId = 5
                         },
                         new
                         {
                             Id = 31,
                             EvaluationId = 1,
-                            Score = 3.5m,
+                            Score = 5.9m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 32,
                             EvaluationId = 2,
-                            Score = 3.8m,
+                            Score = 2.0m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 33,
                             EvaluationId = 3,
-                            Score = 2.6m,
+                            Score = 5.4m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 34,
                             EvaluationId = 4,
-                            Score = 2.9m,
+                            Score = 2.1m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 35,
                             EvaluationId = 5,
-                            Score = 7.0m,
+                            Score = 5.6m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 36,
                             EvaluationId = 6,
-                            Score = 4.5m,
+                            Score = 5.6m,
                             StudentId = 6
                         },
                         new
                         {
                             Id = 37,
                             EvaluationId = 1,
-                            Score = 5.3m,
+                            Score = 4.6m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 38,
                             EvaluationId = 2,
-                            Score = 1.3m,
+                            Score = 3.6m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 39,
                             EvaluationId = 3,
-                            Score = 1.1m,
+                            Score = 1.8m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 40,
                             EvaluationId = 4,
-                            Score = 1.4m,
+                            Score = 5.1m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 41,
                             EvaluationId = 5,
-                            Score = 5.4m,
+                            Score = 6.8m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 42,
                             EvaluationId = 6,
-                            Score = 2.1m,
+                            Score = 4.0m,
                             StudentId = 7
                         },
                         new
                         {
                             Id = 43,
                             EvaluationId = 1,
-                            Score = 5.9m,
+                            Score = 4.9m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 44,
                             EvaluationId = 2,
-                            Score = 6.4m,
+                            Score = 2.5m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 45,
                             EvaluationId = 3,
-                            Score = 4.2m,
+                            Score = 6.6m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 46,
                             EvaluationId = 4,
-                            Score = 4.0m,
+                            Score = 3.5m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 47,
                             EvaluationId = 5,
-                            Score = 3.8m,
+                            Score = 4.6m,
                             StudentId = 8
                         },
                         new
                         {
                             Id = 48,
                             EvaluationId = 6,
-                            Score = 5.0m,
+                            Score = 6.9m,
                             StudentId = 8
+                        });
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.EvaluationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EvaluationTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Nota parcial"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Examen"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Promedio Período"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Promedio Final"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Prueba Acumulativa"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Prueba de Nivel"
                         });
                 });
 
@@ -1455,15 +1759,15 @@ namespace SchoolBook.Migrations
                             Description = "Notas",
                             GroupMenuOptionId = 1,
                             Order = 1,
-                            Url = "ClassBook"
+                            Url = "/ClassBook"
                         },
                         new
                         {
                             Id = 3,
                             Description = "Anotaciones",
                             GroupMenuOptionId = 1,
-                            Order = 3,
-                            Url = "Observations"
+                            Order = 4,
+                            Url = "/ClassBook/Anotations"
                         },
                         new
                         {
@@ -1471,27 +1775,35 @@ namespace SchoolBook.Migrations
                             Description = "Evaluaciones",
                             GroupMenuOptionId = 1,
                             Order = 2,
-                            Url = "Evaluations"
+                            Url = "/ClassBook/Evaluations"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Asistencia",
+                            Description = "Observaciones",
                             GroupMenuOptionId = 1,
-                            Order = 4,
-                            Url = "Attendance"
+                            Order = 3,
+                            Url = "/ClassBook/Observations"
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Atrasos",
+                            Description = "Asistencia",
                             GroupMenuOptionId = 1,
                             Order = 5,
-                            Url = "Delays"
+                            Url = "Attendance"
                         },
                         new
                         {
                             Id = 7,
+                            Description = "Atrasos",
+                            GroupMenuOptionId = 1,
+                            Order = 6,
+                            Url = "Delays"
+                        },
+                        new
+                        {
+                            Id = 8,
                             Description = "Alumnos",
                             GroupMenuOptionId = 0,
                             Icon = "small-icon svgcollege-019-reading-book",
@@ -1499,23 +1811,23 @@ namespace SchoolBook.Migrations
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 9,
                             Description = "Ficha Alumno",
-                            GroupMenuOptionId = 7,
+                            GroupMenuOptionId = 8,
                             Order = 1,
                             Url = "Student"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 10,
                             Description = "Accidente Escolar",
-                            GroupMenuOptionId = 7,
+                            GroupMenuOptionId = 8,
                             Order = 2,
                             Url = "Accidents"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 11,
                             Description = "Administración",
                             GroupMenuOptionId = 0,
                             Icon = "small-icon svgcollege-043-test",
@@ -1523,23 +1835,23 @@ namespace SchoolBook.Migrations
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 12,
                             Description = "Credenciales",
-                            GroupMenuOptionId = 10,
+                            GroupMenuOptionId = 11,
                             Order = 1,
                             Url = "Credentials"
                         },
                         new
                         {
-                            Id = 12,
+                            Id = 13,
                             Description = "Cambiar Contraseña",
-                            GroupMenuOptionId = 10,
+                            GroupMenuOptionId = 11,
                             Order = 2,
                             Url = "Password"
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 14,
                             Description = "Horarios",
                             GroupMenuOptionId = 0,
                             Icon = "small-icon svgcollege-005-alarm",
@@ -1547,33 +1859,33 @@ namespace SchoolBook.Migrations
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 15,
                             Description = "Crear Horarios",
-                            GroupMenuOptionId = 13,
+                            GroupMenuOptionId = 14,
                             Order = 1,
                             Url = "ScheduleMaker"
                         },
                         new
                         {
-                            Id = 15,
+                            Id = 16,
                             Description = "Horario Por Asignatura",
-                            GroupMenuOptionId = 13,
+                            GroupMenuOptionId = 14,
                             Order = 2,
                             Url = "ScheduleMaker?type=1"
                         },
                         new
                         {
-                            Id = 16,
+                            Id = 17,
                             Description = "Horario Por Curso",
-                            GroupMenuOptionId = 13,
+                            GroupMenuOptionId = 14,
                             Order = 3,
                             Url = "ScheduleMaker?type=2"
                         },
                         new
                         {
-                            Id = 17,
+                            Id = 18,
                             Description = "Horario Por Profesor",
-                            GroupMenuOptionId = 13,
+                            GroupMenuOptionId = 14,
                             Order = 4,
                             Url = "ScheduleMaker?type=3"
                         });
@@ -1745,6 +2057,28 @@ namespace SchoolBook.Migrations
                             Id = 8,
                             Name = "Arturito Vidal"
                         });
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.StudentAnotation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnotationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnotationId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentsAnotations");
                 });
 
             modelBuilder.Entity("SchoolBook.Models.StudentClass", b =>
@@ -2161,9 +2495,6 @@ namespace SchoolBook.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("IdSuperior")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -2233,6 +2564,28 @@ namespace SchoolBook.Migrations
                     b.ToTable("UserSelections");
                 });
 
+            modelBuilder.Entity("SchoolBook.Models.UserSuperior", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("SuperiorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SuperiorId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSuperiors");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -2284,6 +2637,28 @@ namespace SchoolBook.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SchoolBook.Models.Anotation", b =>
+                {
+                    b.HasOne("SchoolBook.Models.AuthorizationRequest", "AuthorizationRequest")
+                        .WithMany()
+                        .HasForeignKey("AuthorizationRequestId");
+
+                    b.HasOne("SchoolBook.Models.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId");
+
+                    b.HasOne("SchoolBook.Models.User", "Observer")
+                        .WithMany()
+                        .HasForeignKey("ObserverId");
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.AuthorizationRequest", b =>
+                {
+                    b.HasOne("SchoolBook.Models.User", "ResolvedBy")
+                        .WithMany()
+                        .HasForeignKey("ResolvedById");
+                });
+
             modelBuilder.Entity("SchoolBook.Models.Class", b =>
                 {
                     b.HasOne("SchoolBook.Models.Grade", "Grade")
@@ -2306,6 +2681,10 @@ namespace SchoolBook.Migrations
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SchoolBook.Models.User", null)
+                        .WithMany("Classes")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SchoolBook.Models.EducationGrade", b =>
@@ -2334,6 +2713,35 @@ namespace SchoolBook.Migrations
                     b.HasOne("SchoolBook.Models.TypePeriod", "Period")
                         .WithMany()
                         .HasForeignKey("PeriodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolBook.Models.EvaluationType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.EvaluationObservation", b =>
+                {
+                    b.HasOne("SchoolBook.Models.AuthorizationRequest", "AuthorizationRequest")
+                        .WithMany()
+                        .HasForeignKey("AuthorizationRequestId");
+
+                    b.HasOne("SchoolBook.Models.Evaluation", "Evaluation")
+                        .WithMany()
+                        .HasForeignKey("EvaluationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolBook.Models.User", "Observer")
+                        .WithMany()
+                        .HasForeignKey("ObserverId");
+
+                    b.HasOne("SchoolBook.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2390,6 +2798,21 @@ namespace SchoolBook.Migrations
                         .HasForeignKey("RoleId");
                 });
 
+            modelBuilder.Entity("SchoolBook.Models.StudentAnotation", b =>
+                {
+                    b.HasOne("SchoolBook.Models.Anotation", "Anotation")
+                        .WithMany("StudentAnotations")
+                        .HasForeignKey("AnotationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolBook.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SchoolBook.Models.StudentClass", b =>
                 {
                     b.HasOne("SchoolBook.Models.Class", "Class")
@@ -2409,6 +2832,17 @@ namespace SchoolBook.Migrations
                 {
                     b.HasOne("SchoolBook.Models.User", "User")
                         .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("SchoolBook.Models.UserSuperior", b =>
+                {
+                    b.HasOne("SchoolBook.Models.User", "Superior")
+                        .WithMany()
+                        .HasForeignKey("SuperiorId");
+
+                    b.HasOne("SchoolBook.Models.User", "User")
+                        .WithMany("Superiors")
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618

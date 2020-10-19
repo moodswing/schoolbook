@@ -17,11 +17,8 @@ namespace SchoolBook.Models
         public List<ClassSubject> ClassSubjects { get; set; }
         public List<StudentClass> StudentClass { get; set; }
 
-        [NotMapped]
         public string Text => Description;
-        [NotMapped]
         public string Value => Id.ToString();
-        [NotMapped]
         public string SuperiorId => GradeId.ToString();
     }
 }

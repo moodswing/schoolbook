@@ -1,0 +1,52 @@
+﻿@model SchoolBook.Models.Evaluation
+
+<div class="evals-container">
+    <form>
+        <h6>Nota @(Model.Index + 1): <span>@Model.Title</span></h6>
+        <div class="evaluation" style="@(Model.Index > 0 ? "display: none;" : "")">
+            @Html.Hidden("Id", Model.Id)
+            @Html.Hidden("ClassSubjectId", Model.ClassSubjectId)
+            @Html.Hidden("PeriodId", Model.PeriodId)
+            <div class="field first-field">Nombre</div>
+            <div class="first-field">
+                <input type="text" class="form-control" value="@Model.Title" name="@("Title")" required />
+                <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+            </div>
+            <div class="field">Tipo de Evaluación</div>
+            <div>
+                @*@Html.DropDownList("TypeId", new SelectList(Model.EvaluationTypes, "Value", "Text", Model.TypeId), "Seleccione", new { @class = "form-control" })*@
+                <select asp-for="TypeId" asp-items="Model.EvaluationTypes" class="form-control" required>
+                    <option value="">Seleccione</option>
+                </select>
+                <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+            </div>
+            <div class="field">Fecha de Evaluación</div>
+            <div>
+                <input type="text" class="form-control datepicker" value="@(Model.Date == DateTime.MinValue ? "" : Model.Date.ToString("dd/MM/yyyy"))" name="@("Date")" autocomplete="off" required />
+                <i class="flaticon-calendar-with-spring-binder-and-date-blocks small-icon"></i>
+            </div>
+            <div class="field">Coeficiente</div>
+            <div>
+                @*<input type="text" class="form-control numeric" value="@Model.Coefficient" name="@("Coefficient")" maxlength="3" />*@
+                <input class="form-control numeric" asp-for="Coefficient" maxlength="3" asp-format="{0:0.0}" required />
+                <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+            </div>
+            <div class="field">Activo</div>
+            <div>
+                <checkbox name="@("Active")" checked="@(Model.Active)"></checkbox>
+            </div>
+            <div class="field">Descripción</div>
+            <div>
+                @*<textarea type="text" class="form-control" name="Description">@Model.Description</textarea>*@
+                <textarea asp-for="Description" class="form-control" required></textarea>
+                <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+            </div>
+        </div>
+        <div class="footer-buttons" style="@(Model.Index > 0 ? "display: none;" : "")">
+            <button type="button" class="btn-secondary" onclick="cancelModification(this)">Cancelar</button>
+            <button type="button" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
+        </div>
+        <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveEvaluation(this)" />
+    </form>
+</div>
+

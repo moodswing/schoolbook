@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using SchoolBook.Utils;
 
 namespace SchoolBook.Models
 {
-    public class Student
+    public class Student : IListItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +16,6 @@ namespace SchoolBook.Models
         [NotMapped]
         public List<Evaluation> Evaluations { get; set; }
 
-        [NotMapped]
         public decimal EvaluationAvg
         {
             get
@@ -27,12 +27,10 @@ namespace SchoolBook.Models
             }
         }
 
-        [NotMapped]
-        public string EvaluationAvgStr {
-            get
-            {
-                return EvaluationAvg == 0 ? "" : EvaluationAvg.ToString("0.0");
-            }
-        }
+        public string EvaluationAvgStr => EvaluationAvg == 0 ? "" : EvaluationAvg.ToString("0.0");
+
+        public string Text => Name;
+        public string Value => Id.ToString();
+        public string SuperiorId => string.Empty;
     }
 }

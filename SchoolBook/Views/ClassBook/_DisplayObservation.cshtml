@@ -1,0 +1,31 @@
+﻿@model SchoolBook.Models.EvaluationObservation
+
+<div>
+    <header>
+        <div class="avatar">
+            <i class="flaticon-user-shape icon"></i>
+        </div>
+        <div class="@(Model.AuthorizationRequest != null && Model.AuthorizationRequest.Status == AuthorizationStatus.Approved ? "cancelled" : "")">
+            <div class="title">@Model.Title</div>
+            <div class="subtitle">Ingresado por <i>@Model.Observer.UserName</i> el @Model.Date.ToString("dd 'de' MMMM 'de' yyyy").</div>
+            <div class="actions">
+                @if (Model.AuthorizationRequest == null)
+                {
+                    <span onclick="cancelObservation('@Model.Id', '@((int)AuthorizationType.CancelObservation)')">Anular</span>
+                }
+                else if (Model.AuthorizationRequest.Status == AuthorizationStatus.Pending)
+                {
+                    <span>Pendiente de Anulación</span>
+                }
+                else if (Model.AuthorizationRequest.Status == AuthorizationStatus.Denied)
+                {
+                    <span>Anulación Rechazada</span>
+                }
+            </div>
+        </div>
+    </header>
+    <div class="description">
+        @Model.Description
+    </div>
+</div>
+

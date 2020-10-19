@@ -1,8 +1,8 @@
+using System.Linq;
 using System.Text;
-using SchoolBook.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace SchoolBook.Utils
 {
@@ -58,13 +58,40 @@ namespace SchoolBook.Utils
 
             if (SelectList == null || !SelectList.Any()) return;
 
+            var isRequired = context.AllAttributes.Any(a => a.Name.ToLower() == "required");
+
             foreach (IListItem item in SelectList)
             {
                 sb.AppendFormat("<div class='options {0}'>", Selected == item.Value ? "selected" : string.Empty);
-                sb.AppendFormat("<input id={0} type=radio value={1} name={2} {3}>", Property + item.Value, item.Value, Property, Selected == item.Value ? "checked" : string.Empty);
+                sb.AppendFormat("<input id={0} type=radio value={1} name={2} {3} {4}>", Property + item.Value, item.Value, Property, Selected == item.Value ? "checked" : string.Empty, isRequired ? "required" : "");
                 sb.AppendFormat("<label for={0}>{1}</label>", Property + item.Value, item.Text);
                 sb.AppendFormat("</div>");
             }
+
+            output.Content.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("checkbox")]
+    public class CheckBoxHelper : TagHelper
+    {
+        [HtmlAttributeName("name")]
+        public string Name { get; set; }
+
+        [HtmlAttributeName("checked")]
+        public bool Checked { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "checkbox";
+            output.TagMode = TagMode.StartTagAndEndTag;
+
+            var sb = new StringBuilder();
+
+            var id = Name.Replace(".", "_").Replace("[", "_").Replace("]", "_");
+
+            sb.AppendFormat("<input id={0} type=checkbox {1} name={2} style='display: none;'>", id, Checked ? "checked" : "", Name);
+            sb.AppendFormat("<i class='{0}'></i>", Checked ? "flaticon-check" : "flaticon-check-box-empty");
 
             output.Content.SetHtmlContent(sb.ToString());
         }
@@ -103,9 +130,6 @@ namespace SchoolBook.Utils
         [HtmlAttributeName("callback")]
         public string Callback { get; set; }
 
-        [HtmlAttributeName("display-over")]
-        public string Position { get; set; }
-
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "div";
@@ -117,10 +141,69 @@ namespace SchoolBook.Utils
             var sb = new StringBuilder();
 
             sb.AppendFormat("<div class=title>{0}</div>", Message);
-            sb.AppendFormat("<i class='flaticon-remove-symbol icon' style='display:none;' onclick=cancelConfirmation('{0}')></i>", Position);
-            sb.AppendFormat("<button id=btnCancel class=btn-secondary onclick=cancelConfirmation('{1}')>{0}</button>", No, Position);
-            sb.AppendFormat("<button id=btnOk class=btn-primary onclick='showConfirmationSpinner(this); {1}'>{0}</button>", Yes, Callback);
+            sb.AppendFormat("<i class='flaticon-remove-symbol icon' style='display:none;' onclick=cancelConfirmation(this)></i>");
+            sb.AppendFormat("<button id=btnCancel type='button' class=btn-secondary onclick=cancelConfirmation(this)>{0}</button>", No);
+            sb.AppendFormat("<button id=btnOk type='button' class=btn-primary onclick='showConfirmationSpinner(this); {1}'>{0}</button>", Yes, Callback.Replace("'", "\""));
             sb.AppendFormat("<div class='spinner'><div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div></div>");
+
+            output.Content.SetHtmlContent(sb.ToString());
+        }
+    }
+
+    [HtmlTargetElement("autocomplete")]
+    public class AutoCompleteHelper : TagHelper
+    {
+        [HtmlAttributeName("list")]
+        public IEnumerable<IListItem> SelectList { get; set; }
+
+        public ModelExpression For { get; set; }
+
+        [HtmlAttributeName("max-items")]
+        public string MaxItems { get; set; }
+
+        [HtmlAttributeName("placeholder")]
+        public string Placeholder { get; set; }
+
+        [HtmlAttributeName("multiple-selection")]
+        public bool MultipleSelection { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            output.TagName = "autocomplete";
+            output.TagMode = TagMode.StartTagAndEndTag;
+
+            if (MultipleSelection)
+                output.Attributes.Add("multiple-selection", "");
+
+            var isRequired = context.AllAttributes.Any(a => a.Name.ToLower() == "required");
+            if (isRequired)
+                output.Attributes.Add("required", "");
+
+            var sb = new StringBuilder();
+
+            MaxItems ??= "5";
+
+            var selected = For != null && For.Model != null ? SelectList.FirstOrDefault(i => i.Value == For.Model.ToString()) : null;
+            var value = For != null && For.Model != null && !MultipleSelection ? For.Model : string.Empty;
+            var name = For != null ? For.Name : string.Empty;
+
+            sb.AppendFormat("<input type=text placeholder={0} class='form-control' data-max-items={1} {2} value='{3}' />", Placeholder, MaxItems, MultipleSelection ? "data-list-name='" + name + "'" : "" , selected != null ? selected.Text : "");
+            sb.AppendFormat("<div class=underline></div>");
+            sb.AppendFormat("<i class='flaticon-magnifying-glass small-icon'></i>");
+            sb.AppendFormat("<div class='autocomplete-list'>");
+
+            var addButton = "<i class='flaticon-add-square-button small-icon'></i>";
+
+            foreach (IListItem item in SelectList)
+                sb.AppendFormat("<div data-id={0}>{1}{2}</div>", item.Value, item.Text, MultipleSelection ? addButton : "");
+
+            sb.AppendFormat("<div class='display-all' onclick='DisplayAllAutoComplete(this)'>Mostrar todos</div>");
+            sb.AppendFormat("</div>");
+
+            if (MultipleSelection)
+                sb.AppendFormat("<div class='selection-list'></div>");
+            else
+                sb.AppendFormat("<input name={0} type=hidden value='{1}' />", name, value);
 
             output.Content.SetHtmlContent(sb.ToString());
         }

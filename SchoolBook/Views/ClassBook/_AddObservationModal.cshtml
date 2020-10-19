@@ -1,0 +1,46 @@
+﻿@model SchoolBook.Models.EvaluationObservation
+
+<form id="frmObservation">
+    <div class="obs-container">
+        <h6>Agregar Observación</h6>
+        <div class="observation">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.EvaluationId)
+            @Html.HiddenFor(m => m.ObserverId)
+            @Html.HiddenFor(m => m.StudentId)
+            @Html.HiddenFor(m => m.Date)
+            <div class="field first-field">Evaluación</div>
+            <div class="first-field">
+                @Model.Evaluation.Title
+            </div>
+            <div class="field">Estudiante</div>
+            <div>
+                @Model.Student.Name
+            </div>
+            <div class="field">Observador</div>
+            <div>
+                @User.Identity.Name
+            </div>
+            <div class="field">Fecha</div>
+            <div>
+                @Model.Date.ToString("dd 'de' MMMM 'de' yyyy")
+            </div>
+            <div class="field input">Título</div>
+            <div>
+                <input asp-for="Title" class="form-control" required />
+                <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+            </div>
+            <div class="field">Descripción</div>
+            <div class="textarea">
+                @*<textarea type="text" class="form-control" name="Description">@Model.Description</textarea>*@
+                <textarea asp-for="Description" class="form-control" required></textarea>
+                <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+            </div>
+        </div>
+        <div class="footer-buttons">
+            <button type="button" class="btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
+        </div>
+        <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveForm(this, '/ClassBook/SaveObservation', getFilteredData)" />
+    </div>
+</form>

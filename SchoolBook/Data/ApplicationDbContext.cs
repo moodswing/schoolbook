@@ -8,6 +8,7 @@ using SchoolBook.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace SchoolBook.Data
 {
@@ -18,7 +19,10 @@ namespace SchoolBook.Data
         public DbSet<Education> Educations { get; set; }
         public DbSet<EducationGrade> EducationGrades { get; set; }
         public DbSet<Evaluation> Evaluations { get; set; }
+        public DbSet<EvaluationType> EvaluationTypes { get; set; }
         public DbSet<EvaluationScore> Scores { get; set; }
+        public DbSet<Anotation> Anotations { get; set; }
+        public DbSet<EvaluationObservation> Observations { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<MenuOption> MenuOptions { get; set; }
         public DbSet<Period> Periods { get; set; }
@@ -26,10 +30,13 @@ namespace SchoolBook.Data
         public DbSet<SchoolYear> SchoolYears { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentClass> StudentsClasses { get; set; }
+        public DbSet<StudentAnotation> StudentsAnotations { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<TypePeriod> TypePeriods { get; set; }
         public DbSet<Bulletin> Bulletins { get; set; }
+        public DbSet<AuthorizationRequest> AuthorizationRequests { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<UserSuperior> UserSuperiors { get; set; }
         public DbSet<UserSelection> UserSelections { get; set; }
 
         public static ILogger<ApplicationDbContext> Logger { get; set; }
@@ -47,6 +54,11 @@ namespace SchoolBook.Data
                 .HasMany(a => a.Scores)
                 .WithOne(b => b.Evaluation)
                 .HasForeignKey(b => b.EvaluationId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Superiors)
+                .WithOne(s => s.User)
+                .HasForeignKey(s => s.UserId);
 
             InitialSeed(modelBuilder);
         }
@@ -106,17 +118,33 @@ namespace SchoolBook.Data
                     counter++;
                 }
 
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 1, Description = "Prueba Historia de Chile 1", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 2, Description = "Prueba Historia de Chile 2", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 3, Description = "Trabajo Presidentes de Chile", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 4, Description = "Prueba Historia Mundial", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 5, Description = "Prueba Historia Universal", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 6, Description = "Prueba Cultura Chopistica", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationType>().HasData(new EvaluationType { Id = 1, Description = "Nota parcial" });
+            modelBuilder.Entity<EvaluationType>().HasData(new EvaluationType { Id = 2, Description = "Examen" } );
+            modelBuilder.Entity<EvaluationType>().HasData(new EvaluationType { Id = 3, Description = "Promedio Período" });
+            modelBuilder.Entity<EvaluationType>().HasData(new EvaluationType { Id = 4, Description = "Promedio Final" });
+            modelBuilder.Entity<EvaluationType>().HasData(new EvaluationType { Id = 5, Description = "Prueba Acumulativa" });
+            modelBuilder.Entity<EvaluationType>().HasData(new EvaluationType { Id = 6, Description = "Prueba de Nivel" });
 
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 7, Description = "Prueba Ecuaciones Diferenciales", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 8, Description = "Prueba Geometria", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 9, Description = "Trabajo Aritmetica", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
-            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 10, Description = "Prueba Planos Cartesianos", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 1, Title = "Prueba Historia de Chile 1", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today, TypeId = 1 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 2, Title = "Prueba Historia de Chile 2", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today, TypeId = 2 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 3, Title = "Trabajo Presidentes de Chile", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today, TypeId = 3 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 4, Title = "Prueba Historia Mundial", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today, TypeId = 1 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 5, Title = "Prueba Historia Universal", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today, TypeId = 1 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 6, Title = "Prueba Cultura Chopistica", ClassSubjectId = 1, PeriodId = 1, Date = DateTime.Today, TypeId = 2 });
+
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 7, Title = "Prueba Ecuaciones Diferenciales", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today, TypeId = 2 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 8, Title = "Prueba Geometria", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today, TypeId = 3 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 9, Title = "Trabajo Aritmetica", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today, TypeId = 4 });
+            modelBuilder.Entity<Evaluation>().HasData(new Evaluation { Id = 10, Title = "Prueba Planos Cartesianos", ClassSubjectId = 2, PeriodId = 1, Date = DateTime.Today, TypeId = 5 });
+
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 1, Title = "Mal comportamiento", Description = "No quiso entregar la prueba.", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 2, Title = "Falta de respeto", Description = "Sigue sin entregar la prueba!!", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 3, Title = "Sin interes alguno", Description = "Oye hasta cuando po!", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 4, Title = "Comportamiento agresivo", Description = "Anotación negativa!", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 5, Title = "Falló en la vida", Description = "Expulsado.", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 6, Title = "Sin esperanzas", Description = "Cayó en las drogas :(", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 7, Title = "Un trágico final", Description = "Se nos jue :'(", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=5, EvaluationId = 10, Date = DateTime.Today });
+            modelBuilder.Entity<EvaluationObservation>().HasData(new EvaluationObservation { Id = 8, Title = "Flojera maximas", Description = "No entrega trabajo a la fecha.", ObserverId = "868465e8-48d1-4b1e-96e0-87bfca64f213", StudentId=2, EvaluationId = 10, Date = DateTime.Today });
 
             modelBuilder.Entity<Student>().HasData(new Student { Id = 1, Name = "Juanito Perez" });
             modelBuilder.Entity<Student>().HasData(new Student { Id = 2, Name = "Luchito Jara" });
@@ -147,24 +175,25 @@ namespace SchoolBook.Data
 
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 1, Description = "Libro de Clases", Icon = "small-icon svgcollege-029-papyrus", Order = 1 });
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 2, Description = "Notas", GroupMenuOptionId = 1, Url = "/ClassBook", Order = 1 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 3, Description = "Anotaciones", GroupMenuOptionId = 1, Url = "Observations", Order = 3 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 3, Description = "Anotaciones", GroupMenuOptionId = 1, Url = "/ClassBook/Anotations", Order = 4 });
             modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 4, Description = "Evaluaciones", GroupMenuOptionId = 1, Url = "/ClassBook/Evaluations", Order = 2 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 5, Description = "Asistencia", GroupMenuOptionId = 1, Url = "Attendance", Order = 4 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 6, Description = "Atrasos", GroupMenuOptionId = 1, Url = "Delays", Order = 5 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 5, Description = "Observaciones", GroupMenuOptionId = 1, Url = "/ClassBook/Observations", Order = 3 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 6, Description = "Asistencia", GroupMenuOptionId = 1, Url = "Attendance", Order = 5 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 7, Description = "Atrasos", GroupMenuOptionId = 1, Url = "Delays", Order = 6 });
 
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 7, Description = "Alumnos", Icon = "small-icon svgcollege-019-reading-book", Order = 2 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 8, Description = "Ficha Alumno", GroupMenuOptionId = 7, Url = "Student", Order = 1 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 9, Description = "Accidente Escolar", GroupMenuOptionId = 7, Url = "Accidents", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 8, Description = "Alumnos", Icon = "small-icon svgcollege-019-reading-book", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 9, Description = "Ficha Alumno", GroupMenuOptionId = 8, Url = "Student", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 10, Description = "Accidente Escolar", GroupMenuOptionId = 8, Url = "Accidents", Order = 2 });
 
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 10, Description = "Administración", Icon = "small-icon svgcollege-043-test", Order = 4 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 11, Description = "Credenciales", GroupMenuOptionId = 10, Url = "Credentials", Order = 1 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 12, Description = "Cambiar Contraseña", GroupMenuOptionId = 10, Url = "Password", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 11, Description = "Administración", Icon = "small-icon svgcollege-043-test", Order = 4 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 12, Description = "Credenciales", GroupMenuOptionId = 11, Url = "Credentials", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 13, Description = "Cambiar Contraseña", GroupMenuOptionId = 11, Url = "Password", Order = 2 });
 
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 13, Description = "Horarios", Icon = "small-icon svgcollege-005-alarm", Order = 3 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 14, Description = "Crear Horarios", GroupMenuOptionId = 13, Url = "ScheduleMaker", Order = 1 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 15, Description = "Horario Por Asignatura", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=1", Order = 2 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 16, Description = "Horario Por Curso", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=2", Order = 3 });
-            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 17, Description = "Horario Por Profesor", GroupMenuOptionId = 13, Url = "ScheduleMaker?type=3", Order = 4 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 14, Description = "Horarios", Icon = "small-icon svgcollege-005-alarm", Order = 3 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 15, Description = "Crear Horarios", GroupMenuOptionId = 14, Url = "ScheduleMaker", Order = 1 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 16, Description = "Horario Por Asignatura", GroupMenuOptionId = 14, Url = "ScheduleMaker?type=1", Order = 2 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 17, Description = "Horario Por Curso", GroupMenuOptionId = 14, Url = "ScheduleMaker?type=2", Order = 3 });
+            modelBuilder.Entity<MenuOption>().HasData(new MenuOption { Id = 18, Description = "Horario Por Profesor", GroupMenuOptionId = 14, Url = "ScheduleMaker?type=3", Order = 4 });
 
             modelBuilder.Entity<Bulletin>().HasData(new Bulletin { Id = 1, Title = "Noticia de prueba 1", Subtitle = "Que tema tan interesante nos hablan hoy", Content = "Esto es demasiado interesante..", Image = "https://www.elosceolastar.com/wp-content/uploads/2020/07/empty-classroom_elementary-school-middle-school-high-school.jpg" });
             modelBuilder.Entity<Bulletin>().HasData(new Bulletin { Id = 2, Title = "Noticia de prueba 2", Subtitle = "Que tema tan interesante nos hablan hoy", Content = "Esto es demasiado interesante..", Image = "https://www.andree.cl/home3/images/stories/slideshow2014/foto_03.jpg" });
@@ -178,16 +207,25 @@ namespace SchoolBook.Data
 
             var managerId = Guid.NewGuid().ToString();
 
-            dbContext.Users.RemoveRange(dbContext.Users);
+            //dbContext.Users.RemoveRange(dbContext.Users);
 
-            await AddUserAndRoleAsync("nic@sclbk.com", "Nicolas Rivera", "Supervisor", userManager, dbContext, managerId);
             await AddUserAndRoleAsync("rob@sclbk.com", "Robinson Aravena", "Administrador", userManager, dbContext);
-            await AddUserAndRoleAsync("nat@sclbk.com", "Nathalie Barra", "Profesor", userManager, dbContext);
+            await AddUserAndRoleAsync("rob2@sclbk.com", "Robinson Aravena G.", "Supervisor", userManager, dbContext);
+
+            await AddUserAndRoleAsync("nic@sclbk.com", "Nicolas Rivera", "Supervisor", userManager, dbContext);
+
+            var classes = dbContext.ClassSubjects.Where(c => c.Subject.Description == "Historia y Geografía").Select(c => c.Id).ToList();
+            var superiors = dbContext.Users.Where(c => c.UserName == "Nicolas Rivera" || c.Email == "rob2@sclbk.com").Select(c => c.Id).ToList();
+
+            await AddUserAndRoleAsync("nat@sclbk.com", "Nathalie Barra", "Profesor", userManager, dbContext, superiors, classes: classes);
             await AddUserAndRoleAsync("jon@sclbk.com", "Jonathan Rocha", "Apoderado", userManager, dbContext);
 
             foreach (var role in dbContext.Roles)
                 foreach (var option in dbContext.MenuOptions)
                 {
+                    if (dbContext.RoleMenus.Any(rm => rm.MenuOptionId == option.Id && rm.RoleId == role.Id))
+                        continue;
+
                     var rolMenu = new RoleMenu
                     {
                         MenuOptionId = option.Id,
@@ -200,6 +238,9 @@ namespace SchoolBook.Data
             foreach (var education in dbContext.Educations)
                 foreach (var grade in dbContext.Grades)
                 {
+                    if (dbContext.EducationGrades.Any(rm => rm.EducationId == education.Id && rm.GradeId == grade.Id))
+                        continue;
+
                     var educationGrade = new EducationGrade
                     {
                         EducationId = education.Id,
@@ -212,16 +253,17 @@ namespace SchoolBook.Data
             dbContext.SaveChanges();
         }
 
-        public static async Task AddUserAndRoleAsync(string email, string userName, string role, UserManager<User> userManager, ApplicationDbContext dbContext, string managerId = "")
+        public static async Task AddUserAndRoleAsync(string email, string userName, string role, UserManager<User> userManager, ApplicationDbContext dbContext, List<string> superiors = null, List<int> classes = null)
         {
+            var user = new User();
+
             var findByEmail = userManager.FindByEmailAsync(email);
             if (findByEmail.Result == null)
             {
-                User user = new User
+                user = new User
                 {
                     UserName = userName,
                     Email = email,
-                    IdSuperior = managerId,
                     EmailConfirmed = true
                 };
 
@@ -237,15 +279,43 @@ namespace SchoolBook.Data
             }
             else
             {
-                var user = dbContext.Users.FirstOrDefault(e => e.Email.Equals(email));
+                user = dbContext.Users.Include(s => s.Superiors).FirstOrDefault(e => e.Email.Equals(email));
                 var claims = await userManager.GetClaimsAsync(user);
 
                 if (!userManager.IsInRoleAsync(user, role).Result)
                     userManager.AddToRoleAsync(user, role).Wait();
 
-                if (claims.Any(c => c.Type.Equals(ClaimTypes.Email)))
+                if (!claims.Any(c => c.Type.Equals(ClaimTypes.Email)))
                     await userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, email));
             }
+
+            if (classes != null)
+                foreach(var studentClass in classes)
+                    if (user.Classes == null || !user.Classes.Any(c => c.Id == studentClass))
+                    {
+                        var classSubject = dbContext.ClassSubjects.FirstOrDefault(c => c.Id == studentClass);
+
+                        if (user.Classes == null)
+                            user.Classes = new List<ClassSubject>();
+
+                        user.Classes.Add(classSubject);
+                    }
+
+            if (superiors != null)
+                foreach (var superiorId in superiors)
+                    if (user.Superiors == null || !user.Superiors.Any(c => c.SuperiorId == superiorId))
+                    {
+                        var userSuperior = new UserSuperior
+                        {
+                            UserId = user.Id,
+                            SuperiorId = superiorId
+                        };
+
+                        if (user.Superiors == null)
+                            user.Superiors = new List<UserSuperior>();
+
+                        user.Superiors.Add(userSuperior);
+                    }
         }
     }
 }

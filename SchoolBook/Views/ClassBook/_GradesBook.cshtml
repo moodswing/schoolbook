@@ -1,4 +1,5 @@
 ﻿@model SchoolBook.ViewModels.ClassBookViewModel
+@using SchoolBook.Utils
 
 <style>
     .student-list .header,
@@ -9,16 +10,19 @@
     .student-list .header {
         background-color: #C8C8C8;
         color: white;
+        border-radius: 4px 0 0;
     }
 
         .student-list .header .student-number,
         .student-list .grade-row .student-number {
             width: 30px;
             padding-left: 10px;
+            line-height: 26px;
         }
 
         .student-list .header .student,
         .student-list .grade-row .student {
+            line-height: 26px;
             width: 300px;
         }
 
@@ -26,7 +30,7 @@
         .student-list .grade-row .grade {
             width: 35px;
             text-align: center;
-            padding: 0;
+            padding: 3px 0;
             border: none;
             background-color: transparent;
             height: unset;
@@ -66,6 +70,23 @@
     .student-list .grade-row .grade.changed-score {
         border-bottom: 2px solid #00C6CF;
     }
+
+    .student-list .grade-action {
+        margin-left: 20px;
+    }
+
+    .grade-action {
+        display: none;
+    }
+
+        input.grade:focus ~ .grade-action,
+        .grade-action:hover {
+            display: block;
+        }
+
+        .grade-action i:before {
+            color: #1ca9d4;
+        }
 </style>
 
 @if (Model.Students != null && Model.Students.Any())
@@ -75,7 +96,10 @@
         <div class="student">Alumno</div>
         @for (var i = 0; i < Model.StudentEvaluations.Count(); i++)
         {
-            <div class="grade">N@(i + 1)</div>
+            <div class="grade toltip">
+                N@(i + 1)
+                <span class="toltip up">@Model.StudentEvaluations[i].Title</span>
+            </div>
         }
         @if (Model.StudentEvaluations != null && Model.StudentEvaluations.Any())
         {
@@ -96,11 +120,19 @@
                     {
                         var score = student.Evaluations[j].StudentScore ?? new EvaluationScore();
 
-                        @Html.Hidden("students[" + i + "].Evaluations[" + j + "].Id", student.Evaluations[j].Id)
                         @Html.Hidden("students[" + i + "].Evaluations[" + j + "].StudentScore.Id", score.Id)
-                        <input type="text" class="form-control grade @(score.Score != 0 && score.Score < Model.FailedGrade ? "failed-score" : string.Empty)" value="@score.ScoreStr" name="@("students[" + i + "].Evaluations[" + j + "].StudentScore.Score")" maxlength="2" />
+                        @Html.Hidden("students[" + i + "].Evaluations[" + j + "].Id", student.Evaluations[j].Id)
+                        <input type="text" class="form-control grade numeric @(score.Score != 0 && score.Score < Model.FailedGrade ? "failed-score" : string.Empty)" value="@score.ScoreStr" name="@("students[" + i + "].Evaluations[" + j + "].StudentScore.Score")" @(!Model.ActionPermissions.Contains(ActionPermission.EditGrades) ? "disabled" : "") maxlength="3" autocomplete="off" />
                     }
-                    <div class="grade avg @(student.EvaluationAvg != 0 && student.EvaluationAvg < Model.FailedGrade ? "failed-score" : string.Empty)">@student.EvaluationAvgStr</div>
+                    <div class="grade numeric avg @(student.EvaluationAvg != 0 && student.EvaluationAvg < Model.FailedGrade ? "failed-score" : string.Empty)">@student.EvaluationAvgStr</div>
+                }
+                @if (Model.ActionPermissions.Contains(ActionPermission.EditGrades))
+                {
+                    <div class="grade-action">
+                        <i class="flaticon-comment-white-oval-bubble small-icon toltip" onclick="addObservation(this)">
+                            <span class="toltip">Agregar Observación</span>
+                        </i>
+                    </div>
                 }
             </div>
         }
@@ -109,49 +141,54 @@
     @Html.Hidden("hdnMinGrade", Model.MinGrade)
     @Html.Hidden("hdnMaxGrade", Model.MaxGrade)
 }
+@if (Model.ActionPermissions.Contains(ActionPermission.EditGrades))
+{
+    <div class="footer-buttons">
+        <button type="button" class="btn-secondary">Carga Masiva</button>
+        <button type="button" class="btn-primary" onclick="confirmSaving(this)">Guardar</button>
+    </div>
+    <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveGradesBook(this)" />
+}
+
+<div class="modal" id="modalAddObservation">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
+
     var initialGrades;
+    var selectedGrade;
     $(document).ready(function () {
         initialGrades = getFormData($("#frmGradesBook"));
+
+        minNumeric = $("#hdnMinGrade").val();
+        maxNumeric = $("#hdnMaxGrade").val();
+
+        numericValidation.numericCallback = function numericCallback(input) {
+            EvaluateChange(input, input.val());
+
+            var sum = 0;
+            var counter = 0;
+            input.closest(".grade-row").find("input[type=text]").each(function () {
+                if (Number($(this).val()) != 0)
+                    counter++;
+
+                sum += Number($(this).val());
+            });
+
+            if (sum != 0) {
+                var avg = toFixed(Number(sum / counter), 1);
+                var avgDiv = input.closest(".grade-row").find(".avg");
+                avgDiv.text(avg);
+                EvaluateChange(avgDiv, avg);
+            }
+        };
     });
 
-    $(document).on("blur", "input.grade", function (event) {
-        // todo: highlight notes changed
-
-        var input = $(this);
-        var grade = input.val().replace(new RegExp("([0-9])[^0-9]*([0-9]*)", "gm"), "$1.$2");
-
-        if (isNaN(Number(grade)))
-            grade = "";
-
-        grade = toFixed(Number(grade), 1);
-
-        grade = grade != 0 && grade < $("#hdnMinGrade").val() ? $("#hdnMinGrade").val() : grade;
-        grade = grade != 0 && grade > $("#hdnMaxGrade").val() ? $("#hdnMaxGrade").val() : grade;
-
-        grade = grade == 0 ? "" : grade;
-
-        input.val(grade);
-        EvaluateChange(input, grade);
-
-        var sum = 0;
-        var counter = 0;
-        input.closest(".grade-row").find("input[type=text]").each(function () {
-            if (Number($(this).val()) != 0)
-                counter++;
-
-            sum += Number($(this).val());
-        });
-
-        if (sum != 0) {
-            var avg = toFixed(Number(sum / counter), 1);
-            var avgDiv = input.closest(".grade-row").find(".avg");
-            avgDiv.text(avg);
-            EvaluateChange(avgDiv, avg);
-        }
-    });
-
+    $(document).on("focus", "input.grade", function (event) { selectedGrade = $(this); });
     $(document).on("keydown", "input.grade", function (event) {
         var allowedInput = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Tab", "Delete", "Backspace", "a", "s", "d", "w"];
 
@@ -206,4 +243,36 @@
         else
             input.removeClass("changed-score");
     }
+
+    function addObservation(btn) {
+        var studentContainer = $(btn).closest(".grade-row");
+
+        var data = {
+            studentId: studentContainer.find("[name$='.Id']:first").val(),
+            evaluationId: selectedGrade.prev().val(),
+            modal: true
+        };
+
+        $("#modalAddObservation .modal-content").loadFadeOut("/ClassBook/GetNewObservation", data);
+        $("#modalAddObservation").modal("show");
+    }
+
+    function saveGradesBook(btn) {
+        var request = $.ajax({
+            type: "POST",
+            url: "ClassBook/SaveGradesBook",
+            data: getFormData($("#frmGradesBook")),
+            success: function (result) {
+                // todo: remove timer + refresh changed grades
+
+                setTimeout(function () {
+                    finishAction(result, btn);
+                    $(".changed-score").removeClass("changed-score");
+                    initialGrades = getFormData($("#frmGradesBook"));
+                }, 2000);
+                @* finishAction(result, '.footer-buttons');*@
+            }
+        });
+    }
+
 </script>

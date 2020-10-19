@@ -1,0 +1,44 @@
+﻿@model SchoolBook.Models.AuthorizationRequest
+
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <form id="frmObservation">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Type)
+            @Html.HiddenFor(m => m.RegisterId)
+            <div class="title">Solicitar Aprobación</div>
+            <div class="content">
+                <div class="subtitle">
+                    <div>
+                        <i class="flaticon-exclamation-sign icon"></i>
+                        <span>
+                            Para realizar la anulación requerida es necesario solicitar la aprobación
+                            @(Model.Approvers != null && Model.Approvers.Count() > 1 ? " de al menos uno de los siguientes supervisores:" : " del siguiente supervisor:")
+                        </span>
+                    </div>
+                    @if (Model.Approvers != null)
+                    {
+                        <ul>
+                            @foreach (var approver in Model.Approvers)
+                            {
+                                <li>@approver.UserName</li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="field">
+                    <label>Favor especificar el mótivo de la anulación:</label>
+                </div>
+                <div>
+                    <textarea asp-for="Observation" class="form-control" required></textarea>
+                    <i class='flaticon-warning-sign-on-a-triangular-background small-icon'></i>
+                </div>
+            </div>
+            <div class="footer-buttons">
+                <button type="button" class="btn-secondary" onclick="cancelAddItem(this)">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="confirmSaving(this)">Aceptar</button>
+            </div>
+            <confirm-action message="¿Está Seguro?" yes-title="Si" no-title="No" callback="saveForm(this, '/ClassBook/CancelRegister', getFilteredData)" />
+        </form>
+    </div>
+</div>

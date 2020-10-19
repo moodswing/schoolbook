@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SchoolBook.DAL;
 using System.Security.Claims;
 using SchoolBook.Utils;
+using System.Globalization;
 
 namespace SchoolBook
 {
@@ -77,6 +78,7 @@ namespace SchoolBook
             services.TryAddTransient<ISubjectsDAL, SubjectsDAL>();
             services.TryAddTransient<IPeriodsDAL, PeriodsDAL>();
             services.TryAddTransient<IEvaluationsDAL, EvaluationsDAL>();
+            services.TryAddTransient<IAuthorizationRequestDAL, AuthorizationRequestDAL>();
 
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
@@ -115,6 +117,12 @@ namespace SchoolBook
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            var cultureInfo = new CultureInfo("es-CL");
+            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             //ApplicationDbContext.SeedUsersAsync(userManager, dbContext, logger).GetAwaiter().GetResult();
         }

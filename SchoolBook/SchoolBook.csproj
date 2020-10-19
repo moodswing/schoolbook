@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\ClassBook\_DisplayAnotationcshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
 
@@ -22,6 +25,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.6.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +39,8 @@
     <Folder Include="Views\Shared\Components\ClassSelector\" />
     <Folder Include="DAL\" />
     <Folder Include="Views\ClassBook\" />
+    <Folder Include="wwwroot\lib\datepicker\" />
+    <Folder Include="wwwroot\lib\AutoNumeric\" />
   </ItemGroup>
 
   <ItemGroup>

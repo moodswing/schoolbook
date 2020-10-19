@@ -1,0 +1,34 @@
+﻿@model SchoolBook.Models.Anotation
+@using SchoolBook.Utils
+
+<div>
+    <header>
+        <div class="avatar">
+            <i class="flaticon-user-shape icon"></i>
+        </div>
+        <div>
+            <div class="title">@Model.Title</div>
+            <div class="subtitle">
+                Anotación <b>@Model.TypeDescription</b> ingresada por <i>@Model.Observer.UserName</i>, fecha de la anotación @Model.Date.ToString("dd 'de' MMMM 'de' yyyy").
+                @if (Model.Receiver == AnotationReceiver.Students)
+                {
+                    <i class="flaticon-caret-down small-icon"></i>
+                }
+            </div>
+            @if (Model.Receiver == AnotationReceiver.Students)
+            {
+                <div class="additional-info">
+                    <i class="flaticon-angle-arrow-pointing-to-right small-icon"></i>
+                    @(Model.Receiver == AnotationReceiver.Class ? "Anotación general para el curso " : "Alumnos anotados: ") <span>@Model.ReceiverDescription</span>
+                </div>
+            }
+            <div class="actions">
+                <span>Anular</span>
+            </div>
+        </div>
+    </header>
+    <div class="description">
+        @Model.Description
+    </div>
+</div>
+

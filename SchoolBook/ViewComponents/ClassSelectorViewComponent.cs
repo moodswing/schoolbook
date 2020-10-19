@@ -26,7 +26,7 @@ namespace SchoolBook.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var viewModel = UsersDAL.GetUserSelection<ClassSelectorViewModel>(SelectionType.Class);
+            var viewModel = UsersDAL.GetUserSelection<UserSelectorViewModel>(SelectionType.Filters);
 
             viewModel.Years = DbContext.SchoolYears.OrderByDescending(y => y.Year).ToList();
             viewModel.Grades = DbContext.Grades.ToList();

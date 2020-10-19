@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SchoolBook.Data;
 using SchoolBook.Models;
@@ -19,17 +20,26 @@ namespace SchoolBook.DAL
             User = user;
         }
 
-        public User GetCurrentUser()
+        public User GetCurrentUser(bool includeSuperiors = false)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+            return _dbContext.Users.Include(u => u.Classes).FirstOrDefault(u => u.Id == userId);
+        }
+
+        public List<User> GetSuperiors()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _dbContext.Users.Include("Superiors.Superior").FirstOrDefault(u => u.Id == userId);
+
+            return user.Superiors.Select(s => s.Superior).ToList();
         }
 
         public T GetUserSelection<T>(SelectionType type) where T : new()
         {
             var result = new T();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var selection = _dbContext.UserSelections.FirstOrDefault(s => s.UserId.Equals(userId) && s.Type.Equals(type))?.Value ?? null;
+            var selection = _dbContext.UserSelections.OrderByDescending(s => s.Type)
+                .FirstOrDefault(s => s.UserId.Equals(userId) && (s.Type.Equals(type) || s.Type.Equals(SelectionType.Filters)))?.Value ?? null;
 
             if (!string.IsNullOrEmpty(selection))
                 result = JsonSerializer.Deserialize<T>(selection);
@@ -53,13 +63,22 @@ namespace SchoolBook.DAL
 
             _dbContext.SaveChanges();
         }
+
+        public bool IsUserClassTeacher(int classId, int subjectId)
+        {
+            var user = GetCurrentUser();
+
+            return user.Classes != null && user.Classes.Any(c => c.ClassId == classId && c.SubjectId == subjectId);
+        }
     }
 
     public interface IUsersDAL
     {
-        User GetCurrentUser();
+        User GetCurrentUser(bool includeSuperiors);
+        List<User> GetSuperiors();
 
         T GetUserSelection<T>(SelectionType type) where T : new();
+        bool IsUserClassTeacher(int classId, int subjectId);
         void SaveUserSelection(SelectionType type, string value);
     }
 }

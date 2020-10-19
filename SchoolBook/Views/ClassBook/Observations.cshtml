@@ -1,0 +1,62 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Portal - " + Configuration["AppSettings:SiteTitle"];
+    Layout = "../Shared/_layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/datepicker/datepicker.css">
+<script src="~/lib/datepicker/datepicker.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/js/autocomplete.js" asp-append-version="true"></script>
+
+<div class="content">
+    <vc:class-selector />
+    <div class="inner-content">
+        <div>
+            <h1>Observaciones</h1>
+            <partial name="_SubjectSelector" />
+        </div>
+        <div class="subject-data-filters">
+            <partial name="_StudentEvaluationSelector" />
+        </div>
+        <div class="footer-buttons">
+            <button type="button" class="btn-primary toltip" onclick="addNewObservation()" @(string.IsNullOrEmpty(Model.StudentId) || string.IsNullOrEmpty(Model.EvaluationId) ? "disabled" : "")>
+                Agregar Observación
+                <span class="toltip up validation">Favor seleccionar un estudiante y una evaluación para poder agregar una observación.</span>
+            </button>
+        </div>
+        <div class="new-observation add-item-form">
+        </div>
+        <div class="observations-editor subject-data-container">
+            <partial name="_ListObservations" />
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalCancelObservation">
+</div>
+
+<script type="text/javascript">
+
+    $(document).on("change keyup", ".subject-data-filters input", function () {
+        var valid = true;
+        $(".subject-data-filters").serializeList().forEach(function (input) {
+            if (input.value == "") valid = false;
+        });
+
+        $(".footer-buttons button").prop("disabled", !valid);
+    });
+
+    function addNewObservation() {
+        $(".new-observation").loadFadeOut("/ClassBook/GetNewObservation", getFormData($(".subject-data-filters")));
+    }
+
+    function cancelObservation(registerId, type) {
+        $("#modalCancelObservation").loadFadeOut("/ClassBook/GetRegisterCancelation", { registerId, type });
+        $("#modalCancelObservation").modal("show");
+    }
+
+</script>

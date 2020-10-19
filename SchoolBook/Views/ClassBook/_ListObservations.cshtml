@@ -1,0 +1,18 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+
+<div class="display-container">
+    @if (Model.Observations != null && Model.Observations.Any())
+    {
+        for (var i = 0; i < Model.Observations.Count(); i++)
+        {
+            var observation = Model.Observations[i];
+            observation.Index = i;
+
+            <partial name="_DisplayObservation" model="observation" />
+        }
+    }
+    <div class="informative no-data">
+        <i class="flaticon-information-button icon"></i>
+        @(string.IsNullOrEmpty(Model.StudentId) || string.IsNullOrEmpty(Model.EvaluationId) ? "Favor completar los parametros de búsqueda." : "No se han ingresado observaciones aún.")
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@model SchoolBook.ViewModels.ClassBookViewModel
+
+<style>
+    .form-control {
+        border-radius: 0 0 .25rem;
+    }
+
+        .form-control:focus {
+            border-radius: .25rem !important;
+        }
+
+    .inner-content .selector select {
+        display: inline-block;
+        margin-right: 60px;
+    }
+
+    .filters {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        border: 1px solid #c8c8c8;
+        border-right: none;
+        margin-top: 12px;
+    }
+
+        .filters .field {
+            background-color: #f7f7f7;
+            padding: 5px 25px;
+            line-height: 33px;
+            color: #036e8c;
+        }
+
+        .filters .underline {
+            height: 8px;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 250ms ease-in;
+            position: relative;
+            border-radius: 0 0 5px;
+            top: -8px;
+            border-bottom: 1px solid #00C6CF;
+        }
+
+        .filters input[type=text]:hover + .underline, select:hover + .underline {
+            width: 100%;
+            transform: scaleX(1);
+        }
+
+        .filters input[type=text]:hover:focus + .underline, select:hover + .underline {
+            border-radius: .25rem;
+        }
+
+        .filters .field:first-child,
+        .filters .field:first-child + div {
+            padding-top: 12px;
+        }
+
+        .filters .field + div:last-child {
+            padding-bottom: 12px;
+        }
+
+        .filters .field + div {
+            padding: 5px 80px 5px 30px;
+        }
+
+        .filters input[type=text] {
+            border: none;
+            position: relative;
+            border-bottom: 1px solid #ced4da;
+            display: table-footer-group;
+        }
+
+            .filters input[type=text]::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 100%;
+                height: 9px;
+                width: 100%;
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 250ms ease-in;
+            }
+
+            .filters input[type=text]:hover::after {
+                transform: scaleX(1);
+            }
+</style>
+
+<div class="filters">
+    <div class="field">
+        Estudiante
+    </div>
+    <div>
+        <autocomplete for="StudentId" list="Model.Students" placeholder="Buscar..."></autocomplete>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).on("change", "#SubjectId, [name=PeriodId]", function () {
+        var data = selectorsData();
+        if (data.SubjectId == "" || data.PeriodId == undefined) return;
+
+        var container = "@(string.IsNullOrEmpty(Model.FilterAction) ? ".subject-data-container" : ".subject-data-filters")";
+        var action = "@(string.IsNullOrEmpty(Model.FilterAction) ? Model.SelectorChangeAction : Model.FilterAction )";
+
+        primarySelectorChange(container, action, data);
+    });
+
+    $(document).on("change", ".subject-data-filters input[type=hidden]", function () {
+        filtersChange("@(Model.SelectorChangeAction)");
+    });
+</script>
